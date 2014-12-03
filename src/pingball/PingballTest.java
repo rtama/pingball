@@ -2,12 +2,15 @@ package pingball;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+//import boardFileParsing.MakeInputStream;
 
 
 public class PingballTest {
@@ -22,6 +25,8 @@ public class PingballTest {
     // This parse test covers: simple board with comments, every type of gadget except for portals, triggers
     @Test
     public void testParseSimpleBoard() {
+    	
+
         Board board = new Board();
         try {
             board = Pingball.parse("boards/basic_board.pb",Optional.empty());
@@ -97,6 +102,15 @@ public class PingballTest {
         Board board;
         exception.expect(IOException.class);
         board = Pingball.parse("boards/wrong_board.pb",Optional.empty());
+    }
+    
+    @Test
+    public void testBoardParsing() throws IOException{
+       
+        Board outputBoard = Pingball.parse("boards/default.pb",Optional.empty());
+        String boardName = outputBoard.name;
+        String expectedBoardName = "Default";
+        assertEquals(expectedBoardName,boardName); 
     }
 
 }
