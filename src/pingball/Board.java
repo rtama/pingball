@@ -486,4 +486,31 @@ public class Board {
             g2.draw(new Ellipse2D.Double((ball.getXPos()-ball.getCircle().getRadius())*LPixelLength,(ball.getYPos()-ball.getCircle().getRadius())*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength));
         }
     }
+    
+    // The following methods are used for testing.
+    
+    /**
+     * 
+     * @return the value of this board's gravity
+     */
+    public double getBoardGravity() {
+        return gravity;
+    }
+    
+    /**
+     * 
+     * @return the value of this board's mu (drag coefficient)
+     */
+    public double getBoardDrag() {
+        return mu;
+    }
+    
+    /**
+     * 
+     * @return the value of this board's mu2 (friction coefficient)
+     */
+    public double getBoardFriction() {
+        return mu2;
+    }
+
 }
