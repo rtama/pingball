@@ -83,7 +83,7 @@ public class PingballServer {
                     }else{
                         System.err.println("Invalid Command!");
                     }
-                    reader.close();
+                    //reader.close();
                 }
             }
             /**

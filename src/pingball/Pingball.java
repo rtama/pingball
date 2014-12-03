@@ -202,6 +202,8 @@ public class Pingball {
                 client.gameLoop();
             }
         }
+        
+        // Gui.setVisible(true)
     }
     
     /**
