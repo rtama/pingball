@@ -112,13 +112,13 @@ public class OuterWallTest {
     @Test
     public void testWallLinksToOtherBoardWall(){ 
         //Test a horizontal link within two balls
-        //This needs to be manually tested by creating two bords and linking them
+        //This needs to be manually tested by creating two boards and linking them
     }
     
     //E)
     @Test
     public void testWallLinksToOtherWall(){ 
-        //This needs to be manually tested by creating two bords and linking them
+        //This needs to be manually tested by creating two boards and linking them
     }
 
 }
