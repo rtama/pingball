@@ -295,7 +295,6 @@ public class PingballTest {
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardGravity= outputBoard.getBoardGravity(); 
         
-        int expectedNumBalls = 1;
         Double expectedGravity = 2.5E-5;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  2.0E-5;
@@ -306,65 +305,6 @@ public class PingballTest {
         assertEquals(expectedBoardName,boardName); 
         assertEquals(expectedBoardFriction, boardFriction);        
     }
+
     
-    @Test
-    public void testLotsOfBallsOnBoardParsing()throws IOException{
-        Board outputBoard = Pingball.parse("boards/board_many_balls.pb", Optional.empty());
-        String boardName = outputBoard.name;
-        Double boardFriction = outputBoard.getBoardFriction();
-        Double boardDrag= outputBoard.getBoardDrag(); 
-        Double boardGravity= outputBoard.getBoardGravity(); 
-        
-        int expectedNumBalls = 12;
-        Double expectedGravity = 20.0;
-        Double expectedBoardFriction = 0.025;
-        Double expectedBoardDrag =  0.025;
-        String expectedBoardName = "board_lots_of_balls";
-        
-        assertEquals(expectedGravity,boardGravity); 
-        assertEquals(expectedBoardDrag, boardDrag);
-        assertEquals(expectedBoardName,boardName); 
-        assertEquals(expectedBoardFriction, boardFriction);   
-    }
-    
-    @Test
-    public void testFastBallBoardParsing()throws IOException{
-        Board outputBoard = Pingball.parse("boards/fastBallBoard.pb", Optional.empty());
-        String boardName = outputBoard.name;
-        Double boardFriction = outputBoard.getBoardFriction();
-        Double boardDrag= outputBoard.getBoardDrag(); 
-        Double boardGravity= outputBoard.getBoardGravity(); 
-        
-        int expectedNumBalls = 4;
-        Double expectedGravity = 10.0;
-        Double expectedBoardFriction = 0.030;
-        Double expectedBoardDrag =  0.030;
-        String expectedBoardName = "fastBallBoard";
-        
-        assertEquals(expectedGravity,boardGravity); 
-        assertEquals(expectedBoardDrag, boardDrag);
-        assertEquals(expectedBoardName,boardName); 
-        assertEquals(expectedBoardFriction, boardFriction); 
-    }
-    
-    @Test
-    public void testMultPortalBoardParsing()throws IOException{
-        Board outputBoard = Pingball.parse("boards/many_portal_board.pb", Optional.empty());
-        String boardName = outputBoard.name;
-        Double boardFriction = outputBoard.getBoardFriction();
-        Double boardDrag= outputBoard.getBoardDrag(); 
-        Double boardGravity= outputBoard.getBoardGravity(); 
-        
-        int expectedNumBalls = 4;
-        Double expectedGravity = 15.0;
-        Double expectedBoardFriction = 0.025;
-        Double expectedBoardDrag =  0.025;
-        String expectedBoardName = "many_portal_board";
-        
-        assertEquals(expectedGravity,boardGravity); 
-        assertEquals(expectedBoardDrag, boardDrag);
-        assertEquals(expectedBoardName,boardName); 
-        assertEquals(expectedBoardFriction, boardFriction) ;
-        
-    }   
 }
