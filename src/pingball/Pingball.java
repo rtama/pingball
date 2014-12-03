@@ -17,6 +17,7 @@ import pingball.parser.PingballBaseListener;
 import pingball.parser.PingballFactory;
 import pingball.parser.PingballLexer;
 import pingball.parser.PingballParser;
+import ui.PingballGUI;
 
 /**
  * This is the client for playing a pingball game
@@ -157,6 +158,14 @@ public class Pingball {
      * @throws InterruptedException 
      */
     public static void main(String[] args) throws IOException, InterruptedException {
+        PingballGUI GUI;
+        
+        if (args.length == 0) {
+            // Create a GUI with a blank board
+            GUI = new PingballGUI();
+            GUI.setVisible(true);
+            return;
+        }
         boolean singlePlayerMode = true;
         int port = DEFAULT_PORT;
         String hostName = "localhost";
@@ -203,7 +212,7 @@ public class Pingball {
             }
         }
         
-        // Gui.setVisible(true)
+        GUI.setVisible(true);
     }
     
     /**
