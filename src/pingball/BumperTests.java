@@ -42,6 +42,7 @@ public class BumperTests {
         ball.setXPos(position.x());
         ball.setYPos(position.y()); 
     }
+    
     //Test the walls of a Degree 0 TriangleBumper
     @Test public void testTriangleBumperHitEachWallDegree0(){ 
         Board board = new Board(0,0,0); 
@@ -284,7 +285,7 @@ public class BumperTests {
         Board board = new Board(0,0,0);
         board.addBall(ball);
         
-        Gadget sb = new SquareBumper(5,5);
+        Gadget sb = new CircleBumper(5,5);
         board.addGadget(sb);
         stepBoard(board, 20);
         
@@ -293,4 +294,24 @@ public class BumperTests {
         assertEquals(ball.getBoardY(), 4);
         assertEquals(ball.getBoardX(), 4);
     }
+    
+     //Absorber
+    @Test public void testAbsorberHit() {
+        Ball ball = new Ball(10,10, 0, .001);
+        Board board = new Board(0,0,0);
+        board.addBall(ball);
+        
+        Gadget abs = new Absorber(0,18,20,2);
+        
+        
+        board.addGadget(abs);
+        stepBoard(board, 20);
+        System.out.println("a;lskdjgaoiwejgoiwqjegoisjadlgkjasdlkgjaslkdgjaslkjdg");
+        
+        System.out.println(ball.getBoardY());
+        System.out.println(ball.getBoardX());
+        assertEquals(ball.getBoardY(), 13);
+        assertEquals(ball.getBoardX(), 10);
+    }
+    
 }
