@@ -55,7 +55,6 @@ public class Pingball{
     public Pingball(String hostname, int port, Board board) throws UnknownHostException, IOException{    
         this.removedBalls = new LinkedBlockingQueue<String>();
 
-        
         this.board = board;
 
         this.socket = new Socket(hostname, port);
