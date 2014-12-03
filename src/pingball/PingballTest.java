@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import boardFileParsing.MakeInputStream;
+//import boardFileParsing.MakeInputStream;
 
 //import boardFileParsing.MakeInputStream;
 
@@ -163,7 +163,6 @@ public class PingballTest {
         String boardName = outputBoard.name;
         String expectedBoardName = "Default";
         Double boardGravity = outputBoard.getBoardGravity();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
@@ -171,9 +170,7 @@ public class PingballTest {
         Double expectedGravity = 25.0;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  0.025;
-        
 
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -192,7 +189,6 @@ public class PingballTest {
         String expectedBoardName = "Absorber";
         
         Double boardGravity = outputBoard.getBoardGravity();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
@@ -201,8 +197,6 @@ public class PingballTest {
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  0.025;
         
-
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -214,11 +208,10 @@ public class PingballTest {
     public void testTriggersBoardParsing() throws IOException{
         
         Board outputBoard = Pingball.parse("boards/default.pb",Optional.empty());
-        String boardName = outputBoard.getName();
+        String boardName = outputBoard.name;
         String expectedBoardName = "Triggers";
         
         Double boardGravity = outputBoard.getBoardGravity();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
@@ -228,7 +221,6 @@ public class PingballTest {
         Double expectedBoardDrag =  0.025;
         
 
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -241,7 +233,6 @@ public class PingballTest {
         Board outputBoard = Pingball.parse("boards/flippers.pb",Optional.empty());
         String boardName = outputBoard.name;
         String expectedBoardName = "Flippers";
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardGravity= outputBoard.getBoardGravity(); 
         Double boardFriction = outputBoard.getBoardFriction();
@@ -252,7 +243,6 @@ public class PingballTest {
         Double expectedBoardDrag =  0.025;
         
 
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -266,7 +256,6 @@ public class PingballTest {
         String boardName = outputBoard.name;
         String expectedBoardName = "MultiplayerRight";
         Double boardGravity = outputBoard.getBoardGravity();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();        
         
@@ -277,7 +266,6 @@ public class PingballTest {
         
         assertEquals(expGravity, boardGravity); 
         assertEquals(expectedBoardName,boardName); 
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardFriction, boardFriction);           
     }
@@ -285,7 +273,6 @@ public class PingballTest {
     public void testMultiPlayerLeftBoardParsing()throws IOException{
         Board outputBoard = Pingball.parse("boards/multiplayer_left.pb", Optional.empty());
         String boardName = outputBoard.name;
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         Double boardGravity = outputBoard.getBoardGravity();
@@ -298,7 +285,6 @@ public class PingballTest {
         
         assertEquals(expGravity, boardGravity); 
         assertEquals(expectedBoardName,boardName); 
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardFriction, boardFriction);     
     }
@@ -308,7 +294,6 @@ public class PingballTest {
         Board outputBoard = Pingball.parse("boards/simple_board.pb", Optional.empty());
         String boardName = outputBoard.name;
         Double boardFriction = outputBoard.getBoardFriction();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardGravity= outputBoard.getBoardGravity(); 
         
@@ -318,7 +303,6 @@ public class PingballTest {
         Double expectedBoardDrag =  0.025;
         String expectedBoardName = "SimpleBoard";
 
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -330,7 +314,6 @@ public class PingballTest {
         Board outputBoard = Pingball.parse("boards/board_many_balls.pb", Optional.empty());
         String boardName = outputBoard.name;
         Double boardFriction = outputBoard.getBoardFriction();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardGravity= outputBoard.getBoardGravity(); 
         
@@ -340,7 +323,6 @@ public class PingballTest {
         Double expectedBoardDrag =  0.025;
         String expectedBoardName = "board_lots_of_balls";
         
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -352,7 +334,6 @@ public class PingballTest {
         Board outputBoard = Pingball.parse("boards/fastBallBoard.pb", Optional.empty());
         String boardName = outputBoard.name;
         Double boardFriction = outputBoard.getBoardFriction();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardGravity= outputBoard.getBoardGravity(); 
         
@@ -362,7 +343,6 @@ public class PingballTest {
         Double expectedBoardDrag =  0.030;
         String expectedBoardName = "fastBallBoard";
         
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
@@ -374,7 +354,6 @@ public class PingballTest {
         Board outputBoard = Pingball.parse("boards/many_portal_board.pb", Optional.empty());
         String boardName = outputBoard.name;
         Double boardFriction = outputBoard.getBoardFriction();
-        int numBalls = outputBoard.getBallNumber();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardGravity= outputBoard.getBoardGravity(); 
         
@@ -384,7 +363,6 @@ public class PingballTest {
         Double expectedBoardDrag =  0.025;
         String expectedBoardName = "many_portal_board";
         
-        assertEquals(expectedNumBalls, numBalls);
         assertEquals(expectedGravity,boardGravity); 
         assertEquals(expectedBoardDrag, boardDrag);
         assertEquals(expectedBoardName,boardName); 
