@@ -24,10 +24,6 @@ public class TriangleBumper extends Gadget{
      * Rep invariant: none because it's immutable
      */
     
-    private void checkRep() {
-        //no rep invariant
-    }
-    
     private final int boardX;
     private final int boardY;
     private final int orientation;
