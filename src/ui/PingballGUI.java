@@ -1,5 +1,7 @@
 package ui;
 
+import pingball.Pingball;
+
 import java.awt.Canvas;
 import java.io.File;
 
@@ -36,6 +38,22 @@ public class PingballGUI extends JFrame{
     
     //No parameters. No board or server connection
     public PingballGUI() {
+        loadBoard = new JButton("Load Board");
+        connect = new JButton("Connect");
+        disconnect = new JButton("Disconnect");
+        restart = new JButton("Restart");
+        quit = new JButton("Quit");
+        pause = new JButton("Pause");
+        boardFile = new JTextField();
+        hostText = new JTextField();
+        portText = new JTextField();
+        hostLabel = new JLabel("Host");
+        portLabel = new JLabel("Label");
+        boardDisplay = new Canvas();
+    }
+    
+    //Takes in a Pingball object
+    public PingballGUI(Pingball client) {
         loadBoard = new JButton("Load Board");
         connect = new JButton("Connect");
         disconnect = new JButton("Disconnect");

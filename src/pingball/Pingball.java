@@ -159,6 +159,7 @@ public class Pingball {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         PingballGUI GUI;
+        Pingball client;
         
         if (args.length == 0) {
             // Create a GUI with a blank board
@@ -193,25 +194,25 @@ public class Pingball {
         
         if (filename.length() > 0) {
             if(singlePlayerMode){
-                Pingball client = new Pingball(filename);
+                client = new Pingball(filename);
                 client.gameLoop();
             }
             else{
-                Pingball client = new Pingball(port,hostName, filename);
+                client = new Pingball(port,hostName, filename);
                 client.gameLoop();
             }
         }
         else{
             if(singlePlayerMode){
-                Pingball client = new Pingball();
+                client = new Pingball();
                 client.gameLoop();
             }
             else{
-                Pingball client = new Pingball(port,hostName);
+                client = new Pingball(port,hostName);
                 client.gameLoop();
             }
         }
-        
+        GUI = new PingballGUI(client);
         GUI.setVisible(true);
     }
     
