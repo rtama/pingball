@@ -39,29 +39,10 @@ import javax.swing.Timer;
 
 import pingball.Pingball;
 
-
-    // Components in the pingball GUI
-    /*
-    private final JButton loadBoard = new JButton("Load Board");
-    private final JButton connect = new JButton("Connect");
-    private final JButton disconnect = new JButton("Disconnect");
-    private final JButton restart = new JButton("Restart");
-    private final JButton quit = new JButton("Quit");
-    private final JButton pause = new JButton("Pause");
-    private final JTextField boardFile = new JTextField();
-    private final JTextField hostText = new JTextField();
-    private final JTextField portText = new JTextField();
-    private final JLabel hostLabel = new JLabel("Host");
-    private final JLabel portLabel = new JLabel("Label");
-    private final Canvas boardDisplay = new Canvas();
-    */
-    
-
-
+   
 public class PingballGUI extends JPanel implements KeyListener {
 
     private static final long serialVersionUID = 1L;
-
     private static final Color backgroundColor = Color.white;
     private static final int timeStepMillis = 20;
     private static final int WIDTH = 800, HEIGHT = 800;
@@ -73,16 +54,23 @@ public class PingballGUI extends JPanel implements KeyListener {
     private String initalStateString;
     private Timer boardTimer;
     private boolean isPaused;
-
-
+    
+    // JMenu objects
+    JMenuBar menuBar = new JMenuBar();
+    JMenu menu = new JMenu("Menu");
+    final JMenuItem openFile = new JMenuItem("Open board");
+    final JMenuItem connectToServer = new JMenuItem("Connect to server");
+    final JMenuItem disconnectFromServer = new JMenuItem("Disconnect from server");
+    final JMenuItem pauseGame = new JMenuItem("Pause game");
+    final JMenuItem resumeGame = new JMenuItem("Resume game");
+    final JMenuItem restartBoard = new JMenuItem("Restart board");
+    final JMenuItem quitGame = new JMenuItem("Quit game");
     
     /**
      * Creates a GUI with the specified board. May or may not be connected to a server.
      * @param client: a pingball game to display in the GUI
      */
     public PingballGUI(Pingball client) {
-
-
 
     }
     
@@ -96,25 +84,27 @@ public class PingballGUI extends JPanel implements KeyListener {
     	//client
     	//initialStateString
     	//etc
+    
     	
-    	
-        // Make and set menu bar
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
+        //set menu bar
         menuBar.add(menu);
-
-        final JMenuItem openFile = new JMenuItem("Open board");
-        final JMenuItem connectToServer = new JMenuItem("Connect to server");
-        final JMenuItem disconnectFromServer = new JMenuItem("Disconnect from server");
-        final JMenuItem pauseGame = new JMenuItem("Pause game");
-        final JMenuItem resumeGame = new JMenuItem("Resume game");
-        final JMenuItem restartBoard = new JMenuItem("Restart board");
-        final JMenuItem quitGame = new JMenuItem("Quit game");
-
+        //Set window
+        
+        addListeners();
+    }
+    
+    /**
+     * Creates the layout of the GUI content pane
+     */
+    private void createLayout() {
+        
+    }
+    
+    public void addListeners() {
         openFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	//TODO:
+                //TODO:
             }
         });
         menu.add(openFile);
@@ -144,7 +134,7 @@ public class PingballGUI extends JPanel implements KeyListener {
         menu.add(connectToServer);
 
         disconnectFromServer.addActionListener(new ActionListener() {
-        	//TODO: show "Disconnected from Server
+            //TODO: show "Disconnected from Server
             @Override
             public void actionPerformed(ActionEvent e) {
                 disconnectServer();
@@ -156,7 +146,7 @@ public class PingballGUI extends JPanel implements KeyListener {
         pauseGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	//TODO: "Game Paused"
+                //TODO: "Game Paused"
             }
         });
         menu.add(pauseGame);
@@ -164,7 +154,7 @@ public class PingballGUI extends JPanel implements KeyListener {
         resumeGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	//TODO: "Game resumed"
+                //TODO: "Game resumed"
             }
         });
         menu.add(resumeGame);
@@ -180,17 +170,12 @@ public class PingballGUI extends JPanel implements KeyListener {
         quitGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	//TOD: quite game
+                //TOD: quite game
               
             }
         });
         menu.add(quitGame);
-        
-        //this.addKeyListener(this);
-        
-        //Set window
     }
-
     
     //constructor: loard from String board path
 
