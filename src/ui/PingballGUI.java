@@ -40,9 +40,11 @@ import javax.swing.Timer;
 import pingball.Pingball;
 import ui.KeyNames;
 
-   
+   /**
+    * TODO: specs
+    *
+    */
 public class PingballGUI extends JFrame implements KeyListener {
-
     private static final long serialVersionUID = 1L; // required by Serializable
 
    // private final CopyOnWriteArrayList<String> wallNames;
@@ -64,9 +66,9 @@ public class PingballGUI extends JFrame implements KeyListener {
     // JMenu objects 
     JMenuBar menuBar = new JMenuBar();
     JMenu menu = new JMenu("Menu");
-    final JMenuItem openFile = new JMenuItem("Open board");
-    final JMenuItem restartBoard = new JMenuItem("Restart board");
-    final JMenuItem quitGame = new JMenuItem("Quit game");
+    private final JMenuItem openFile = new JMenuItem("Open board");
+    private final JMenuItem restartBoard = new JMenuItem("Restart board");
+    private final JMenuItem quitGame = new JMenuItem("Quit game");
     
     /**
      * Creates a GUI with the specified board. May or may not be connected to a server.
@@ -77,6 +79,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         menuBar.add(menu);
         
         //addListeners();
+        createLayout();
     }
     
     /**
@@ -87,6 +90,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     	
         //set menu bar
         menuBar.add(menu);
+        setJMenuBar(menuBar);
         //Set window
         
         createLayout();
@@ -139,7 +143,11 @@ public class PingballGUI extends JFrame implements KeyListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
     
-    /*
+    
+    /**
+     * Adds Action Listeners to all of the components of the GUI.
+     * 
+     */
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
             @Override
@@ -149,7 +157,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
         menu.add(openFile);
 
-        connectToServer.addActionListener(new ActionListener() {
+        connect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JTextField serverName = new JTextField();
@@ -171,9 +179,8 @@ public class PingballGUI extends JFrame implements KeyListener {
                 }
             }
         });
-        menu.add(connectToServer);
 
-        disconnectFromServer.addActionListener(new ActionListener() {
+        disconnect.addActionListener(new ActionListener() {
             //TODO: show "Disconnected from Server
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -181,23 +188,14 @@ public class PingballGUI extends JFrame implements KeyListener {
                 JOptionPane.showMessageDialog(null, "Disconnected from server.");
             }
         });
-        menu.add(disconnectFromServer);
 
-        pauseGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO: "Game Paused"
-            }
-        });
-        menu.add(pauseGame);
 
-        resumeGame.addActionListener(new ActionListener() {
+        pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: "Game resumed"
             }
         });
-        menu.add(resumeGame);
 
         restartBoard.addActionListener(new ActionListener() {
             @Override
@@ -231,7 +229,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         };
     }
 
-*/
     /**
      * Load a board from a file
      * @param file The file to load the board from
