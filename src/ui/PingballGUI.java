@@ -238,7 +238,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
     }
     
-    //constructor: loard from String board path
+    //constructor: load from String board path
 
 
 
@@ -270,7 +270,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * @throws UnknownHostException
      */
     public void connectServer(String host, int port) throws UnknownHostException, IOException {
-
+        
     }
 
     /**
