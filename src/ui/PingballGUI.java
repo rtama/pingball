@@ -39,15 +39,12 @@ public class PingballGUI extends JFrame{
     private final JLabel portLabel = new JLabel("Label");
     private final Canvas boardDisplay = new Canvas();
     
-   
-    
     
     /**
      * Creates a GUI with a blank board, not connected to any server. The user can choose to
      * load a board from a file and connect to a server.
      */
     public PingballGUI() {
-
     }
     
     /**
@@ -55,7 +52,6 @@ public class PingballGUI extends JFrame{
      * @param client: a pingball game to display in the GUI
      */
     public PingballGUI(Pingball client) {
- 
     }
     
     /**
@@ -66,5 +62,13 @@ public class PingballGUI extends JFrame{
         
     }
     
+    public static void main(final String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                PingballGUI main = new PingballGUI();
+                main.setVisible(true);
+            }
+        });
+    }
 }
 
