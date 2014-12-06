@@ -24,6 +24,7 @@ import java.util.Queue;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -64,11 +65,13 @@ public class PingballGUI extends JFrame implements KeyListener {
     private final JPanel boardDisplay = new JPanel();
    
     // JMenu objects 
-    JMenuBar menuBar = new JMenuBar();
-    JMenu menu = new JMenu("Menu");
+    private final JMenuBar menuBar = new JMenuBar();
+    private final JMenu menuFile = new JMenu("File");
+    private final JMenu menuGame = new JMenu("Game");
     private final JMenuItem openFile = new JMenuItem("Open board");
     private final JMenuItem restartBoard = new JMenuItem("Restart board");
     private final JMenuItem quitGame = new JMenuItem("Quit game");
+    private final JFileChooser fc = new JFileChooser();
     
     /**
      * Creates a GUI with the specified board. May or may not be connected to a server.
@@ -76,10 +79,9 @@ public class PingballGUI extends JFrame implements KeyListener {
      */
     public PingballGUI(Pingball client) {
         // set menu bar
-        menuBar.add(menu);
-        
-        //addListeners();
+        setMenuBar();
         createLayout();
+        addListeners();
     }
     
     /**
@@ -87,14 +89,31 @@ public class PingballGUI extends JFrame implements KeyListener {
      * load a board from a file and connect to a server.
      */
     public PingballGUI() {
-    	
         //set menu bar
-        menuBar.add(menu);
-        setJMenuBar(menuBar);
-        //Set window
-        
+        setMenuBar();
         createLayout();
-        //addListeners();
+        addListeners();
+    }
+    
+    /**
+     * Sets the menuBar layout.
+     */
+    private void setMenuBar() {
+        // Create menu: menuFile
+        menuBar.add(menuFile);
+        // Add menuItems to menuFile
+        menuFile.add(openFile);
+        
+        // Create menu: menuGame
+        menuBar.add(menuGame);
+        // Add menuItems to MenuGame
+        menuGame.add(restartBoard);
+        menuGame.add(quitGame);
+        
+        
+        // set the MenuBar
+        setJMenuBar(menuBar);
+
     }
     
     /**
@@ -152,10 +171,17 @@ public class PingballGUI extends JFrame implements KeyListener {
         openFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO:
+                int returnVal = fc.showOpenDialog(PingballGUI.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File boardFile = fc.getSelectedFile();
+                    System.out.println("I found the board file");
+                    // TODO: Connect this with the parser to read the board and then 
+                    //      draw it in the boardDrawing panel. 
+                } else {
+                    System.out.println("Aww");
+                }
             }
         });
-        menu.add(openFile);
 
         connect.addActionListener(new ActionListener() {
             @Override
@@ -203,7 +229,6 @@ public class PingballGUI extends JFrame implements KeyListener {
                 //TODO: restart initial Board 
             }
         });
-        menu.add(restartBoard);
 
         quitGame.addActionListener(new ActionListener() {
             @Override
@@ -212,7 +237,6 @@ public class PingballGUI extends JFrame implements KeyListener {
               
             }
         });
-        menu.add(quitGame);
     }
     
     //constructor: loard from String board path
