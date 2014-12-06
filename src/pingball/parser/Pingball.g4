@@ -117,6 +117,31 @@ INTEGER
 	: [0-9]+
 	;
 */
+
+KEY
+	: [a-z] 
+    | [0-9]
+    | 'shift' | 'ctrl' | 'alt' | 'meta'
+    | 'space'
+    | 'left' | 'right' | 'up' | 'down'
+    | 'minus' | 'equals' | 'backspace'
+    | 'openbracket' | 'closebracket' | 'backslash'
+    | 'semicolon' | 'quote' | 'enter'
+    | 'comma' | 'period' | 'slash'
+    ;
+    
+KEYUP
+	: 'keyup'
+	;
+	
+KEYDOWN
+	: 'keydown'
+	;
+	
+KEY_LITERAL
+	: 'key'
+	;
+
 NAME
 	: [A-Za-z_][A-Za-z_0-9]*
 	;
@@ -136,7 +161,7 @@ EQUALS
 // Parser rules
 
 boardFile
-	: boardDef (ballDef | gadgetDef | fireDef)*
+	: boardDef (ballDef | gadgetDef | fireDef | keyDef)*
 	;
 
 boardDef
@@ -152,8 +177,11 @@ gadgetDef
 	;
 	
 fireDef
-	: FIRE TRIGGER EQUALS NAME ACTION EQUALS NAME 
+	: FIRE TRIGGER EQUALS NAME ACTION EQUALS NAME
 	;
+
+keyDef
+	: KEYUP | KEYDOWN KEY_LITERAL EQUALS KEY ACTION EQUALS NAME
 
 squareBumperDef
 	: SQUARE_BUMPER (NAME_LITERAL EQUALS NAME)? X EQUALS FLOAT Y EQUALS FLOAT 
