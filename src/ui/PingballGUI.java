@@ -1,6 +1,5 @@
 package ui;
 
-<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -177,45 +176,16 @@ public class PingballGUI extends JPanel implements KeyListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // Paints the components
-        g2d.setColor(Color.black);
-        for (ColoredShape coloredShape : shapes) {
-            g2d.setColor(coloredShape.getColor());
-            g2d.draw(coloredShape.getShape());
-            g2d.fill(coloredShape.getShape());
-        }
-
+        
         // Draws the names of the board this is connected to
         FontMetrics fm = g2d.getFontMetrics();
-        double expectedHeight = getHeight() / 21 / 2 - 1;
-        double scale = expectedHeight / fm.getHeight();
-        AffineTransform atx = AffineTransform.getScaleInstance(scale, scale);
-        Font scaledFont = g2d.getFont().deriveFont(atx);
-        g2d.setFont(scaledFont);
-        fm = g2d.getFontMetrics();
+        //height, scale
+
 
         // Top / bottom
-        for (int i = 0; i < Math.min(2, wallNames.size()); i++) {
-            String wallName = wallNames.get(i);
-            float width = fm.stringWidth(wallName);
-            float x = (getWidth() - width) / 2;
-            float y = (i == 0) ? fm.getHeight() : getHeight();
-            g2d.drawString(wallName, x, y);
+
         }
         // Left / right
-        for (int i = 2; i < Math.min(4, wallNames.size()); i++) {
-            Font origFont = g2d.getFont();
-            String wallName = wallNames.get(i);
-            float width = fm.stringWidth(wallName);
-            float x = (i == 2) ? fm.getHeight() : getWidth() - fm.getHeight();
-            float y = getHeight() / 2.0f + 0.5f * ((i == 2) ? width : -width);
-            if (i == 2)
-                g2d.setFont(origFont.deriveFont(AffineTransform.getRotateInstance(-Math.PI / 2)));
-            else
-                g2d.setFont(origFont.deriveFont(AffineTransform.getRotateInstance(Math.PI / 2)));
-            g2d.drawString(wallName, x, y);
-            g2d.setFont(origFont);
-        }
-    }
 
     private ActionListener boardRedrawer() {
         return new ActionListener() {
