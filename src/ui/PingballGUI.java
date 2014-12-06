@@ -16,28 +16,21 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.StringReader;
-import java.net.Socket;
+
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Queue;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+import java.util.Queue;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+//import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import pingball.Pingball;
