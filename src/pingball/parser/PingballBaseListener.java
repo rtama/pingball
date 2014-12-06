@@ -4,8 +4,9 @@ package pingball.parser;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.antlr.v4.runtime.tree.ErrorNode;
 
 public class PingballBaseListener implements PingballListener {
 	@Override public void enterAbsorberDef(PingballParser.AbsorberDefContext ctx) { }
@@ -28,6 +29,9 @@ public class PingballBaseListener implements PingballListener {
 
 	@Override public void enterGadgetDef(PingballParser.GadgetDefContext ctx) { }
 	@Override public void exitGadgetDef(PingballParser.GadgetDefContext ctx) { }
+
+	@Override public void enterKeyDef(PingballParser.KeyDefContext ctx) { }
+	@Override public void exitKeyDef(PingballParser.KeyDefContext ctx) { }
 
 	@Override public void enterPortalDef(PingballParser.PortalDefContext ctx) { }
 	@Override public void exitPortalDef(PingballParser.PortalDefContext ctx) { }

@@ -2,7 +2,8 @@
 
 package pingball.parser;
 
-import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.Token;
 
 public interface PingballListener extends ParseTreeListener {
 	void enterAbsorberDef(PingballParser.AbsorberDefContext ctx);
@@ -25,6 +26,9 @@ public interface PingballListener extends ParseTreeListener {
 
 	void enterGadgetDef(PingballParser.GadgetDefContext ctx);
 	void exitGadgetDef(PingballParser.GadgetDefContext ctx);
+
+	void enterKeyDef(PingballParser.KeyDefContext ctx);
+	void exitKeyDef(PingballParser.KeyDefContext ctx);
 
 	void enterPortalDef(PingballParser.PortalDefContext ctx);
 	void exitPortalDef(PingballParser.PortalDefContext ctx);
