@@ -18,6 +18,10 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 
+/**
+ * TODO: spec
+ *
+ */
 public class PingballGUI extends JFrame{
     
     private static final long serialVersionUID = 1L; // required by Serializable
@@ -35,8 +39,12 @@ public class PingballGUI extends JFrame{
     private final JLabel portLabel;
     private final Canvas boardDisplay;
     
+    private Pingball pingball;
     
-    //No parameters. No board or server connection
+    /**
+     * Creates a GUI with a blank board, not connected to any server. The user can choose to
+     * load a board from a file and connect to a server.
+     */
     public PingballGUI() {
         loadBoard = new JButton("Load Board");
         connect = new JButton("Connect");
@@ -52,40 +60,11 @@ public class PingballGUI extends JFrame{
         boardDisplay = new Canvas();
     }
     
-    //Takes in a Pingball object
+    /**
+     * Creates a GUI with the specified board. May or may not be connected to a server.
+     * @param client: a pingball game to display in the GUI
+     */
     public PingballGUI(Pingball client) {
-        loadBoard = new JButton("Load Board");
-        connect = new JButton("Connect");
-        disconnect = new JButton("Disconnect");
-        restart = new JButton("Restart");
-        quit = new JButton("Quit");
-        pause = new JButton("Pause");
-        boardFile = new JTextField();
-        hostText = new JTextField();
-        portText = new JTextField();
-        hostLabel = new JLabel("Host");
-        portLabel = new JLabel("Label");
-        boardDisplay = new Canvas();
-    }
-    
-    // Constructor using host, port, and file. 
-    public PingballGUI(String host, String port, File file) {
-        loadBoard = new JButton("Load Board");
-        connect = new JButton("Connect");
-        disconnect = new JButton("Disconnect");
-        restart = new JButton("Restart");
-        quit = new JButton("Quit");
-        pause = new JButton("Pause");
-        boardFile = new JTextField();
-        hostText = new JTextField();
-        portText = new JTextField();
-        hostLabel = new JLabel("Host");
-        portLabel = new JLabel("Label");
-        boardDisplay = new Canvas();
-    }
-    
-    // Construct using file.
-    public PingballGUI(File file) {
         loadBoard = new JButton("Load Board");
         connect = new JButton("Connect");
         disconnect = new JButton("Disconnect");
