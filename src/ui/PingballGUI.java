@@ -54,6 +54,19 @@ public class PingballGUI extends JPanel implements KeyListener {
     private Timer boardTimer;
     private boolean isPaused;
 
+    
+    /**
+     * Creates a GUI with the specified board. May or may not be connected to a server.
+     * @param client: a pingball game to display in the GUI
+     */
+    public PingballGUI(Pingball client) {
+
+    }
+    
+    /**
+     * Creates a GUI with a blank board, not connected to any server. The user can choose to
+     * load a board from a file and connect to a server.
+     */
     public PingballGUI() {
     	//shapes
     	//wallNames
