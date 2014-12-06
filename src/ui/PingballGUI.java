@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,6 +23,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -38,15 +41,9 @@ import pingball.Pingball;
 import ui.KeyNames;
 
    
-public class PingballGUI extends JPanel implements KeyListener {
+public class PingballGUI extends JFrame implements KeyListener {
 
-    private static final long serialVersionUID = 1L;
-    private static final Color backgroundColor = Color.white;
-    private static final int timeStepMillis = 20;
-    private static final int WIDTH = 800, HEIGHT = 800;
-    private static final double wallSize = 0.5;
-    private static final double boardSize = 20 + wallSize * 2;
-    private final JFrame frame = new JFrame();
+    private static final long serialVersionUID = 1L; // required by Serializable
 
    // private final CopyOnWriteArrayList<String> wallNames;
     private Pingball client;
@@ -54,14 +51,20 @@ public class PingballGUI extends JPanel implements KeyListener {
     private Timer boardTimer;
     private boolean isPaused;
     
-    // JMenu objects
+    // GUI Buttons
+    private final JButton connect = new JButton("Connect");
+    private final JButton disconnect = new JButton("Disconnect");
+    private final JButton pause = new JButton("Pause");
+    private final JTextField hostText = new JTextField();
+    private final JTextField portText = new JTextField();
+    private final JLabel hostLabel = new JLabel("Host:");
+    private final JLabel portLabel = new JLabel("Label:");
+    private final JPanel boardDisplay = new JPanel();
+   
+    // JMenu objects 
     JMenuBar menuBar = new JMenuBar();
     JMenu menu = new JMenu("Menu");
     final JMenuItem openFile = new JMenuItem("Open board");
-    final JMenuItem connectToServer = new JMenuItem("Connect to server");
-    final JMenuItem disconnectFromServer = new JMenuItem("Disconnect from server");
-    final JMenuItem pauseGame = new JMenuItem("Pause game");
-    final JMenuItem resumeGame = new JMenuItem("Resume game");
     final JMenuItem restartBoard = new JMenuItem("Restart board");
     final JMenuItem quitGame = new JMenuItem("Quit game");
     
@@ -73,7 +76,7 @@ public class PingballGUI extends JPanel implements KeyListener {
         // set menu bar
         menuBar.add(menu);
         
-        addListeners();
+        //addListeners();
     }
     
     /**
@@ -81,35 +84,62 @@ public class PingballGUI extends JPanel implements KeyListener {
      * load a board from a file and connect to a server.
      */
     public PingballGUI() {
-    	//shapes
-    	//wallNames
-    	//client
-    	//initialStateString
-    	//etc
-    
     	
         //set menu bar
         menuBar.add(menu);
         //Set window
         
-        addListeners();
+        createLayout();
+        //addListeners();
     }
     
     /**
      * Creates the layout of the GUI content pane
      */
     private void createLayout() {
-        GroupLayout layout = new GroupLayout(frame.getContentPane());
-        frame.getContentPane().setLayout(layout);
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(hostLabel)
+                            .addComponent(hostText)
+                            .addComponent(portLabel)
+                            .addComponent(portText))
+                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(connect)
+                            .addComponent(disconnect))
+                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(boardDisplay))
+                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(pause))
+                );
         
-        
-        
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(hostLabel)
+                            .addComponent(hostText)
+                            .addComponent(portLabel)
+                            .addComponent(portText))
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(connect)
+                            .addComponent(disconnect))
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)                            
+                            .addComponent(boardDisplay))
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(pause))
+                );
+        setTitle("Pingball Game");
+        pack();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
     
+    /*
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
             @Override
@@ -189,27 +219,7 @@ public class PingballGUI extends JPanel implements KeyListener {
     
     //constructor: loard from String board path
 
-    @Override
-    public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        // Set background to the background color.
-        g2d.setColor(backgroundColor);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
 
-        // Set antialiasing hints
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Paints the components
-        
-        // Draws the names of the board this is connected to
-        FontMetrics fm = g2d.getFontMetrics();
-        //height, scale
-
-
-        // Top / bottom
-
-        }
-        // Left / right
 
     private ActionListener boardRedrawer() {
         return new ActionListener() {
@@ -221,6 +231,7 @@ public class PingballGUI extends JPanel implements KeyListener {
         };
     }
 
+*/
     /**
      * Load a board from a file
      * @param file The file to load the board from
@@ -297,6 +308,14 @@ public class PingballGUI extends JPanel implements KeyListener {
         String hn = "";
         String fp = "";
         // parse arguments
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                PingballGUI main = new PingballGUI();
+                main.setVisible(true);
+            }
+        });
+        
     }
 
 
