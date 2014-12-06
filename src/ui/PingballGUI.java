@@ -16,6 +16,8 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 
+import pingball.Pingball;
+
 public class PingballGUI extends JFrame{
     
     private static final long serialVersionUID = 1L; // required by Serializable
@@ -32,6 +34,8 @@ public class PingballGUI extends JFrame{
     private final JLabel hostLabel;
     private final JLabel portLabel;
     private final Canvas boardDisplay;
+   
+    private final Pingball pingball;
     
     
     //No parameters. No board or server connection
