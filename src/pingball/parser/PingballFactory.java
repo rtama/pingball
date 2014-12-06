@@ -461,27 +461,10 @@ public class PingballFactory extends PingballBaseListener {
      */
     public Board getBoard() throws IOException{ 
         if (badBoard) throw new IOException(); 
-        //System.out.println(board.toString()); 
+        //System.out.println(board.toString());
+        this.board.assignKeydowns(keydowns);
+        this.board.assignKeyups(keyups);
         return this.board; 
     }
     
-    /**
-     * 
-     * @return the dictionary of keys and the gadgets they trigger when the keys are released
-     */
-    public Map<String, ArrayList<String>> getKeyups() {
-        // Defensive copying
-        Map<String, ArrayList<String>> copy = new HashMap<String, ArrayList<String>>(keyups);
-        return copy;        
-    }
-    
-    /**
-     * 
-     * @return the dictionary of keys and the gadgets they trigger when the keys are pressed
-     */
-    public Map<String, ArrayList<String>> getKeydowns() {
-        // Defensive copying
-        Map<String, ArrayList<String>> copy = new HashMap<String, ArrayList<String>>(keydowns);
-        return copy;        
-    }
 }
