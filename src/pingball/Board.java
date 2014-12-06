@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 /**
@@ -59,6 +61,10 @@ public class Board {
 
     private Socket socket;
     private PrintWriter out;
+    
+    private Map<String, ArrayList<String>> keyups;
+    private Map<String, ArrayList<String>> keydowns;
+
     
     //the board constructors without names are here for testing purposes
     /**
@@ -484,6 +490,58 @@ public class Board {
         
         for (Ball ball : balls) {
             g2.draw(new Ellipse2D.Double((ball.getXPos()-ball.getCircle().getRadius())*LPixelLength,(ball.getYPos()-ball.getCircle().getRadius())*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength));
+        }
+    }
+    
+    /**
+     * Assign keyup dictionary to this board.
+     * @param keys dictionary of keys and the gadgets they trigger upon key release
+     */
+    public void assignKeyups(Map<String, ArrayList<String>> keys) {
+        // Defensive copying
+        Map<String, ArrayList<String>> copy = new HashMap<String, ArrayList<String>>(keys);
+        this.keyups = copy;
+    }
+    
+    /**
+     * Assign keydown dictionary to this board.
+     * @param keys dictionary of keys and the gadgets they trigger upon key press
+     */
+    public void assignKeydowns(Map<String, ArrayList<String>> keys) {
+        // Defensive copying
+        Map<String, ArrayList<String>> copy = new HashMap<String, ArrayList<String>>(keys);
+        this.keyups = copy;
+    }
+    
+    /**
+     * Respond to a key that was pressed with the action of every gadget triggered by that key press
+     * @param key that was pressed
+     */
+    public void keyPressed(String key) {
+        for (String gadgetName : keydowns.get(key)) {
+            this.activate(gadgetName);
+        }
+    }
+    
+    /**
+     * Respond to a key that was released with the action of every gadget triggered by that key release
+     * @param key that was released
+     */
+    public void keyReleased(String key) {
+        for (String gadgetName : keyups.get(key)) {
+            this.activate(gadgetName);
+        }
+    }
+    
+    /**
+     * Activate the specified gadget on this board (if it exists).
+     * @param gadgetName name of gadget to activate
+     */
+    private void activate(String gadgetName) {
+        for (Gadget gadget : gadgets) {
+            if (gadget.name.equals(gadgetName)) {
+                gadget.action();
+            }
         }
     }
     

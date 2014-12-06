@@ -35,6 +35,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import pingball.Pingball;
+import ui.KeyNames;
 
    
 public class PingballGUI extends JPanel implements KeyListener {
@@ -278,12 +279,14 @@ public class PingballGUI extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        String key = KeyNames.keyToString(e);
+        this.client.keyPressed(key);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        String key = KeyNames.keyToString(e);
+        this.client.keyReleased(key);
     }
 
     public static void main(final String[] args) {

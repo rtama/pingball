@@ -120,6 +120,21 @@ public class Pingball {
 //        board.addGadget(abs);
     }
     
+    /**
+     * Respond to a key that was pressed with the action of every gadget triggered by that key press
+     * @param key that was pressed
+     */
+    public void keyPressed(String key) {
+        this.board.keyPressed(key);
+    }
+    
+    /**
+     * Respond to a key that was released with the action of every gadget triggered by that key release
+     * @param key that was released
+     */
+    public void keyReleased(String key) {
+        this.board.keyReleased(key);
+    }
     
     /**
      * Main game loop that plays pingball

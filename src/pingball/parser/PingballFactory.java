@@ -4,12 +4,14 @@ package pingball.parser;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 import pingball.Absorber;
 import pingball.Ball;
@@ -22,6 +24,10 @@ import pingball.RightFlipper;
 import pingball.SquareBumper;
 import pingball.TriangleBumper;
 
+/**
+ * TODO: spec
+ *
+ */
 public class PingballFactory extends PingballBaseListener {
     
     private final String GRAVITY = "gravity"; 
@@ -39,17 +45,25 @@ public class PingballFactory extends PingballBaseListener {
     private final String TRIGGER = "trigger";
     private final String ACTION = "action";
     private final String OTHER_BOARD = "otherBoard"; 
-    private final String TARGET_PORTAL = "otherPortal"; 
+    private final String TARGET_PORTAL = "otherPortal";
+    private final String KEYUP = "keyup";
+    private final String KEYDOWN = "keydown";
     
+    private final int SHIFT = 2;    // This is used when getting the value assigned to a variable.
+                                    // For instance, in the definition 'x=1', the value, 1, is 
+                                    // 2 indices to the right of the index of 'x'.
     private final Double UNIT_CONVERSION = .000001;
-        
-    /**
-     * Constructor
-     */
-    Board board;
+    
+    private Board board;
     private boolean badBoard = false; 
     private Socket socket=null;
-   
+    private Map<String, ArrayList<String>> keyups = new HashMap<String, ArrayList<String>>();
+    private Map<String, ArrayList<String>> keydowns = new HashMap<String, ArrayList<String>>();
+        
+    /**
+     * TODO add detail
+     * Constructor 
+     */   
     public PingballFactory() {    }
     
     public PingballFactory(Socket socket) {
@@ -57,8 +71,49 @@ public class PingballFactory extends PingballBaseListener {
     }
     
     
+    @Override public void enterKeyDef(PingballParser.KeyDefContext ctx) {
+        //System.out.print( ctx.children ); 
+        String keyUp = "";
+        String keyDown = "";
+        String action = "";
+        
+        List<ParseTree> children = ctx.children; 
+        for (int i = 0; i < ctx.getChildCount(); i++){ 
+                    
+            if (children.get(i).toString().contains(KEYUP)) {
+                keyUp = children.get(i+SHIFT).getText(); 
+            }
+            
+            else if (children.get(i).toString().contains(KEYDOWN)) {
+                keyDown = children.get(i+SHIFT).getText(); 
+            }
+            
+            else if (children.get(i).toString().contains(ACTION)) {
+                action = children.get(i+SHIFT).getText(); 
+            }
+                                
+        }
+        if (action.equals("")) {
+            return;
+        }
+        if (!keyUp.equals("")) {
+            if (keyups.containsKey(keyUp)) {
+                keyups.get(keyUp).add(action);
+            }else {
+                keyups.put(keyUp, new ArrayList<String>(Arrays.asList(action)));
+            }
+            
+        }else if (!keyDown.equals("")) {
+            if (keydowns.containsKey(keyDown)) {
+                keydowns.get(keyDown).add(action);
+            }else {
+                keydowns.put(keyDown, new ArrayList<String>(Arrays.asList(action)));
+            }
+        }
+    }
+    
     @Override public void enterAbsorberDef(PingballParser.AbsorberDefContext ctx) {
-//      System.out.println("Creating new abosrber:");
+//      System.out.println("Creating new absorber:");
 //      System.out.println(ctx.getText()); 
 //      System.out.println(ctx.children); 
         
@@ -73,23 +128,23 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
                     
             if (children.get(i).toString().contains(X)) {
-                x = Integer.parseInt(children.get(i+2).getText()); //Skip equals sign and go to next value
+                x = Integer.parseInt(children.get(i+SHIFT).getText()); //Skip equals sign and go to next value
             }
             
             else if (children.get(i).toString().contains(Y)) {
-                y = Integer.parseInt(children.get(i+2).getText()); 
+                y = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(WIDTH)) {
-                width = Integer.parseInt(children.get(i+2).getText()); 
+                width = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(HEIGHT)) {
-                height = Integer.parseInt(children.get(i+2).getText()); 
+                height = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }    
             
             else if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
             
         }
@@ -97,7 +152,6 @@ public class PingballFactory extends PingballBaseListener {
         Gadget absorber = new Absorber(name,x,y,width,height );
         board.addGadget(absorber);
     }
-    @Override public void exitAbsorberDef(PingballParser.AbsorberDefContext ctx) { }
 
     @Override public void enterFireDef(PingballParser.FireDefContext ctx) {
        //System.out.print( ctx.children ); 
@@ -109,17 +163,16 @@ public class PingballFactory extends PingballBaseListener {
        for (int i = 0; i < ctx.getChildCount(); i++){ 
                    
            if (children.get(i).toString().contains(TRIGGER)) {
-               trigger = children.get(i+2).getText(); 
+               trigger = children.get(i+SHIFT).getText(); 
            }
            
            else if (children.get(i).toString().contains(ACTION)) {
-               action = children.get(i+2).getText(); 
+               action = children.get(i+SHIFT).getText(); 
            }
                                
        }
        board.addTrigger(trigger, action);
     }
-    @Override public void exitFireDef(PingballParser.FireDefContext ctx) { }
 
     @Override public void enterTriangleBumperDef(PingballParser.TriangleBumperDefContext ctx) { 
         int x = 0; 
@@ -132,19 +185,19 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
                     
             if (children.get(i).toString().contains(X)) {
-                x = Integer.parseInt(children.get(i+2).getText()); 
+                x = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(Y)) {
-                y = Integer.parseInt(children.get(i+2).getText()); 
+                y = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(ORIENTATION)) {
-                orientation = Integer.parseInt(children.get(i+2).getText()); 
+                orientation = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
                        
         }
@@ -152,8 +205,6 @@ public class PingballFactory extends PingballBaseListener {
         Gadget triangleBumper = new TriangleBumper(name, x,y,orientation); 
         board.addGadget(triangleBumper); 
 
-    }
-    @Override public void exitTriangleBumperDef(PingballParser.TriangleBumperDefContext ctx) {     
     }
 
     @Override public void enterSquareBumperDef(PingballParser.SquareBumperDefContext ctx) {
@@ -166,15 +217,15 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
                     
             if (children.get(i).toString().contains(X)) {
-                x = Integer.parseInt(children.get(i+2).getText()); 
+                x = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(Y)) {
-                y = Integer.parseInt(children.get(i+2).getText()); 
+                y = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
             
         }
@@ -182,7 +233,6 @@ public class PingballFactory extends PingballBaseListener {
         Gadget squareBumper = new SquareBumper(name, x, y); 
         board.addGadget(squareBumper);
     }
-    @Override public void exitSquareBumperDef(PingballParser.SquareBumperDefContext ctx) { }
 
     @Override public void enterCircleBumperDef(PingballParser.CircleBumperDefContext ctx) { 
         int x = 0; 
@@ -194,15 +244,15 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
                     
             if (children.get(i).toString().contains(X)) {
-                x = Integer.parseInt(children.get(i+2).getText()); 
+                x = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(Y)) {
-                y = Integer.parseInt(children.get(i+2).getText()); 
+                y = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
              
         }
@@ -211,7 +261,6 @@ public class PingballFactory extends PingballBaseListener {
         board.addGadget(circleBumper);
         
     }
-    @Override public void exitCircleBumperDef(PingballParser.CircleBumperDefContext ctx) { }
 
     @Override public void enterBallDef(PingballParser.BallDefContext ctx) {
         System.out.println(ctx.children);
@@ -225,32 +274,32 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
 
             if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
                 System.out.println("name:" + name); 
             } 
                      
 
             
             else if (children.get(i).toString().contains(X_VELOCITY)) {
-                xVelocity = Double.parseDouble(children.get(i+2).getText()); 
+                xVelocity = Double.parseDouble(children.get(i+SHIFT).getText()); 
                 System.out.println("xVel:" + x); 
 
             }
             
             else if (children.get(i).toString().contains(Y_VELOCITY)) {
-                yVelocity = Double.parseDouble(children.get(i+2).getText()); 
+                yVelocity = Double.parseDouble(children.get(i+SHIFT).getText()); 
                 System.out.println("yVel:" + y); 
 
 
             }    
             else if (children.get(i).toString().contains(X)) {
-                x = Double.parseDouble(children.get(i+2).getText()); 
+                x = Double.parseDouble(children.get(i+SHIFT).getText()); 
                 System.out.println("x:" + x); 
 
             }
             
             else if (children.get(i).toString().contains(Y)) {
-                y = Double.parseDouble(children.get(i+2).getText());
+                y = Double.parseDouble(children.get(i+SHIFT).getText());
                 System.out.println("y:" + y); 
 
             }
@@ -261,13 +310,6 @@ public class PingballFactory extends PingballBaseListener {
         
         
     }
-    @Override public void exitBallDef(PingballParser.BallDefContext ctx) { }
-
-    @Override public void enterGadgetDef(PingballParser.GadgetDefContext ctx) { }
-    @Override public void exitGadgetDef(PingballParser.GadgetDefContext ctx) { }
-
-    @Override public void enterBoardFile(PingballParser.BoardFileContext ctx) {}
-    @Override public void exitBoardFile(PingballParser.BoardFileContext ctx) { }
 
     @Override public void enterBoardDef(PingballParser.BoardDefContext ctx) {
 
@@ -282,19 +324,19 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
 
             if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
                      
             else if (children.get(i).toString().contains(GRAVITY)) {
-                gravity = Double.parseDouble(children.get(i+2).getText()) * UNIT_CONVERSION; 
+                gravity = Double.parseDouble(children.get(i+SHIFT).getText()) * UNIT_CONVERSION; 
             }
             
             else if (children.get(i).toString().contains(FRICTION1)) {
-                mu1 = Double.parseDouble(children.get(i+2).getText()) * UNIT_CONVERSION; 
+                mu1 = Double.parseDouble(children.get(i+SHIFT).getText()) * UNIT_CONVERSION; 
             }
             
             else if (children.get(i).toString().contains(FRICTION2)) {
-                mu2 = Double.parseDouble(children.get(i+2).getText()) * UNIT_CONVERSION; 
+                mu2 = Double.parseDouble(children.get(i+SHIFT).getText()) * UNIT_CONVERSION; 
             }
              
         }
@@ -310,7 +352,6 @@ public class PingballFactory extends PingballBaseListener {
         }
 
     }
-    @Override public void exitBoardDef(PingballParser.BoardDefContext ctx) { }
 
     @Override public void enterFlipperDef(PingballParser.FlipperDefContext ctx) {
 
@@ -324,15 +365,15 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
             
             if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
             
             else if (children.get(i).toString().contains(X)) {
-                x = Integer.parseInt(children.get(i+2).getText()); 
+                x = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(Y)) {
-                y= Integer.parseInt(children.get(i+2).getText()); 
+                y= Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().contains(LEFT_FLIPPER)) {
@@ -340,7 +381,7 @@ public class PingballFactory extends PingballBaseListener {
             }
             
             else if (children.get(i).toString().contains(ORIENTATION)) { 
-                orientation = Integer.parseInt(children.get(i+2).getText()); 
+                orientation = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
              
         }
@@ -371,27 +412,27 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
             
             if (children.get(i).toString().contains(NAME_LITERAL)) {
-                name = children.get(i+2).getText(); 
+                name = children.get(i+SHIFT).getText(); 
             } 
             
             else if (children.get(i).toString().contains(X)) {
-                x = Integer.parseInt(children.get(i+2).getText()); 
+                x = Integer.parseInt(children.get(i+SHIFT).getText()); 
             }
             
             else if (children.get(i).toString().equals(Y)) {
-                System.out.println("Portal parsing "+ children.get(i+2).getText());
-                y= Integer.parseInt(children.get(i+2).getText()); 
-                System.out.println("Portal parsing complte: "+ children.get(i+2).getText());
+                System.out.println("Portal parsing "+ children.get(i+SHIFT).getText());
+                y= Integer.parseInt(children.get(i+SHIFT).getText()); 
+                System.out.println("Portal parsing complte: "+ children.get(i+SHIFT).getText());
 
             }
             
             else if (children.get(i).toString().contains(TARGET_PORTAL)) {
-                targetPortal = children.get(i+2).getText(); 
+                targetPortal = children.get(i+SHIFT).getText(); 
                 
             }
          
             else if (children.get(i).toString().contains(OTHER_BOARD)) { 
-                otherBoard = children.get(i+2).getText(); 
+                otherBoard = children.get(i+SHIFT).getText(); 
                 inOtherBoard = true; 
             }
              
@@ -406,12 +447,7 @@ public class PingballFactory extends PingballBaseListener {
         }
         board.addPortal(portal); 
     }
-    @Override public void exitPortalDef(PingballParser.PortalDefContext ctx) { }
-    
-    @Override public void exitFlipperDef(PingballParser.FlipperDefContext ctx) { }
-    @Override public void enterEveryRule(ParserRuleContext ctx) { }
-    @Override public void exitEveryRule(ParserRuleContext ctx) { }
-    @Override public void visitTerminal(TerminalNode node) { }
+
     @Override public void visitErrorNode(ErrorNode node) {
   
          //throw new IOException();
@@ -425,7 +461,10 @@ public class PingballFactory extends PingballBaseListener {
      */
     public Board getBoard() throws IOException{ 
         if (badBoard) throw new IOException(); 
-        //System.out.println(board.toString()); 
+        //System.out.println(board.toString());
+        this.board.assignKeydowns(keydowns);
+        this.board.assignKeyups(keyups);
         return this.board; 
     }
+    
 }
