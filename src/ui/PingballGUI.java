@@ -16,21 +16,18 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.net.UnknownHostException;
-
 import java.util.Arrays;
 import java.util.LinkedList;
-
 import java.util.Queue;
 
+import javax.swing.GroupLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +45,7 @@ public class PingballGUI extends JPanel implements KeyListener {
     private static final int WIDTH = 800, HEIGHT = 800;
     private static final double wallSize = 0.5;
     private static final double boardSize = 20 + wallSize * 2;
+    private final JFrame frame = new JFrame();
 
    // private final CopyOnWriteArrayList<String> wallNames;
     private Pingball client;
@@ -71,7 +69,10 @@ public class PingballGUI extends JPanel implements KeyListener {
      * @param client: a pingball game to display in the GUI
      */
     public PingballGUI(Pingball client) {
-
+        // set menu bar
+        menuBar.add(menu);
+        
+        addListeners();
     }
     
     /**
@@ -97,6 +98,14 @@ public class PingballGUI extends JPanel implements KeyListener {
      * Creates the layout of the GUI content pane
      */
     private void createLayout() {
+        GroupLayout layout = new GroupLayout(frame.getContentPane());
+        frame.getContentPane().setLayout(layout);
+        
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
+        
+        
         
     }
     
