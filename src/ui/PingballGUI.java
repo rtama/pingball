@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +44,6 @@ import ui.KeyNames;
 
    /**
     * TODO: specs
-    *
     */
 public class PingballGUI extends JFrame implements KeyListener {
     private static final long serialVersionUID = 1L; // required by Serializable
@@ -54,23 +54,21 @@ public class PingballGUI extends JFrame implements KeyListener {
     private Timer boardTimer;
     private boolean isPaused;
     
-    // GUI Buttons
-    private final JButton connect = new JButton("Connect");
-    private final JButton disconnect = new JButton("Disconnect");
-    private final JButton pause = new JButton("Pause");
-    private final JTextField hostText = new JTextField();
-    private final JTextField portText = new JTextField();
-    private final JLabel hostLabel = new JLabel("Host:");
-    private final JLabel portLabel = new JLabel("Label:");
     private final JPanel boardDisplay = new JPanel();
    
     // JMenu objects 
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenu menuGame = new JMenu("Game");
+    private final JMenu menuHelp = new JMenu("Help");
+    private final JMenu menuConnection = new JMenu("Connection");
     private final JMenuItem openFile = new JMenuItem("Open board");
     private final JMenuItem restartBoard = new JMenuItem("Restart board");
     private final JMenuItem quitGame = new JMenuItem("Quit game");
+    private final JMenuItem controls = new JMenuItem("Controls");
+    private final JMenuItem pause = new JMenuItem("Pause");
+    private final JMenuItem connect = new JMenuItem("Connect");
+    private final JMenuItem disconnect = new JMenuItem("Disconnect");
     private final JFileChooser fc = new JFileChooser();
     
     /**
@@ -99,17 +97,27 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Sets the menuBar layout.
      */
     private void setMenuBar() {
-        // Create menu: menuFile
+        
+        // Add all menus to the MenuBar
         menuBar.add(menuFile);
+        menuBar.add(menuGame);
+        menuBar.add(menuConnection);
+        menuBar.add(menuHelp);
+
         // Add menuItems to menuFile
         menuFile.add(openFile);
         
-        // Create menu: menuGame
-        menuBar.add(menuGame);
         // Add menuItems to MenuGame
         menuGame.add(restartBoard);
         menuGame.add(quitGame);
+        menuGame.add(pause);
         
+        // Add menuItems to menuConnection
+        menuConnection.add(connect);
+        menuConnection.add(disconnect);
+        
+        // Add menuItems to MenuHelp
+        menuHelp.add(controls);
         
         // set the MenuBar
         setJMenuBar(menuBar);
@@ -126,37 +134,19 @@ public class PingballGUI extends JFrame implements KeyListener {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         
+        
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                    .addGroup(layout.createSequentialGroup()
-                            .addComponent(hostLabel)
-                            .addComponent(hostText)
-                            .addComponent(portLabel)
-                            .addComponent(portText))
-                    .addGroup(layout.createSequentialGroup()
-                            .addComponent(connect)
-                            .addComponent(disconnect))
+                layout.createParallelGroup()
                     .addGroup(layout.createSequentialGroup()
                             .addComponent(boardDisplay))
-                    .addGroup(layout.createSequentialGroup()
-                            .addComponent(pause))
                 );
         
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(hostLabel)
-                            .addComponent(hostText)
-                            .addComponent(portLabel)
-                            .addComponent(portText))
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(connect)
-                            .addComponent(disconnect))
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)                            
                             .addComponent(boardDisplay))
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(pause))
                 );
+        
         setTitle("Pingball Game");
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -192,7 +182,7 @@ public class PingballGUI extends JFrame implements KeyListener {
                 //create server name for x,y values
                 Object[] message = { "Server name:", serverName, "Port number:", portNumber };
                 int result = JOptionPane.showConfirmDialog(null, message,
-                        "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+                        "Hostname and port", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     try {
                         String host = serverName.getText();
@@ -233,8 +223,17 @@ public class PingballGUI extends JFrame implements KeyListener {
         quitGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TOD: quite game
+                //TODO: quit game
               
+            }
+        });
+        
+        controls.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: add actual controls!
+                JOptionPane.showMessageDialog(PingballGUI.this,"Here are the controls",
+                        "Controls", JOptionPane.PLAIN_MESSAGE);
             }
         });
     }
