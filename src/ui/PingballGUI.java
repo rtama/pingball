@@ -166,8 +166,19 @@ public class PingballGUI extends JFrame implements KeyListener {
                     File boardFile = fc.getSelectedFile();
                     String fileName = boardFile.getPath();
                     System.out.println("I found the board file: " + fileName);
-                    // TODO: Connect this with the parser to read the board and then 
-                    //      draw it in the boardDrawing panel. 
+                    Thread handler = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                client = new Pingball(fileName);
+                                client.gameLoop();
+                            } catch (IOException | InterruptedException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }                                                    
+                        }
+                    });
+                    handler.start();
                 } else {
                     System.out.println("Aww");
                 }
@@ -227,7 +238,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         restartBoard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: restart initial Board 
+                restartInitialBoard();
             }
         });
         
