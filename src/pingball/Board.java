@@ -545,6 +545,21 @@ public class Board {
         }
     }
     
+    /**
+     * Reassigns this board's socket to newSocket
+     * @param newSocket
+     */
+    public void changeSocket(Socket newSocket) {
+        this.socket = newSocket;
+    }
+    
+    /**
+     * Disconnects this board from the server.
+     */
+    public void disconnect() {
+        this.singlePlayerMode = true;
+    }
+    
     // The following methods are used for testing.
     
     /**

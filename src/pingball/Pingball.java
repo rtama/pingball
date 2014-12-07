@@ -41,20 +41,24 @@ public class Pingball {
     
     /** Default server port. */
     private static final int DEFAULT_PORT = 10987;
+    private static final String defaultBoardName = "default";
     
     private long fieldTime;
     private final long MILLISECS_PER_FRAME = 100; // Formula: 1000 / MILLLISECS_PER_FRAME = FPS
     //create the board
-    private final Board board;
+    private Board board;
     private Socket clientSocket;
+    
+    private final String fileName;
     
     /**
      * Creates a pingball client in single player mode
      * @param board pingball board that the game will be played on
      */
     public Pingball() {
-        this.board = new Board("default",.000025, .025, .000025);
+        this.board = new Board(defaultBoardName,.000025, .025, .000025);
         this.board.setSinglePlayerMode(true);
+        this.fileName = defaultBoardName;
         createDefaultBoard(this.board);
     }
     
@@ -70,6 +74,7 @@ public class Pingball {
     public Pingball(String fileName) throws IOException {
         this.board = parse(fileName,Optional.empty());
         this.board.setSinglePlayerMode(true);
+        this.fileName = fileName;
     }
 
     /**
@@ -82,9 +87,9 @@ public class Pingball {
      */
     public Pingball(int port, String hostName) throws UnknownHostException, IOException {
         clientSocket = new Socket(hostName, port);
-        this.board=new Board("default",.000025, .025, .000025, clientSocket);
+        this.board=new Board(defaultBoardName,.000025, .025, .000025, clientSocket);
         createDefaultBoard(this.board);
-        
+        this.fileName = defaultBoardName;
         (new Thread(new ClientReceiver(clientSocket,board))).start();
     }
     
@@ -99,28 +104,23 @@ public class Pingball {
     public Pingball(int port, String hostName, String fileName) throws UnknownHostException, IOException {
         clientSocket = new Socket(hostName, port);
         this.board=parse(fileName, Optional.of(clientSocket));
-        
+        this.fileName = fileName;
         (new Thread(new ClientReceiver(clientSocket,board))).start();
     }
     
     /**
-     * Creates a pingball client in singleplayer mode based on a board
-     * @param board
+     * Disconnect this pingball client from the server.
      */
-    public Pingball(Board board) {
-        this.board = board;
-//        this.board.setSinglePlayerMode(true);
+    public void disconnect() {
+        this.board.disconnect();
     }
     
     /**
-     * Creates a disconnected pingball client, preserving the board.
-     * @param oldGame pingball game to disconnect
-     * @return disconnected pingball game
+     * Connect this pingball client to the specified socket
+     * @param socket
      */
-    public Pingball disconnectedPingball(Pingball oldGame) {
-        Board board = oldGame.board;
-        board.setSinglePlayerMode(true);
-        return new Pingball(board);
+    public void connect(Socket socket) {
+        this.board.changeSocket(socket);
     }
     
     /**
@@ -143,6 +143,26 @@ public class Pingball {
 //        Absorber abs = new Absorber(0,19,20,1);
 //        abs.addTriggeredGadget(abs);
 //        board.addGadget(abs);
+    }
+    
+    /**
+     * Restarts the board to its original state. Disconnects from the server.
+     */
+    public void restartBoard() {
+        if (this.fileName.equals(defaultBoardName)) {
+            this.board = new Board(defaultBoardName,.000025, .025, .000025);
+            this.board.setSinglePlayerMode(true);
+            createDefaultBoard(this.board);
+        }else {
+            try {
+                this.board = parse(fileName,Optional.empty());
+                this.board.setSinglePlayerMode(true);
+                createDefaultBoard(this.board);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
     
     /**
@@ -212,7 +232,7 @@ public class Pingball {
         String hostName = "localhost";
         String filename = "";
         Board board = null;
-        //Board board = new Board("default",0,0,0);
+        //Board board = new Board(defaultBoardName,0,0,0);
         
         for (int i=0; i<args.length; i++) {
             //System.out.println(args[i]);

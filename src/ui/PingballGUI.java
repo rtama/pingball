@@ -18,6 +18,7 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -165,7 +166,8 @@ public class PingballGUI extends JFrame implements KeyListener {
                 int returnVal = fc.showOpenDialog(PingballGUI.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File boardFile = fc.getSelectedFile();
-                    System.out.println("I found the board file");
+                    String fileName = boardFile.getPath();
+                    System.out.println("I found the board file: " + fileName);
                     // TODO: Connect this with the parser to read the board and then 
                     //      draw it in the boardDrawing panel. 
                 } else {
@@ -193,13 +195,12 @@ public class PingballGUI extends JFrame implements KeyListener {
                         JOptionPane.showMessageDialog(null,
                                 "Cannot connect to specified host/port.");
                     }
-                }   // client = new Pingball(port,hostName, filename); how to get filename??
+                }
 
             }
         });
 
         disconnect.addActionListener(new ActionListener() {
-            //TODO: show "Disconnected from Server
             @Override
             public void actionPerformed(ActionEvent e) {
                 disconnectServer();
@@ -250,29 +251,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
     }
     
-    //constructor: load from String board path
 
-
-
-    private ActionListener boardRedrawer() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //set wall and board size, wall name, add shape
-
-            }
-        };
-    }
-
-    /**
-     * Load a board from a file
-     * @param file The file to load the board from
-     * @throws IOException
-     * @throws FileNotFoundException
-     */
-    public void loadBoard(File boardFile) throws FileNotFoundException, IOException {
-
-    }
 
     /**
      * Connect to a server by specifying a host and port
@@ -282,14 +261,19 @@ public class PingballGUI extends JFrame implements KeyListener {
      * @throws UnknownHostException
      */
     public void connectServer(String host, int port) throws UnknownHostException, IOException {
-        
+        Socket newSocket = new Socket(host, port);
+        if (this.client != null) {
+            this.client.connect(newSocket);   
+        }
     }
 
     /**
      * Disconnect from the server yo
      */
     public void disconnectServer() {
-
+        if (this.client != null) {
+            this.client.disconnect();            
+        }
     }
 
     /**
