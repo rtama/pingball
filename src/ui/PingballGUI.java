@@ -119,6 +119,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         // Add menuItems to MenuHelp
         menuHelp.add(controls);
         
+        
         // set the MenuBar
         setJMenuBar(menuBar);
 
@@ -275,7 +276,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
 
     /**
-     * Disconnect from the server
+     * Disconnect from the server yo
      */
     public void disconnectServer() {
 
