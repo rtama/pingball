@@ -240,29 +240,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
     }
     
-    //constructor: load from String board path
 
-
-
-    private ActionListener boardRedrawer() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //set wall and board size, wall name, add shape
-
-            }
-        };
-    }
-
-    /**
-     * Load a board from a file
-     * @param file The file to load the board from
-     * @throws IOException
-     * @throws FileNotFoundException
-     */
-    public void loadBoard(File boardFile) throws FileNotFoundException, IOException {
-
-    }
 
     /**
      * Connect to a server by specifying a host and port
