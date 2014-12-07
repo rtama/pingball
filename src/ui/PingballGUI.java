@@ -229,8 +229,6 @@ public class PingballGUI extends JFrame implements KeyListener {
                     // Resume the Game
                     pause.setText("Pause");
                 }
-                
-                
 
             }
         });
@@ -252,8 +250,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
     }
     
-
-
     /**
      * Connect to a server by specifying a host and port
      * @param host The host to connect to
