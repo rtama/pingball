@@ -210,7 +210,17 @@ public class PingballGUI extends JFrame implements KeyListener {
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: "Game resumed"
+                //TODO: Fill in the actual pause stuff
+                if (pause.getText().equals("Pause")) {
+                    // Pause the Game
+                    pause.setText("Resume");
+                } else {
+                    // Resume the Game
+                    pause.setText("Pause");
+                }
+                
+                
+
             }
         });
 
