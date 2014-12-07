@@ -65,7 +65,6 @@ public class PingballGUI extends JFrame implements KeyListener {
     private final JMenu menuConnection = new JMenu("Connection");
     private final JMenuItem openFile = new JMenuItem("Open board");
     private final JMenuItem restartBoard = new JMenuItem("Restart board");
-    private final JMenuItem quitGame = new JMenuItem("Quit game");
     private final JMenuItem controls = new JMenuItem("Controls");
     private final JMenuItem pause = new JMenuItem("Pause");
     private final JMenuItem connect = new JMenuItem("Connect");
@@ -110,7 +109,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         
         // Add menuItems to MenuGame
         menuGame.add(restartBoard);
-        menuGame.add(quitGame);
         menuGame.add(pause);
         
         // Add menuItems to menuConnection
@@ -222,14 +220,6 @@ public class PingballGUI extends JFrame implements KeyListener {
                 //TODO: restart initial Board 
             }
         });
-
-        quitGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO: quit game
-              
-            }
-        });
         
         controls.addActionListener(new ActionListener() {
             @Override
@@ -281,11 +271,11 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
 
     /**
-     * Restart the game from the initial state of the board
-     * @throws IOException
+     * Restart the game from the initial state of the board. Disconnects the game if
+     * it was originally connected.
      */
     public void restartInitialBoard() {
-
+        this.client.restartBoard();
     }
 
     @Override
