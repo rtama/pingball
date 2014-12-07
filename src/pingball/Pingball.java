@@ -104,23 +104,18 @@ public class Pingball {
     }
     
     /**
-     * Creates a pingball client in singleplayer mode based on a board
-     * @param board
+     * Disconnect this pingball client from the server.
      */
-    public Pingball(Board board) {
-        this.board = board;
-//        this.board.setSinglePlayerMode(true);
+    public void disconnect() {
+        this.board.disconnect();
     }
     
     /**
-     * Creates a disconnected pingball client, preserving the board.
-     * @param oldGame pingball game to disconnect
-     * @return disconnected pingball game
+     * Connect this pingball client to the specified socket
+     * @param socket
      */
-    public Pingball disconnectedPingball(Pingball oldGame) {
-        Board board = oldGame.board;
-        board.setSinglePlayerMode(true);
-        return new Pingball(board);
+    public void connect(Socket socket) {
+        this.board.changeSocket(socket);
     }
     
     /**
