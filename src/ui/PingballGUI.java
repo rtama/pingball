@@ -18,6 +18,7 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -193,7 +194,7 @@ public class PingballGUI extends JFrame implements KeyListener {
                         JOptionPane.showMessageDialog(null,
                                 "Cannot connect to specified host/port.");
                     }
-                }   // client = new Pingball(port,hostName, filename); how to get filename??
+                }
 
             }
         });
@@ -272,14 +273,15 @@ public class PingballGUI extends JFrame implements KeyListener {
      * @throws UnknownHostException
      */
     public void connectServer(String host, int port) throws UnknownHostException, IOException {
-        
+        Socket newSocket = new Socket(host, port);
+        this.client.connect(newSocket);
     }
 
     /**
      * Disconnect from the server yo
      */
     public void disconnectServer() {
-
+        this.client.disconnect();
     }
 
     /**
