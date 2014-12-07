@@ -192,7 +192,8 @@ public class PingballGUI extends JFrame implements KeyListener {
                         JOptionPane.showMessageDialog(null,
                                 "Cannot connect to specified host/port.");
                     }
-                }
+                }   // client = new Pingball(port,hostName, filename); how to get filename??
+
             }
         });
 

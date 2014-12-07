@@ -103,6 +103,31 @@ public class Pingball {
         (new Thread(new ClientReceiver(clientSocket,board))).start();
     }
     
+    /**
+     * Creates a pingball client in singleplayer mode based on a board
+     * @param board
+     */
+    public Pingball(Board board) {
+        this.board = board;
+//        this.board.setSinglePlayerMode(true);
+    }
+    
+    /**
+     * Creates a disconnected pingball client, preserving the board.
+     * @param oldGame pingball game to disconnect
+     * @return disconnected pingball game
+     */
+    public Pingball disconnectedPingball(Pingball oldGame) {
+        Board board = oldGame.board;
+        board.setSinglePlayerMode(true);
+        return new Pingball(board);
+    }
+    
+    /**
+     * Creates the default board with gadgets specified in
+     * http://web.mit.edu/6.005/www/fa14/projects/pb3/pingball-phase1-spec.html
+     * @param board to put gadgets on
+     */
     public void createDefaultBoard(Board board){
         board.addBall(new Ball(1.25, 1.25, 0, 0));
         board.addGadget(new CircleBumper(1, 10));
