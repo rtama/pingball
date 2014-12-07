@@ -166,7 +166,8 @@ public class PingballGUI extends JFrame implements KeyListener {
                 int returnVal = fc.showOpenDialog(PingballGUI.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File boardFile = fc.getSelectedFile();
-                    System.out.println("I found the board file");
+                    String fileName = boardFile.getPath();
+                    System.out.println("I found the board file: " + fileName);
                     // TODO: Connect this with the parser to read the board and then 
                     //      draw it in the boardDrawing panel. 
                 } else {
@@ -200,7 +201,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
 
         disconnect.addActionListener(new ActionListener() {
-            //TODO: show "Disconnected from Server
             @Override
             public void actionPerformed(ActionEvent e) {
                 disconnectServer();
@@ -274,14 +274,18 @@ public class PingballGUI extends JFrame implements KeyListener {
      */
     public void connectServer(String host, int port) throws UnknownHostException, IOException {
         Socket newSocket = new Socket(host, port);
-        this.client.connect(newSocket);
+        if (this.client != null) {
+            this.client.connect(newSocket);   
+        }
     }
 
     /**
      * Disconnect from the server yo
      */
     public void disconnectServer() {
-        this.client.disconnect();
+        if (this.client != null) {
+            this.client.disconnect();            
+        }
     }
 
     /**
