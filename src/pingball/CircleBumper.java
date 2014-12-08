@@ -3,6 +3,12 @@ package pingball;
 import static physics.Geometry.reflectCircle;
 import static physics.Geometry.timeUntilCircleCollision;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.JComponent;
 
 import physics.Circle;
@@ -99,9 +105,11 @@ public class CircleBumper extends Gadget{
     }
 
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
-        
+    public void drawCanvas(Graphics2D g2d) {
+        Shape shape = new Ellipse2D.Double(boardX, boardY, 1, 1);
+        g2d.setColor(Color.WHITE);;
+        g2d.draw(shape);
+        g2d.fill(shape);
     }
 
 }
