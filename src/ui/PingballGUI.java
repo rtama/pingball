@@ -96,7 +96,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
     
     /**
-     * Sets the menuBar layout, including menus: File, Game, Connection, Help
+     * Sets the menuBar layout, including menus: File, Game, Connection
      */
     private void setMenuBar() {
         
@@ -104,7 +104,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         menuBar.add(menuFile);
         menuBar.add(menuGame);
         menuBar.add(menuConnection);
-        menuBar.add(menuHelp);
 
         // Add menuItems to menuFile
         menuFile.add(openFile);
@@ -116,10 +115,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         // Add menuItems to menuConnection
         menuConnection.add(connect);
         menuConnection.add(disconnect);
-        
-        // Add menuItems to MenuHelp
-        menuHelp.add(controls);
-        
         
         // set the MenuBar
         setJMenuBar(menuBar);
@@ -162,7 +157,6 @@ public class PingballGUI extends JFrame implements KeyListener {
      *      disconnect: discconects the client from the server.
      *      pause: pause the game
      *      restart: restart the Board with the initial startstate
-     *      controls: shows controls for game
      */
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
@@ -246,15 +240,7 @@ public class PingballGUI extends JFrame implements KeyListener {
                 restartInitialBoard();
             }
         });
-        
-        controls.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO: add actual controls!
-                JOptionPane.showMessageDialog(PingballGUI.this,"Here are the controls",
-                        "Controls", JOptionPane.PLAIN_MESSAGE);
-            }
-        });
+
     }
     
     /**
