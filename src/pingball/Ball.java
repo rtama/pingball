@@ -43,8 +43,8 @@ public class Ball extends Gadget {
     private String sendToBoard;
     private boolean shouldSend = false;
     
-    private final double xMax = 19;     // a 20x20 board has x coordinates from 0-19
-    private final double yMax = 19;     // a 20x20 board has y coordinates from 0-19
+    private final double xMax = 19.75;     // No part of the .25 radius ball can be beyond 20,20
+    private final double yMax = 19.75;
     private final double yMin = 0;    
     private final double xMin = 0; 
     
