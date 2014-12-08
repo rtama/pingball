@@ -23,24 +23,24 @@ import java.util.TreeSet;
  * Access to board in other classes is synchronized.
  */
 public class Board {
-    
+
     //rep invariant: has outer walls, height and width are 22 (including outer walls)
-    
+
     /*
      * Mutability:
      * Board is mutable. Board has a name, width, height, outerwalls, gravity, and friction constants which are 
      * set upon creation and can never be changed. The gadgets and balls on the board can be 
      * mutated as well as removed. The socket is also mutable.
      */
-    
+
     public final String name;
-    
+
     //list of balls and gadgets
     public static final int WIDTH = 22;
     public static final int HEIGHT = 22;
     public static final char IGNORE_CHAR = 'N';
     public static final char BALL_CHAR = '*';
-    
+
     private List<Gadget> gadgets = new ArrayList<Gadget>();
     private List<Ball> balls = new ArrayList<Ball>();
     private List<Ball> newBalls = new ArrayList<Ball>();
@@ -51,8 +51,8 @@ public class Board {
     private final OuterWall rightWall;
     private final OuterWall bottomWall;
     private final OuterWall leftWall;
-    
-    
+
+
     private final double mu;
     private final double mu2;
     private final double gravity;
@@ -61,11 +61,13 @@ public class Board {
 
     private Socket socket;
     private PrintWriter out;
-    
+
     private Map<String, ArrayList<String>> keyups;
     private Map<String, ArrayList<String>> keydowns;
 
-    
+    private Boolean paused = false;
+
+
     //the board constructors without names are here for testing purposes
     /**
      * Constructor for Board class: initializes a board object to handle the gadgets
@@ -79,7 +81,7 @@ public class Board {
     public Board() {
         this("",.000025, .025, .000025);
     }
-    
+
     /**
      * Constructor for Board class allowing for specification of friction and gravity;
      * constants used in the formula  Vnew = Vold × ( 1 - mu × deltat - mu2 × |Vold| × deltat ).
@@ -106,7 +108,7 @@ public class Board {
     public Board(double mu, double mu2, double gravity, Socket clientSocket) throws IOException {
         this("", mu, mu2, gravity,clientSocket);
     }
-    
+
     /**
      * Constructor for Board class allowing for specification of friction and gravity and a name;
      * constants used in the formula  Vnew = Vold × ( 1 - mu × deltat - mu2 × |Vold| × deltat ).
@@ -123,12 +125,12 @@ public class Board {
         this.leftWall = OuterWall.LEFT_WALL();
         this.rightWall = OuterWall.RIGHT_WALL();
         this.bottomWall = OuterWall.BOTTOM_WALL();
-        
+
         gadgets.add(topWall);
         gadgets.add(leftWall);
         gadgets.add(rightWall);
         gadgets.add(bottomWall);
-        
+
         //set values for friction and gravity
         this.mu = mu;
         this.mu2 = mu2;
@@ -160,7 +162,7 @@ public class Board {
     public void checkRep(){
         // don't have to check, because using final variables
     }
-    
+
     /**
      * Set whether this Board is being played in single-player or multi-player mode.
      * @param singlePlayerMode true if single-player, false if multi-player
@@ -168,7 +170,7 @@ public class Board {
     public void setSinglePlayerMode(boolean singlePlayerMode){
         this.singlePlayerMode=singlePlayerMode;
     }
-    
+
     /**
      * Check whether this Board is being played in single-player or multi-player mode.
      * @return true if single-player, false if multi-player
@@ -176,7 +178,7 @@ public class Board {
     public boolean getSinglePlayerMode(){
         return singlePlayerMode;
     }
-    
+
     /**
      * Send a message to the server
      * @param message to send
@@ -186,7 +188,7 @@ public class Board {
             out.println(message);
         }
     }
-    
+
     /**
      * Adds a ball to the board.
      * 
@@ -195,11 +197,11 @@ public class Board {
     public void addBall(Ball ball){
         //balls are gadgets, a reference to them is stored in both balls and
         //gadgets so that we know which gadgets are balls
-        
+
         balls.add(ball);
         gadgets.add(ball);
     }
-    
+
     /**
      * Adds a ball after the current timestep is over
      * @param ball Ball object to be added to the ball
@@ -207,7 +209,7 @@ public class Board {
     public void addBallNext(Ball ball){
         newBalls.add(ball); 
     }
-     
+
     /**
      * Adds a gadget to the board.
      * 
@@ -216,8 +218,8 @@ public class Board {
     public void addGadget(Gadget gadget){
         gadgets.add(gadget);
     }
-    
-    
+
+
     /**
      * Adds a portal to the board
      * @param portal
@@ -226,7 +228,7 @@ public class Board {
         portals.add(portal); 
         this.addGadget(portal); 
     }
-    
+
     /**
      * Gets a list of all of the portals on the board
      * @return all of the portals in the board
@@ -234,7 +236,7 @@ public class Board {
     public List<Gadget> getPortals(){ 
         return this.portals; 
     }
-    
+
     /**
      * Sets up a gadget on this board to trigger another gadget on this board.
      * @param trigger   name of gadget that is the trigger
@@ -264,7 +266,7 @@ public class Board {
             }
         }return false;
     }
-    
+
     /**
      * Gets the portal with the specified name. It must exist on this board.
      * @param portalName
@@ -279,7 +281,25 @@ public class Board {
         System.err.println("You disobeyed the spec. Here's a top wall for you instead of a portal.");
         return OuterWall.TOP_WALL(); // This line should only occur if the user disobeyed the spec.
     }
-    
+
+    /**
+     * Pauses this board.
+     */
+    public void pause() {
+        synchronized(this.paused) {
+            this.paused = true;   
+        }
+    }
+
+    /**
+     * Resumes playing this board.
+     */
+    public void resume() {
+        synchronized(this.paused) {
+            this.paused = false;            
+        }
+    }
+
     /**
      * Continually updates the position and velocity of gadgets, according 
      * to the physics of ball movement, gadget collision, and friction. 
@@ -288,99 +308,105 @@ public class Board {
      * in a time frame
      */
     public void update(double initialTimeToEndOfFrame){
-        //for every ball, every other ball/every gadget,
-        // compute time until collision -> sorted list of collision events
-        TreeSet<CollisionEvent> events;
-       
-        // time to end of frame. Changes over the course of the calculations.
-        double timeToEndOfFrame = initialTimeToEndOfFrame;
-        
-        boolean notDoneColliding = true;
+        synchronized(this.paused) {
+            if (this.paused) {
+                return;
+            }
 
-        //while first collisionevent time < end of frame time
-        while (notDoneColliding) {
-            
-            //reset collision events tree
-            events = new TreeSet<CollisionEvent>();
-            
-            // update all objects to new collision time, update collision times
-            for (Ball firstBall : balls) {
-                if (!firstBall.isGhost() && !firstBall.isRemoved()) {
-                    for(Gadget gadget : gadgets) {
-                        if (!(gadget.isGhost())) {
-                            if (firstBall != gadget) {
-                                events.add(new CollisionEvent(firstBall, gadget, gadget.collisionTime(firstBall)));
+            //for every ball, every other ball/every gadget,
+            // compute time until collision -> sorted list of collision events
+            TreeSet<CollisionEvent> events;
+
+            // time to end of frame. Changes over the course of the calculations.
+            double timeToEndOfFrame = initialTimeToEndOfFrame;
+
+            boolean notDoneColliding = true;
+
+            //while first collisionevent time < end of frame time
+            while (notDoneColliding) {
+
+                //reset collision events tree
+                events = new TreeSet<CollisionEvent>();
+
+                // update all objects to new collision time, update collision times
+                for (Ball firstBall : balls) {
+                    if (!firstBall.isGhost() && !firstBall.isRemoved()) {
+                        for(Gadget gadget : gadgets) {
+                            if (!(gadget.isGhost())) {
+                                if (firstBall != gadget) {
+                                    events.add(new CollisionEvent(firstBall, gadget, gadget.collisionTime(firstBall)));
+                                }
                             }
                         }
                     }
                 }
-            }
-            
 
-            // try to get first collision (u,v)
-            CollisionEvent firstCollisionEvent = events.pollFirst();
-            if (!events.isEmpty() && firstCollisionEvent.getTimeToCollision() <= timeToEndOfFrame) {
 
-                // update all gadgets to collision time
-                for(Gadget gadget : gadgets) {
-                    gadget.updateToTime(firstCollisionEvent.getTimeToCollision());
+                // try to get first collision (u,v)
+                CollisionEvent firstCollisionEvent = events.pollFirst();
+                if (!events.isEmpty() && firstCollisionEvent.getTimeToCollision() <= timeToEndOfFrame) {
+
+                    // update all gadgets to collision time
+                    for(Gadget gadget : gadgets) {
+                        gadget.updateToTime(firstCollisionEvent.getTimeToCollision());
+                    }
+
+                    // collide gadget with ball, updating ball's velocity
+                    firstCollisionEvent.getGadget().collideWithBall(firstCollisionEvent.getBall());                
+                    timeToEndOfFrame -= firstCollisionEvent.getTimeToCollision();
+
+
+                } 
+                else {
+                    notDoneColliding = false;       
                 }
-                
-                // collide gadget with ball, updating ball's velocity
-                firstCollisionEvent.getGadget().collideWithBall(firstCollisionEvent.getBall());                
-                timeToEndOfFrame -= firstCollisionEvent.getTimeToCollision();
 
-                
-            } 
-            else {
-                notDoneColliding = false;       
             }
-            
-        }
-        
-        // update all to final time
-        for(Gadget gadget : gadgets) {
-            gadget.updateToTime(timeToEndOfFrame);
-        }
-        
-        //Apply friction and gravity for previous timestep
-        for (Ball ball : balls) {
 
-            if (!ball.isGhost()){
-                ball.applyFriction(this.mu, this.mu2, initialTimeToEndOfFrame);
-                ball.applyGravity(this.gravity, initialTimeToEndOfFrame);
+            // update all to final time
+            for(Gadget gadget : gadgets) {
+                gadget.updateToTime(timeToEndOfFrame);
             }
-        }
-        
-        //send balls to other client board
-        //System.out.println("singlePlayerMode?" + this.singlePlayerMode);
-        if(!this.singlePlayerMode){
+
+            //Apply friction and gravity for previous timestep
             for (Ball ball : balls) {
-                //System.out.println("ball should send?" + ball.getShouldSend());
-                if (ball.getShouldSend()){
-                    sendMessage(ball.getSendToBoardMessage());
-                    //System.out.println("ball.getsendtoboardmessage" + ball.getSendToBoardMessage());
+
+                if (!ball.isGhost()){
+                    ball.applyFriction(this.mu, this.mu2, initialTimeToEndOfFrame);
+                    ball.applyGravity(this.gravity, initialTimeToEndOfFrame);
                 }
             }
-        }
-        
-        //Remove balls   
-        Iterator<Ball> iter = balls.iterator();
-        while (iter.hasNext()) {
-            Ball currentBall = iter.next(); 
-            if (currentBall.isRemoved()) {
-                iter.remove(); //Remove from balls
-                gadgets.remove(currentBall); //Remove from gadgets. 
+
+            //send balls to other client board
+            //System.out.println("singlePlayerMode?" + this.singlePlayerMode);
+            if(!this.singlePlayerMode){
+                for (Ball ball : balls) {
+                    //System.out.println("ball should send?" + ball.getShouldSend());
+                    if (ball.getShouldSend()){
+                        sendMessage(ball.getSendToBoardMessage());
+                        //System.out.println("ball.getsendtoboardmessage" + ball.getSendToBoardMessage());
+                    }
+                }
             }
+
+            //Remove balls   
+            Iterator<Ball> iter = balls.iterator();
+            while (iter.hasNext()) {
+                Ball currentBall = iter.next(); 
+                if (currentBall.isRemoved()) {
+                    iter.remove(); //Remove from balls
+                    gadgets.remove(currentBall); //Remove from gadgets. 
+                }
+            }
+
+            //Add balls after the timestep. 
+            for (Ball ball : newBalls){ 
+                this.addBall(ball); 
+            }
+            newBalls.clear();   
         }
-        
-        //Add balls after the timestep. 
-        for (Ball ball : newBalls){ 
-            this.addBall(ball); 
-        }
-        newBalls.clear();   
     }
-    
+
     /**
      * Unlink the specified wall by making it solid.
      * @param type of wall (top, left, right, or bottom)
@@ -396,7 +422,7 @@ public class Board {
             bottomWall.makeSolid();
         }
     }
-    
+
     /**
      * Gets the name of the Board that is linked to the specified wall
      * @param type of wall to check (left, right, top or bottom)
@@ -413,7 +439,7 @@ public class Board {
             return bottomWall.getLinkedBoardName();
         }        
     }
-    
+
     /**
      * Links this board's specified wall to another board
      * @param type of wall to link (left, right, top or bottom)
@@ -440,14 +466,14 @@ public class Board {
     public String toString(){
         char[][] board = new char[22][22]; //output
         String output = "";
-       
+
         //set up board
         for(int i=0;i<board.length;i++){
             for(int j=0;j<board[0].length;j++){
                 board[i][j]=' ';
             }
         }
-        
+
         //loop through gadgets and balls and put their representation in the board char array
         for(Gadget gadget: gadgets){
             //getSymbol size
@@ -465,7 +491,7 @@ public class Board {
                 }
             }
         }
-        
+
         //create output string
         for(int y=0; y<board[0].length; y++){
             for(int x=0; x<board.length; x++){
@@ -475,7 +501,7 @@ public class Board {
         }
         return output;
     }
-    
+
     /**
      * Used to create a visual representation of the board - not part of phase 2, just used for testing
      * @param g2 graphics to draw
@@ -487,12 +513,12 @@ public class Board {
                 g2.draw(new Rectangle(gadget.getBoardX()*LPixelLength,gadget.getBoardY()*LPixelLength,LPixelLength,LPixelLength));
             }
         }
-        
+
         for (Ball ball : balls) {
             g2.draw(new Ellipse2D.Double((ball.getXPos()-ball.getCircle().getRadius())*LPixelLength,(ball.getYPos()-ball.getCircle().getRadius())*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength));
         }
     }
-    
+
     /**
      * Assign keyup dictionary to this board.
      * @param keys dictionary of keys and the gadgets they trigger upon key release
@@ -502,7 +528,7 @@ public class Board {
         Map<String, ArrayList<String>> copy = new HashMap<String, ArrayList<String>>(keys);
         this.keyups = copy;
     }
-    
+
     /**
      * Assign keydown dictionary to this board.
      * @param keys dictionary of keys and the gadgets they trigger upon key press
@@ -512,7 +538,7 @@ public class Board {
         Map<String, ArrayList<String>> copy = new HashMap<String, ArrayList<String>>(keys);
         this.keyups = copy;
     }
-    
+
     /**
      * Respond to a key that was pressed with the action of every gadget triggered by that key press
      * @param key that was pressed
@@ -522,7 +548,7 @@ public class Board {
             this.activate(gadgetName);
         }
     }
-    
+
     /**
      * Respond to a key that was released with the action of every gadget triggered by that key release
      * @param key that was released
@@ -532,7 +558,7 @@ public class Board {
             this.activate(gadgetName);
         }
     }
-    
+
     /**
      * Activate the specified gadget on this board (if it exists).
      * @param gadgetName name of gadget to activate
@@ -544,24 +570,34 @@ public class Board {
             }
         }
     }
-    
+
     /**
      * Reassigns this board's socket to newSocket
      * @param newSocket
      */
     public void changeSocket(Socket newSocket) {
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.socket = newSocket;
     }
-    
+
     /**
      * Disconnects this board from the server.
      */
     public void disconnect() {
-        this.singlePlayerMode = true;
+        try {
+            this.socket.close();
+            this.singlePlayerMode = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     // The following methods are used for testing.
-    
+
     /**
      * 
      * @return the value of this board's gravity
@@ -569,7 +605,7 @@ public class Board {
     public double getBoardGravity() {
         return gravity;
     }
-    
+
     /**
      * 
      * @return the value of this board's mu (drag coefficient)
@@ -577,7 +613,7 @@ public class Board {
     public double getBoardDrag() {
         return mu;
     }
-    
+
     /**
      * 
      * @return the value of this board's mu2 (friction coefficient)

@@ -263,7 +263,7 @@ public class PingballFactory extends PingballBaseListener {
     }
 
     @Override public void enterBallDef(PingballParser.BallDefContext ctx) {
-        System.out.println(ctx.children);
+        //System.out.println(ctx.children);
         String name = "";
         double x = 0; 
         double y = 0; 
@@ -275,32 +275,32 @@ public class PingballFactory extends PingballBaseListener {
 
             if (children.get(i).toString().contains(NAME_LITERAL)) {
                 name = children.get(i+SHIFT).getText(); 
-                System.out.println("name:" + name); 
+                //System.out.println("name:" + name); 
             } 
                      
 
             
             else if (children.get(i).toString().contains(X_VELOCITY)) {
                 xVelocity = Double.parseDouble(children.get(i+SHIFT).getText()); 
-                System.out.println("xVel:" + x); 
+                //System.out.println("xVel:" + x); 
 
             }
             
             else if (children.get(i).toString().contains(Y_VELOCITY)) {
                 yVelocity = Double.parseDouble(children.get(i+SHIFT).getText()); 
-                System.out.println("yVel:" + y); 
+                //System.out.println("yVel:" + y); 
 
 
             }    
             else if (children.get(i).toString().contains(X)) {
                 x = Double.parseDouble(children.get(i+SHIFT).getText()); 
-                System.out.println("x:" + x); 
+                //System.out.println("x:" + x); 
 
             }
             
             else if (children.get(i).toString().contains(Y)) {
                 y = Double.parseDouble(children.get(i+SHIFT).getText());
-                System.out.println("y:" + y); 
+                //System.out.println("y:" + y); 
 
             }
         }
@@ -420,9 +420,9 @@ public class PingballFactory extends PingballBaseListener {
             }
             
             else if (children.get(i).toString().equals(Y)) {
-                System.out.println("Portal parsing "+ children.get(i+SHIFT).getText());
+                //System.out.println("Portal parsing "+ children.get(i+SHIFT).getText());
                 y= Integer.parseInt(children.get(i+SHIFT).getText()); 
-                System.out.println("Portal parsing complte: "+ children.get(i+SHIFT).getText());
+                //System.out.println("Portal parsing complte: "+ children.get(i+SHIFT).getText());
 
             }
             

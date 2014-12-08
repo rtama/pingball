@@ -44,7 +44,8 @@ import pingball.Pingball;
 import ui.KeyNames;
 
    /**
-    * TODO: specs
+    * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
+    * adds listeners to each component of the menu and drawing area.
     */
 public class PingballGUI extends JFrame implements KeyListener {
     private static final long serialVersionUID = 1L; // required by Serializable
@@ -65,7 +66,6 @@ public class PingballGUI extends JFrame implements KeyListener {
     private final JMenu menuConnection = new JMenu("Connection");
     private final JMenuItem openFile = new JMenuItem("Open board");
     private final JMenuItem restartBoard = new JMenuItem("Restart board");
-    private final JMenuItem quitGame = new JMenuItem("Quit game");
     private final JMenuItem controls = new JMenuItem("Controls");
     private final JMenuItem pause = new JMenuItem("Pause");
     private final JMenuItem connect = new JMenuItem("Connect");
@@ -78,6 +78,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      */
     public PingballGUI(Pingball client) {
         // set menu bar
+        this.client = client;
         setMenuBar();
         createLayout();
         addListeners();
@@ -95,7 +96,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
     
     /**
-     * Sets the menuBar layout.
+     * Sets the menuBar layout, including menus: File, Game, Connection
      */
     private void setMenuBar() {
         
@@ -103,23 +104,17 @@ public class PingballGUI extends JFrame implements KeyListener {
         menuBar.add(menuFile);
         menuBar.add(menuGame);
         menuBar.add(menuConnection);
-        menuBar.add(menuHelp);
 
         // Add menuItems to menuFile
         menuFile.add(openFile);
         
         // Add menuItems to MenuGame
         menuGame.add(restartBoard);
-        menuGame.add(quitGame);
         menuGame.add(pause);
         
         // Add menuItems to menuConnection
         menuConnection.add(connect);
         menuConnection.add(disconnect);
-        
-        // Add menuItems to MenuHelp
-        menuHelp.add(controls);
-        
         
         // set the MenuBar
         setJMenuBar(menuBar);
@@ -127,7 +122,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
     
     /**
-     * Creates the layout of the GUI content pane
+     * Creates the layout of the GUI content pane. Menu bar with JPanel containing canvas for game drawing.
      */
     private void createLayout() {
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -156,8 +151,12 @@ public class PingballGUI extends JFrame implements KeyListener {
     
     
     /**
-     * Adds Action Listeners to all of the components of the GUI.
-     * 
+     * Adds Action Listeners to all of the components of the GUI:
+     *      openFile: opens a new board file
+     *      connect: connects the client to a server provided the hostname and port
+     *      disconnect: discconects the client from the server.
+     *      pause: pause the game
+     *      restart: restart the Board with the initial startstate
      */
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
@@ -166,9 +165,20 @@ public class PingballGUI extends JFrame implements KeyListener {
                 int returnVal = fc.showOpenDialog(PingballGUI.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File boardFile = fc.getSelectedFile();
-                    System.out.println("I found the board file");
-                    // TODO: Connect this with the parser to read the board and then 
-                    //      draw it in the boardDrawing panel. 
+                    String fileName = boardFile.getPath();
+                    System.out.println("I found the board file: " + fileName);
+                    Thread handler = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                client = new Pingball(fileName);
+                                client.gameLoop();
+                            } catch (IOException | InterruptedException e1) {
+                                e1.printStackTrace();
+                            }                                                    
+                        }
+                    });
+                    handler.start();
                 } else {
                     System.out.println("Aww");
                 }
@@ -200,7 +210,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         });
 
         disconnect.addActionListener(new ActionListener() {
-            //TODO: show "Disconnected from Server
             @Override
             public void actionPerformed(ActionEvent e) {
                 disconnectServer();
@@ -212,37 +221,24 @@ public class PingballGUI extends JFrame implements KeyListener {
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: "Game resumed"
+                if (pause.getText().equals("Pause")) {
+                    pauseGame();
+                } else {
+                    resumeGame();
+                }
+
             }
         });
 
         restartBoard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: restart initial Board 
+                restartInitialBoard();
             }
         });
 
-        quitGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO: quit game
-              
-            }
-        });
-        
-        controls.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO: add actual controls!
-                JOptionPane.showMessageDialog(PingballGUI.this,"Here are the controls",
-                        "Controls", JOptionPane.PLAIN_MESSAGE);
-            }
-        });
     }
     
-
-
     /**
      * Connect to a server by specifying a host and port
      * @param host The host to connect to
@@ -252,36 +248,45 @@ public class PingballGUI extends JFrame implements KeyListener {
      */
     public void connectServer(String host, int port) throws UnknownHostException, IOException {
         Socket newSocket = new Socket(host, port);
-        this.client.connect(newSocket);
+        if (this.client != null) {
+            this.client.connect(newSocket);   
+        }
     }
 
     /**
      * Disconnect from the server yo
      */
     public void disconnectServer() {
-        this.client.disconnect();
+        if (this.client != null) {
+            this.client.disconnect();            
+        }
     }
 
     /**
      * Pause the game
      */
     public void pauseGame() {
-        boardTimer.stop();
+        // boardTimer.stop();
+        this.client.pause();
+        pause.setText("Resume");
     }
 
     /**
      * Resume the game
      */
     public void resumeGame() {
-        boardTimer.start();
+        // boardTimer.start();
+        this.client.resume();
+        pause.setText("Pause");
     }
 
     /**
-     * Restart the game from the initial state of the board
-     * @throws IOException
+     * Restart the game from the initial state of the board. Disconnects the game if
+     * it was originally connected.
      */
     public void restartInitialBoard() {
-
+        this.client.restartBoard();
+        this.resumeGame();
     }
 
     @Override
