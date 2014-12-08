@@ -95,7 +95,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
     
     /**
-     * Sets the menuBar layout.
+     * Sets the menuBar layout, including menus: File, Game, Connection, Help
      */
     private void setMenuBar() {
         
@@ -126,7 +126,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
     
     /**
-     * Creates the layout of the GUI content pane
+     * Creates the layout of the GUI content pane. Menu bar with JPanel containing canvas for game drawing.
      */
     private void createLayout() {
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -155,8 +155,13 @@ public class PingballGUI extends JFrame implements KeyListener {
     
     
     /**
-     * Adds Action Listeners to all of the components of the GUI.
-     * 
+     * Adds Action Listeners to all of the components of the GUI:
+     *      openFile: opens a new board file
+     *      connect: connects the client to a server provided the hostname and port
+     *      disconnect: discconects the client from the server.
+     *      pause: pause the game
+     *      restart: restart the Board with the initial startstate
+     *      controls: shows controls for game
      */
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
