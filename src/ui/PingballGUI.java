@@ -231,9 +231,11 @@ public class PingballGUI extends JFrame implements KeyListener {
                 if (pause.getText().equals("Pause")) {
                     // Pause the Game
                     pause.setText("Resume");
+                    pauseGame();
                 } else {
                     // Resume the Game
                     pause.setText("Pause");
+                    resumeGame();
                 }
 
             }
@@ -283,7 +285,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Pause the game
      */
     public void pauseGame() {
-        boardTimer.stop();
+        // boardTimer.stop();
         this.client.pause();
     }
 
@@ -291,7 +293,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Resume the game
      */
     public void resumeGame() {
-        boardTimer.start();
+        // boardTimer.start();
         this.client.resume();
     }
 
