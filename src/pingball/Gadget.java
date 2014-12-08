@@ -2,6 +2,8 @@ package pingball;
 
 import java.util.LinkedList;
 
+import javax.swing.JComponent;
+
 /**
  * Represents a gadget, an active object on the pingball playing board.
  * Examples of such objects include ball, bumper, and outer wall.
@@ -112,6 +114,12 @@ public abstract class Gadget {
      * @see pingball.Board
      */
     public abstract char[][] getSymbol();
+    
+    /**
+     * Draws itself onto the canvas
+     * @param canvas
+     */
+    public abstract void drawCanvas(JComponent canvas);
         
     /**
      * Execute action. Happens whenever this gadget is triggered.

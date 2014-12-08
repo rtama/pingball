@@ -26,6 +26,7 @@ import java.util.Queue;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -57,6 +58,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     private boolean isPaused;
     
     private final JPanel boardDisplay = new JPanel();
+    private final JComponent canvas = new BoardDrawing();
    
     // JMenu objects 
     private final JMenuBar menuBar = new JMenuBar();
@@ -81,6 +83,11 @@ public class PingballGUI extends JFrame implements KeyListener {
         setMenuBar();
         createLayout();
         addListeners();
+        try {
+            client.gameLoop(canvas);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -177,7 +184,7 @@ public class PingballGUI extends JFrame implements KeyListener {
                         public void run() {
                             try {
                                 client = new Pingball(fileName);
-                                client.gameLoop();
+                                client.gameLoop(canvas);
                             } catch (IOException | InterruptedException e1) {
                                 e1.printStackTrace();
                             }                                                    

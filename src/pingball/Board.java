@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import javax.swing.JComponent;
+
 /**
  * The board is a 20L x 20L playing area that can contain gadgets on it
  * such as bumpers, flippers, absorbers, and balls.
@@ -297,6 +299,16 @@ public class Board {
     public void resume() {
         synchronized(this.paused) {
             this.paused = false;            
+        }
+    }
+    
+    /**
+     * Draws this board.
+     * @param canvas on which to draw board
+     */
+    public void draw(JComponent canvas) {
+        for (Gadget gadget: gadgets) {
+            gadget.drawCanvas(canvas);
         }
     }
 

@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -25,7 +26,7 @@ import javax.swing.JPanel;
  * @author chaewonlee
  *
  */
-public class BoardDrawing extends JPanel{
+public class BoardDrawing extends JComponent{
 
     private static final long serialVersionUID = 1L;
     private static final Color backgroundColor = Color.white;

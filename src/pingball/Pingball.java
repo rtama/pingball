@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Optional;
 
+import javax.swing.JComponent;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -196,10 +198,11 @@ public class Pingball {
     }
     
     /**
-     * Main game loop that plays pingball
+     * Main game loop that plays pingball and draws the game.
+     * @param canvas to draw game onto
      * @throws InterruptedException
      */
-    public void gameLoop() throws InterruptedException{
+    public void gameLoop(JComponent canvas) throws InterruptedException{
         boolean gameIsOver = false;
         
         //game loop
@@ -212,6 +215,7 @@ public class Pingball {
                 
                 //print the board and all of the gadgets
                 System.out.println(board.toString());
+                board.draw(canvas);
             }
             //sleep to achieve desired FPS
             long elapsedTime = System.currentTimeMillis() - fieldTime;
@@ -269,21 +273,21 @@ public class Pingball {
         if (filename.length() > 0) {
             if(singlePlayerMode){
                 client = new Pingball(filename);
-                client.gameLoop();
+                //client.gameLoop();
             }
             else{
                 client = new Pingball(port,hostName, filename);
-                client.gameLoop();
+                //client.gameLoop();
             }
         }
         else{
             if(singlePlayerMode){
                 client = new Pingball();
-                client.gameLoop();
+                //client.gameLoop();
             }
             else{
                 client = new Pingball(port,hostName);
-                client.gameLoop();
+                //client.gameLoop();
             }
         }
         GUI = new PingballGUI(client);
