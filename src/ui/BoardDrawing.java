@@ -31,9 +31,9 @@ import pingball.Pingball;
 public class BoardDrawing extends JPanel{
 
     private static final long serialVersionUID = 1L;
-    private static final Color backgroundColor = Color.BLACK;
+    private static final Color backgroundColor = Color.LIGHT_GRAY;
     private static final int timeStepMillis = 20;
-    private static final int WIDTH = 800, HEIGHT = 800;
+    private static final int WIDTH = 440, HEIGHT = 440;
     private static final double wallSize = 0.5;
     private static final double boardSize = 20 + wallSize * 2;
     private final CopyOnWriteArrayList<ColoredShape> shapes;
@@ -68,6 +68,7 @@ public class BoardDrawing extends JPanel{
         g2d.setColor(Color.blue);
         
         if (pingball != null) {
+            System.out.println("PINGBALL NOT NULL");
             pingball.draw(g2d);            
         }
 //        for (ColoredShape coloredShape: shapes) {
