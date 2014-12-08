@@ -179,7 +179,6 @@ public class PingballGUI extends JFrame implements KeyListener {
                                 client = new Pingball(fileName);
                                 client.gameLoop();
                             } catch (IOException | InterruptedException e1) {
-                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }                                                    
                         }
@@ -227,14 +226,9 @@ public class PingballGUI extends JFrame implements KeyListener {
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: Fill in the actual pause stuff
                 if (pause.getText().equals("Pause")) {
-                    // Pause the Game
-                    pause.setText("Resume");
                     pauseGame();
                 } else {
-                    // Resume the Game
-                    pause.setText("Pause");
                     resumeGame();
                 }
 
@@ -287,6 +281,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     public void pauseGame() {
         // boardTimer.stop();
         this.client.pause();
+        pause.setText("Resume");
     }
 
     /**
@@ -295,6 +290,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     public void resumeGame() {
         // boardTimer.start();
         this.client.resume();
+        pause.setText("Pause");
     }
 
     /**
@@ -303,6 +299,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      */
     public void restartInitialBoard() {
         this.client.restartBoard();
+        this.resumeGame();
     }
 
     @Override

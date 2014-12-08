@@ -163,15 +163,15 @@ public class Pingball {
      * Restarts the board to its original state. Disconnects from the server.
      */
     public void restartBoard() {
+        System.out.println(this.fileName);
         if (this.fileName.equals(defaultBoardName)) {
             this.board = new Board(defaultBoardName,.000025, .025, .000025);
             this.board.setSinglePlayerMode(true);
             createDefaultBoard(this.board);
         }else {
             try {
-                this.board = parse(fileName,Optional.empty());
+                this.board = parse(this.fileName,Optional.empty());
                 this.board.setSinglePlayerMode(true);
-                createDefaultBoard(this.board);
             } catch (IOException e) {
                 e.printStackTrace();
             }
