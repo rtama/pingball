@@ -1,5 +1,10 @@
 package pingball;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.JComponent;
 
 import physics.Geometry;
@@ -25,6 +30,8 @@ public class OuterWall extends Gadget {
     private final boolean isHorizontal;
     private String linkedBoardName; 
     private final wallType type;
+    
+    private int scaleFactor = 20;
     
     /*
      * Mutability:
@@ -285,9 +292,21 @@ public class OuterWall extends Gadget {
     }
 
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
-        
+    public void drawCanvas(Graphics2D g2d) {
+        int height; // of rectangle shape
+        int width;
+        if (this.isHorizontal) {
+            height = scaleFactor;
+            width = Board.WIDTH*scaleFactor;
+        }else {
+            height = Board.HEIGHT*scaleFactor;
+            width = scaleFactor;
+        }
+        Shape shape = new Rectangle2D.Double((this.wall.p1().x())*scaleFactor, (this.wall.p1().y())*scaleFactor, width, height);
+        System.out.println(this.wall.p1().x() + ", " + this.wall.p1().y());
+        g2d.setColor(Color.PINK);;
+        g2d.draw(shape);
+        g2d.fill(shape);
     }
 
 }
