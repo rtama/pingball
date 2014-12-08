@@ -32,6 +32,7 @@ public class OuterWall extends Gadget {
     private final wallType type;
     
     private int scaleFactor = 20;
+    private Color color = Color.CYAN;
     
     /*
      * Mutability:
@@ -295,16 +296,33 @@ public class OuterWall extends Gadget {
     public void drawCanvas(Graphics2D g2d) {
         int height; // of rectangle shape
         int width;
-        if (this.isHorizontal) {
+        double x;
+        double y;
+        
+        if (this.type.equals(wallType.BOTTOM_WALL)) {
             height = scaleFactor;
             width = Board.WIDTH*scaleFactor;
+            x = 0;
+            y = (this.wall.p1().y()+1)*scaleFactor; // Add 1 because wall goes outside of playing area
+        }else if (this.type.equals(wallType.TOP_WALL)) {
+            height = scaleFactor;
+            width = Board.WIDTH*scaleFactor;
+            x = 0;
+            y = 0;            
+        }else if (this.type.equals(wallType.LEFT_WALL)) {
+            height = Board.HEIGHT*scaleFactor;
+            width = scaleFactor;
+            x = 0;
+            y = 0;            
         }else {
             height = Board.HEIGHT*scaleFactor;
             width = scaleFactor;
+            x = (this.wall.p1().x()+1)*scaleFactor; // Add 1 because wall goes outside of playing area
+            y = 0;            
         }
-        Shape shape = new Rectangle2D.Double((this.wall.p1().x())*scaleFactor, (this.wall.p1().y())*scaleFactor, width, height);
+        Shape shape = new Rectangle2D.Double(x, y, width, height);
         System.out.println(this.wall.p1().x() + ", " + this.wall.p1().y());
-        g2d.setColor(Color.PINK);;
+        g2d.setColor(color);;
         g2d.draw(shape);
         g2d.fill(shape);
     }
