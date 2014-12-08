@@ -1,9 +1,14 @@
 package pingball;
 
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.JComponent;
 
 import physics.Circle;
 import physics.LineSegment;
+import ui.ColoredShape;
 
 /**
  * Immutable square bumper class.
@@ -154,11 +159,11 @@ public class SquareBumper extends Gadget{
     public void action() {
         // This gadget has no action.
     }
-
+    
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
-        
+    public ColoredShape getShape() {
+        Shape shape = new Rectangle2D.Double(boardX, boardY, 1, 1);
+        return new ColoredShape(shape, Color.WHITE);
     }
 
 }
