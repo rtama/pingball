@@ -20,11 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Thread-safety argument //TODO: add more
- * - CopyOnWriteArrayList
- * 
- * @author chaewonlee
- *
+ *The list of components on the board (wall, shapes) are drawn
+ * The list of 
+ * of components is passed to the View, we simply paint them and display to the
+ * user.
  */
 public class BoardDrawing extends JComponent{
 
@@ -34,12 +33,9 @@ public class BoardDrawing extends JComponent{
     private static final int WIDTH = 800, HEIGHT = 800;
     private static final double wallSize = 0.5;
     private static final double boardSize = 20 + wallSize * 2;
-
     private final CopyOnWriteArrayList<ColoredShape> shapes;
     private final CopyOnWriteArrayList<String> wallNames;
- 
-    // TODO: just continue doing what you were doing in here. Good luck!
-    
+
     public BoardDrawing() {
     	shapes = new CopyOnWriteArrayList<ColoredShape>();
     	wallNames = new CopyOnWriteArrayList<String>();
@@ -53,7 +49,6 @@ public class BoardDrawing extends JComponent{
         g2d.setColor(backgroundColor);
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
-        // Set antialiasing hints
         //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // Paints the components
@@ -124,5 +119,6 @@ public class BoardDrawing extends JComponent{
             }
         };
     }
+    
 
 }
