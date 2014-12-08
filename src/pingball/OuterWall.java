@@ -1,5 +1,7 @@
 package pingball;
 
+import javax.swing.JComponent;
+
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
@@ -280,6 +282,12 @@ public class OuterWall extends Gadget {
     public double collisionTime(Ball ball) {
         // Check when the ball will collide with the wall (regardless of whether or not it is solid)
         return Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -1,5 +1,7 @@
 package pingball;
 
+import javax.swing.JComponent;
+
 /**
  * Immutable triangle bumper class.
  * 
@@ -201,6 +203,12 @@ public class TriangleBumper extends Gadget{
     @Override
     public void action() {
         // This gadget has no action.
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

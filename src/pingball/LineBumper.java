@@ -2,6 +2,9 @@ package pingball;
 
 import static physics.Geometry.reflectWall;
 import static physics.Geometry.timeUntilWallCollision;
+
+import javax.swing.JComponent;
+
 import physics.LineSegment;
 
 /**
@@ -92,6 +95,12 @@ public class LineBumper extends Gadget{
     @Override
     public void action() {
         // This gadget has no action.        
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

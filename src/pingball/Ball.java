@@ -6,6 +6,8 @@ import static physics.Geometry.*;
 
 import java.lang.Math;
 
+import javax.swing.JComponent;
+
 /**
  * 
  * This is a ball. It has a position and a velocity. It can collide with other Gadgets and it is effected
@@ -378,5 +380,11 @@ public class Ball extends Gadget {
     @Override
     public void action() {
         // Ball has no action      
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 }

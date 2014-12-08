@@ -3,6 +3,8 @@ package pingball;
 import static physics.Geometry.reflectRotatingCircle;
 import static physics.Geometry.timeUntilRotatingCircleCollision;
 
+import javax.swing.JComponent;
+
 import physics.Circle;
 import physics.Vect;
 
@@ -111,6 +113,12 @@ public class RotatingPointBumper extends Gadget{
     @Override
     public void action() {
         // No action.
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

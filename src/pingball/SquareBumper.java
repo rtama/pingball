@@ -1,5 +1,7 @@
 package pingball;
 
+import javax.swing.JComponent;
+
 import physics.Circle;
 import physics.LineSegment;
 
@@ -151,6 +153,12 @@ public class SquareBumper extends Gadget{
     @Override
     public void action() {
         // This gadget has no action.
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

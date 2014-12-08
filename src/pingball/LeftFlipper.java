@@ -1,5 +1,7 @@
 package pingball;
 
+import javax.swing.JComponent;
+
 import physics.Vect;
 
 public class LeftFlipper extends Flipper {
@@ -138,6 +140,12 @@ public class LeftFlipper extends Flipper {
         }
         
         return symbol;
+        
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
         
     }    
     

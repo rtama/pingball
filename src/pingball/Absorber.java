@@ -3,6 +3,8 @@ package pingball;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JComponent;
+
 import physics.Vect;
 
 /**
@@ -182,6 +184,12 @@ public class Absorber extends Gadget{
                                                                                             // Get ball's symbol[0][0] because ball is represented by only 1 char
         }
         return output;
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

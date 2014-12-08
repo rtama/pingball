@@ -2,6 +2,9 @@ package pingball;
 
 import static physics.Geometry.reflectRotatingWall;
 import static physics.Geometry.timeUntilRotatingWallCollision;
+
+import javax.swing.JComponent;
+
 import physics.LineSegment;
 import physics.Vect;
 
@@ -110,6 +113,12 @@ public class RotatingLineBumper extends Gadget{
     @Override
     public void action() {
         // No action.
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

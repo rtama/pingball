@@ -2,6 +2,9 @@ package pingball;
 
 import static physics.Geometry.reflectCircle;
 import static physics.Geometry.timeUntilCircleCollision;
+
+import javax.swing.JComponent;
+
 import physics.Circle;
 
 /**
@@ -93,6 +96,12 @@ public class CircleBumper extends Gadget{
     @Override
     public void action() {
         // This gadget has no action.
+    }
+
+    @Override
+    public void drawCanvas(JComponent canvas) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
