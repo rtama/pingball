@@ -78,6 +78,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      */
     public PingballGUI(Pingball client) {
         // set menu bar
+        this.client = client;
         setMenuBar();
         createLayout();
         addListeners();
