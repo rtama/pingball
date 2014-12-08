@@ -146,6 +146,20 @@ public class Pingball {
     }
     
     /**
+     * Pauses the game.
+     */
+    public void pause() {
+        this.board.pause();
+    }
+    
+    /**
+     * Resumes the game.
+     */
+    public void resume() {
+        this.board.resume();
+    }
+    
+    /**
      * Restarts the board to its original state. Disconnects from the server.
      */
     public void restartBoard() {
