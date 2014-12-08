@@ -44,7 +44,8 @@ import pingball.Pingball;
 import ui.KeyNames;
 
    /**
-    * TODO: specs
+    * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
+    * adds listeners to each component of the menu and drawing area.
     */
 public class PingballGUI extends JFrame implements KeyListener {
     private static final long serialVersionUID = 1L; // required by Serializable
