@@ -509,17 +509,17 @@ public class Board {
      * @param g2 graphics to draw
      */
     public void paintBoardOnGraphics2D(Graphics2D g2) {
-        int LPixelLength=10;
+//        int LPixelLength=10;
         for (Gadget gadget : gadgets) {
             gadget.drawCanvas(g2);
-            if (!balls.contains(gadget)) {
-                g2.draw(new Rectangle(gadget.getBoardX()*LPixelLength,gadget.getBoardY()*LPixelLength,LPixelLength,LPixelLength));
-            }
+//            if (!balls.contains(gadget)) {
+//                g2.draw(new Rectangle(gadget.getBoardX()*LPixelLength,gadget.getBoardY()*LPixelLength,LPixelLength,LPixelLength));
+//            }
         }
 
-        for (Ball ball : balls) {
-            g2.draw(new Ellipse2D.Double((ball.getXPos()-ball.getCircle().getRadius())*LPixelLength,(ball.getYPos()-ball.getCircle().getRadius())*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength));
-        }
+//        for (Ball ball : balls) {
+//            g2.draw(new Ellipse2D.Double((ball.getXPos()-ball.getCircle().getRadius())*LPixelLength,(ball.getYPos()-ball.getCircle().getRadius())*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength));
+//        }
     }
 
     /**
