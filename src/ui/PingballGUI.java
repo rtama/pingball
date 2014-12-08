@@ -1,22 +1,10 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.AffineTransform;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -25,10 +13,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -36,13 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import pingball.Pingball;
-import ui.KeyNames;
 
    /**
     * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
@@ -57,8 +40,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     private Timer boardTimer;
     private boolean isPaused;
     
-    private final JPanel boardDisplay = new JPanel();
-    private final JComponent canvas = new BoardDrawing();
+    private final JPanel canvas;
    
     // JMenu objects 
     private final JMenuBar menuBar = new JMenuBar();
@@ -79,6 +61,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * @param client: a pingball game to display in the GUI
      */
     public PingballGUI(Pingball client) {
+        this.canvas = new BoardDrawing(client);
         // set menu bar
         this.client = client;
         setMenuBar();
@@ -96,6 +79,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * load a board from a file and connect to a server.
      */
     public PingballGUI() {
+        this.canvas = new BoardDrawing();
         //set menu bar
         setMenuBar();
         createLayout();
@@ -142,13 +126,13 @@ public class PingballGUI extends JFrame implements KeyListener {
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
                     .addGroup(layout.createSequentialGroup()
-                            .addComponent(boardDisplay))
+                            .addComponent(canvas))
                 );
         
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)                            
-                            .addComponent(boardDisplay))
+                            .addComponent(canvas))
                 );
         
         setTitle("Pingball Game");

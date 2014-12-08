@@ -1,5 +1,6 @@
 package pingball;
 
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 import javax.swing.JComponent;
@@ -169,8 +170,8 @@ public abstract class Gadget {
     }
 
     /**
-     * 
-     * @return
+     * Draw this gadget onto graphics
+     * @param g2 graphics
      */
-	public abstract ColoredShape getShape();
+    public abstract void drawCanvas(Graphics2D g2);
 }

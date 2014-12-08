@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -19,26 +20,38 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import pingball.Pingball;
+
 /**
  *The list of components on the board (wall, shapes) are drawn
  * The list of 
  * of components is passed to the View, we simply paint them and display to the
  * user.
  */
-public class BoardDrawing extends JComponent{
+public class BoardDrawing extends JPanel{
 
     private static final long serialVersionUID = 1L;
-    private static final Color backgroundColor = Color.white;
+    private static final Color backgroundColor = Color.BLACK;
     private static final int timeStepMillis = 20;
     private static final int WIDTH = 800, HEIGHT = 800;
     private static final double wallSize = 0.5;
     private static final double boardSize = 20 + wallSize * 2;
     private final CopyOnWriteArrayList<ColoredShape> shapes;
     private final CopyOnWriteArrayList<String> wallNames;
+    
+    private Pingball pingball;
 
     public BoardDrawing() {
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
     	shapes = new CopyOnWriteArrayList<ColoredShape>();
     	wallNames = new CopyOnWriteArrayList<String>();
+    }
+    
+    public BoardDrawing(Pingball client) {
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        shapes = new CopyOnWriteArrayList<ColoredShape>();
+        wallNames = new CopyOnWriteArrayList<String>();
+        this.pingball = client;
     }
     
     @Override
@@ -53,48 +66,52 @@ public class BoardDrawing extends JComponent{
 
         // Paints the components
         g2d.setColor(Color.blue);
-        for (ColoredShape coloredShape: shapes) {
-        	g2d.setColor(coloredShape.getColor());;
-        	g2d.draw(coloredShape.getShape());
-        	g2d.fill(coloredShape.getShape());
-        }
         
-        // Draws the names of the board this is connected to
-        // Draws the names of the board this is connected to
-        FontMetrics fm = g2d.getFontMetrics();
-        double expectedHeight = getHeight() / 21 / 2 - 1;
-        double scale = expectedHeight / fm.getHeight();
-        AffineTransform atx = AffineTransform.getScaleInstance(scale, scale);
-        Font scaledFont = g2d.getFont().deriveFont(atx);
-        g2d.setFont(scaledFont);
-        fm = g2d.getFontMetrics();
-        
-        //height, scale
-
-
-        
-        // Top / bottom
-        for (int i = 0; i < Math.min(2, wallNames.size()); i++) {
-        	Font originalFont = g2d.getFont();
-            String wallName = wallNames.get(i);
-            int x = 0, y = 1;
-            
-            //TODO: figure out how to place the x,y of wallName
-            
-            g2d.drawString(wallName, x, y);
-            g2d.setFont(originalFont);
+        if (pingball != null) {
+            pingball.draw(g2d);            
         }
-        // Left / right
-        for (int i = 2; i < Math.min(4, wallNames.size()); i++) {
-            Font origFont = g2d.getFont();
-            String wallName = wallNames.get(i);
-            int x = 0, y = 0;
-            
-            //TODO: figure out how to place the x,y of wallName
- 
-            g2d.drawString(wallName, x, y);
-            g2d.setFont(origFont);
-        }
+//        for (ColoredShape coloredShape: shapes) {
+//        	g2d.setColor(coloredShape.getColor());;
+//        	g2d.draw(coloredShape.getShape());
+//        	g2d.fill(coloredShape.getShape());
+//        }
+//        
+//        // Draws the names of the board this is connected to
+//        // Draws the names of the board this is connected to
+//        FontMetrics fm = g2d.getFontMetrics();
+//        double expectedHeight = getHeight() / 21 / 2 - 1;
+//        double scale = expectedHeight / fm.getHeight();
+//        AffineTransform atx = AffineTransform.getScaleInstance(scale, scale);
+//        Font scaledFont = g2d.getFont().deriveFont(atx);
+//        g2d.setFont(scaledFont);
+//        fm = g2d.getFontMetrics();
+//        
+//        //height, scale
+//
+//
+//        
+//        // Top / bottom
+//        for (int i = 0; i < Math.min(2, wallNames.size()); i++) {
+//        	Font originalFont = g2d.getFont();
+//            String wallName = wallNames.get(i);
+//            int x = 0, y = 1;
+//            
+//            //TODO: figure out how to place the x,y of wallName
+//            
+//            g2d.drawString(wallName, x, y);
+//            g2d.setFont(originalFont);
+//        }
+//        // Left / right
+//        for (int i = 2; i < Math.min(4, wallNames.size()); i++) {
+//            Font origFont = g2d.getFont();
+//            String wallName = wallNames.get(i);
+//            int x = 0, y = 0;
+//            
+//            //TODO: figure out how to place the x,y of wallName
+// 
+//            g2d.drawString(wallName, x, y);
+//            g2d.setFont(origFont);
+//        }
     }      
     
     /**

@@ -301,16 +301,6 @@ public class Board {
             this.paused = false;            
         }
     }
-    
-    /**
-     * Draws this board.
-     * @param canvas on which to draw board
-     */
-    public void draw(JComponent canvas) {
-        for (Gadget gadget: gadgets) {
-            gadget.drawCanvas(canvas);
-        }
-    }
 
     /**
      * Continually updates the position and velocity of gadgets, according 
@@ -521,6 +511,7 @@ public class Board {
     public void paintBoardOnGraphics2D(Graphics2D g2) {
         int LPixelLength=10;
         for (Gadget gadget : gadgets) {
+            gadget.drawCanvas(g2);
             if (!balls.contains(gadget)) {
                 g2.draw(new Rectangle(gadget.getBoardX()*LPixelLength,gadget.getBoardY()*LPixelLength,LPixelLength,LPixelLength));
             }

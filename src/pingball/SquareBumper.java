@@ -1,6 +1,7 @@
 package pingball;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
@@ -161,9 +162,11 @@ public class SquareBumper extends Gadget{
     }
     
     @Override
-    public ColoredShape getShape() {
+    public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Rectangle2D.Double(boardX, boardY, 1, 1);
-        return new ColoredShape(shape, Color.WHITE);
+        g2d.setColor(Color.WHITE);;
+        g2d.draw(shape);
+        g2d.fill(shape);
     }
 
 }

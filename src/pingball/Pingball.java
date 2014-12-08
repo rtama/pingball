@@ -1,5 +1,6 @@
 package pingball;
 
+import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -198,6 +199,14 @@ public class Pingball {
     }
     
     /**
+     * Draw this game
+     * @param g2 where to draw this game
+     */
+    public void draw(Graphics2D g2) {
+        this.board.paintBoardOnGraphics2D(g2);
+    }
+    
+    /**
      * Main game loop that plays pingball and draws the game.
      * @param canvas to draw game onto
      * @throws InterruptedException
@@ -215,7 +224,6 @@ public class Pingball {
                 
                 //print the board and all of the gadgets
                 System.out.println(board.toString());
-                board.draw(canvas);
             }
             //sleep to achieve desired FPS
             long elapsedTime = System.currentTimeMillis() - fieldTime;
