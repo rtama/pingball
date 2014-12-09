@@ -212,8 +212,13 @@ public class TriangleBumper extends Gadget{
     
     @Override
     public void drawCanvas(Graphics2D g2d) {
-        int xpoints[] = {this.corners[0].getBoardX(), this.corners[1].getBoardX(), this.corners[2].getBoardX()};
-        int ypoints[] = {this.corners[0].getBoardY(), this.corners[1].getBoardY(), this.corners[2].getBoardY()};
+    	
+        int xpoints[] = {scaleFactor*(1+this.corners[0].getBoardX()), 
+        		scaleFactor*(1+this.corners[1].getBoardX()), 
+        		scaleFactor*(1+this.corners[2].getBoardX())};
+        int ypoints[] = {scaleFactor*(1+this.corners[0].getBoardY()),
+        		scaleFactor*(1+this.corners[1].getBoardY()), 
+        		scaleFactor*(1+this.corners[2].getBoardY())};
         int npoints = 3;
         
         g2d.setColor(Color.GREEN);
