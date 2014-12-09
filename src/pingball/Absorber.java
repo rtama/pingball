@@ -49,6 +49,8 @@ public class Absorber extends Gadget{
     private final double maxBoardX = 19;
     private final double maxBoardY = 19;
     private final int scaleFactor = 20;
+    private Color color = Color.RED;
+    private final Color LIGHT_RED = new Color(210, 54, 65);
     
     private boolean isHoldingBall = false;
     private List<Ball> heldBall = new ArrayList<Ball>();
@@ -132,6 +134,11 @@ public class Absorber extends Gadget{
         ball.setVelocity(new Vect(0.0,0.0));
         ball.setGhost(true);
         this.heldBall.add(ball);
+        
+        if (color == Color.RED) 
+        	color = LIGHT_RED;
+        else
+        	color = Color.RED;
         //Note: the absorber can be self triggering, it will move the ball to the bottom right and then shoot it upwards
         this.trigger();
         //this.action(); 
@@ -199,7 +206,7 @@ public class Absorber extends Gadget{
         // Add 1 to position to account for outer walls
         g2d.setColor(Color.BLACK);
         g2d.draw(shape);
-        g2d.setColor(Color.RED);
+        g2d.setColor(color);
         g2d.fill(shape);
     }
 

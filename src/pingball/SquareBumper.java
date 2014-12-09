@@ -146,8 +146,7 @@ public class SquareBumper extends Gadget{
 
     @Override
     public void updateToTime(double timeToCollision) {
-        // immutable. Nothing to update.
-        
+        // immutable. Nothing to update.     
     }
 
     @Override

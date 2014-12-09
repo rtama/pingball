@@ -32,6 +32,7 @@ public class OuterWall extends Gadget {
     private final wallType type;
     
     private Color color = Color.DARK_GRAY;
+    private final Color LIGHT_GRAY = new Color(192, 192, 192);
     
     /*
      * Mutability:
@@ -282,6 +283,10 @@ public class OuterWall extends Gadget {
         }else {
             // Update the ball's velocity to that of after the collision
             ball.setVelocity(Geometry.reflectWall(wall, ball.getVelocity(), coeffOfRefl));   
+/*            if (color == Color.DARK_GRAY)
+            	color = Color.LIGHT_GRAY;
+            else
+            	color = Color.DARK_GRAY;*/
         }
     }
 
