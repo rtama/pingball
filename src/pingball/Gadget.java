@@ -26,6 +26,8 @@ public abstract class Gadget {
     private boolean isGhost = false;
     protected String name;
     
+    protected int scaleFactor = 20;
+    
     /*
      * Mutability:
      * Gadget is mutable. Its name can't be changed by anything outside of the package
