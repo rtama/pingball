@@ -3,7 +3,12 @@ package pingball;
 import static physics.Geometry.reflectCircle;
 import static physics.Geometry.timeUntilCircleCollision;
 
+
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.JComponent;
 
@@ -87,9 +92,12 @@ public class PointBumper extends Gadget{
         // This gadget has no action.
     }
 
-    @Override
-    public void drawCanvas(Graphics2D g2) {
-        // TODO Auto-generated method stub
+    public void drawCanvas(Graphics2D g2d) {
+        Shape shape = new Ellipse2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, scaleFactor, scaleFactor);
+        g2d.setColor(Color.BLACK);;
+        g2d.setStroke(new BasicStroke(3.0f));
+        g2d.draw(shape);
+        //g2d.fill(shape);
         
     }
 

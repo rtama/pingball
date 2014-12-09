@@ -1,5 +1,11 @@
 package pingball;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+
 import javax.swing.JComponent;
 
 import physics.*;
@@ -22,11 +28,13 @@ public class Portal extends Gadget {
     private final Board board; 
     private boolean portalInOtherBoard;
     private boolean targetPortalExists = false; 
+    private int scaleFactor = 20;
     
     private void checkRep(){ 
         assert(boardX <= Board.WIDTH); 
         assert(boardY <= Board.HEIGHT);
     }
+    
     /**
      * Portal Constructor if portal is on the same board. 
      * @param name Name of the Portal
@@ -201,9 +209,15 @@ public class Portal extends Gadget {
     public void action() {
         // This gadget has no action.
     }
+    
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
+    public void drawCanvas(Graphics2D g2d) {
+        Shape shape = new Ellipse2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, scaleFactor, scaleFactor);
+        g2d.setColor(Color.BLACK);;
+        g2d.setStroke(new BasicStroke(3.0f));
+        g2d.draw(shape);
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fill(shape);
         
     }
 }
