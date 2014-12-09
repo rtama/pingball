@@ -389,7 +389,7 @@ public class Ball extends Gadget {
     @Override
     public void drawCanvas(Graphics2D g2d) {
         System.out.println("printing ball");
-        Shape shape = new Ellipse2D.Double( (this.xPos + 1)*scaleFactor, (this.yPos + 1)*scaleFactor, 2*this.RADIUS*scaleFactor,2*this.RADIUS*scaleFactor);
+        Shape shape = new Ellipse2D.Double( (this.xPos + 1 - this.RADIUS)*scaleFactor, (this.yPos + 1- this.RADIUS)*scaleFactor, 2*this.RADIUS*scaleFactor,2*this.RADIUS*scaleFactor);
         // Multiply the radius by 2 because we want the length and width of the bounding box
         g2d.setColor(Color.YELLOW);;
         g2d.draw(shape);

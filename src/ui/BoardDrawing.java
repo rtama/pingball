@@ -54,6 +54,14 @@ public class BoardDrawing extends JPanel{
         this.pingball = client;
     }
     
+    /**
+     * Updates this pingball game to a new one
+     * @param newGame new pingball game
+     */
+    public void setClient(Pingball newGame) {
+        this.pingball = newGame;
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
