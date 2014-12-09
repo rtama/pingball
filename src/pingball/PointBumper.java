@@ -3,6 +3,7 @@ package pingball;
 import static physics.Geometry.reflectCircle;
 import static physics.Geometry.timeUntilCircleCollision;
 
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -91,7 +92,6 @@ public class PointBumper extends Gadget{
         // This gadget has no action.
     }
 
-    @Override
     public void drawCanvas(Graphics2D g2d) {
     }
 

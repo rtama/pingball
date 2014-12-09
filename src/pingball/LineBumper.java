@@ -100,7 +100,7 @@ public class LineBumper extends Gadget{
     }
 
     @Override
-    public void drawCanvas(Graphics2D g2d) {
+    public void drawCanvas(Graphics2D g2) {
     }
 
 }

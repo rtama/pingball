@@ -3,6 +3,8 @@ package pingball;
 import static physics.Geometry.reflectRotatingWall;
 import static physics.Geometry.timeUntilRotatingWallCollision;
 
+import java.awt.Graphics2D;
+
 import javax.swing.JComponent;
 
 import physics.LineSegment;
@@ -116,7 +118,7 @@ public class RotatingLineBumper extends Gadget{
     }
 
     @Override
-    public void drawCanvas(JComponent canvas) {
+    public void drawCanvas(Graphics2D g2) {
         // TODO Auto-generated method stub
         
     }
