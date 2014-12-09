@@ -81,6 +81,7 @@ public class CircleBumper extends Gadget{
     @Override
     public void collideWithBall(Ball ball) {
         ball.setVelocity(reflectCircle(this.circle.getCenter(), ball.getCircle().getCenter(),  ball.getVelocity(), getCoefficientOfReflection()));
+      //changes the color of the flipper at ball collision
         if (color == Color.ORANGE)
         	color = LIGHT_ORANGE;
         else

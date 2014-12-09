@@ -186,7 +186,7 @@ public abstract class Flipper extends Gadget{
                 theStaticCollision.getGadget().collideWithBall(ball);
             }
         }
-        
+        //changes the color of the flipper at ball collision
         if (color == Color.MAGENTA)
         	color = LIGHT_PINK;
         else
@@ -371,7 +371,6 @@ public abstract class Flipper extends Gadget{
     
     /**
      * Tell the current state of motion of this Flipper.
-     * 
      * @return true if the flipper is currently rotating, false otherwise.
      */
     public boolean isMoving() {
