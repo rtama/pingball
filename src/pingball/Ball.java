@@ -4,6 +4,10 @@ import physics.Circle;
 import physics.Vect;
 import static physics.Geometry.*;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.lang.Math;
 
 import javax.swing.JComponent;
@@ -383,8 +387,10 @@ public class Ball extends Gadget {
     }
 
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
-        
+    public void drawCanvas(Graphics2D g2d) {
+        Shape shape = new Ellipse2D.Double( 1.0*this.xPos, 1.0*this.yPos, 1,1);
+        g2d.setColor(Color.YELLOW);;
+        g2d.draw(shape);
+        g2d.fill(shape);
     }
 }
