@@ -124,6 +124,8 @@ public class Pingball {
      */
     public void connect(Socket socket) {
         this.board.changeSocket(socket);
+        clientSocket = socket;
+        (new Thread(new ClientReceiver(clientSocket,board))).start();
     }
     
     /**
@@ -166,7 +168,7 @@ public class Pingball {
      * Restarts the board to its original state. Disconnects from the server.
      */
     public void restartBoard() {
-        System.out.println(this.fileName);
+        //System.out.println(this.fileName);
         if (this.fileName.equals(defaultBoardName)) {
             this.board = new Board(defaultBoardName,.000025, .025, .000025);
             this.board.setSinglePlayerMode(true);
@@ -221,7 +223,7 @@ public class Pingball {
                 //update gadgets
                 board.update(MILLISECS_PER_FRAME);
                 
-                //System.out.println(board.toString());
+                System.out.println(board.toString());
             }
             //sleep to achieve desired FPS
             long elapsedTime = System.currentTimeMillis() - fieldTime;
@@ -255,7 +257,6 @@ public class Pingball {
         int port = DEFAULT_PORT;
         String hostName = "localhost";
         String filename = "";
-        Board board = null;
         //Board board = new Board(defaultBoardName,0,0,0);
         
         for (int i=0; i<args.length; i++) {

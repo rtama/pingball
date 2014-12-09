@@ -585,10 +585,12 @@ public class Board {
      * @param newSocket
      */
     public void changeSocket(Socket newSocket) {
-        try {
-            this.socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (this.socket != null) {
+            try {
+                this.socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         this.socket = newSocket;
     }
@@ -597,6 +599,9 @@ public class Board {
      * Disconnects this board from the server.
      */
     public void disconnect() {
+        if (this.socket == null) {
+            return;
+        }
         try {
             this.socket.close();
             this.singlePlayerMode = true;

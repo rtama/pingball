@@ -321,7 +321,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 PingballGUI main = new PingballGUI();
-                main.setVisible(true);
+                //main.setVisible(true);
             }
         });
         
