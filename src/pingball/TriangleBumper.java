@@ -221,8 +221,9 @@ public class TriangleBumper extends Gadget{
         		scaleFactor*(1+this.corners[2].getBoardY())};
         int npoints = 3;
         
-        g2d.setColor(Color.GREEN);
+        g2d.setColor(Color.BLACK);
         g2d.drawPolygon(xpoints, ypoints, npoints);
+        g2d.setColor(Color.GREEN);
         g2d.fillPolygon(xpoints, ypoints, npoints);;
 
     }

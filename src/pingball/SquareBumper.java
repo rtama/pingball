@@ -29,6 +29,7 @@ public class SquareBumper extends Gadget{
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     private final Gadget[] sides = new Gadget[4];
     private final Gadget[] corners = new Gadget[4];
+    private Color color = Color.WHITE;
     
     /**
      * Creates a square bumper of edge length 1L.
@@ -136,6 +137,10 @@ public class SquareBumper extends Gadget{
     public void collideWithBall(Ball ball) {
         double equalityBuffer = 0.0005;
         collisionHelper(ball, equalityBuffer).getGadget().collideWithBall(ball);
+        if (color == Color.WHITE) 
+        	color = Color.BLACK;
+        else
+        	color = Color.white;
         this.trigger();
     }
 
@@ -164,8 +169,10 @@ public class SquareBumper extends Gadget{
     @Override
     public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Rectangle2D.Double(scaleFactor*(boardX+1),scaleFactor*(1+ boardY), scaleFactor, scaleFactor);
-        g2d.setColor(Color.WHITE);;
+
+        g2d.setColor(Color.DARK_GRAY);
         g2d.draw(shape);
+        g2d.setColor(color);
         g2d.fill(shape);
     }
 

@@ -95,7 +95,6 @@ public class Portal extends Gadget {
     }
     
     /**
-     * 
      * @return true if the target Portal is in the other board
      */
     public boolean targetInOtherBoard(){ 
@@ -133,7 +132,6 @@ public class Portal extends Gadget {
         this.trigger();
         //System.out.println("Hit a portal " + targetPortalExists); 
         
-
         //Get Target Portal
         if (!portalInOtherBoard) { 
             if ( board.containsGadget(targetPortalName)){ 
@@ -163,7 +161,6 @@ public class Portal extends Gadget {
                     ball.remove();
                     board.sendMessage("bp " + otherBoardName + " " + targetPortalName + " " + ball.getXVel() + " " + ball.getYVel());
                 }
-
             }
             else{ //Target portal does not exist
                 //System.out.println("Target Portal does not Exist"); 
