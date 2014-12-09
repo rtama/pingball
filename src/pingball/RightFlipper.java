@@ -32,7 +32,7 @@ public class RightFlipper extends Flipper {
      * @param orientation clockwise orientation of the flipper. Must be 0, 90, 180, 270.
      */
     public RightFlipper(String name, int boardX, int boardY, int orientation) {
-        super(name, boardX, boardY);
+        super(name, boardX, boardY, orientation, false);    // false because it's a right flipper
 
         angularVelocityForward = 1.080; //<--|These should be the same sign for a proper flipper
         fullySweptAngleDegrees = 90; /// <--|
