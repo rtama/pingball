@@ -76,8 +76,8 @@ public class KeyNames {
     
     public static String keyToString(KeyEvent e) {
         String stringVersion = "";
-        if (keyName.containsKey(e)) {
-            stringVersion = keyName.get(e);
+        if (keyName.containsKey(e.getKeyCode())) {
+            stringVersion = keyName.get(e.getKeyCode());
         }
         return stringVersion;
     }

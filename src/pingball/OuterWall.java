@@ -325,7 +325,7 @@ public class OuterWall extends Gadget {
             y = 0;            
         }
         Shape shape = new Rectangle2D.Double(x, y, width, height);
-        System.out.println(this.wall.p1().x() + ", " + this.wall.p1().y());
+        //System.out.println(this.wall.p1().x() + ", " + this.wall.p1().y());
         g2d.setColor(color);;
         g2d.draw(shape);
         g2d.fill(shape);

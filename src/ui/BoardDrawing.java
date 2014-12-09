@@ -59,7 +59,10 @@ public class BoardDrawing extends JPanel{
      * @param newGame new pingball game
      */
     public void setClient(Pingball newGame) {
+        //System.out.println("set client");
         this.pingball = newGame;
+        //System.out.println(pingball == null);
+        this.repaint();
     }
     
     @Override
@@ -75,8 +78,9 @@ public class BoardDrawing extends JPanel{
         // Paints the components
         g2d.setColor(Color.blue);
         
+        //System.out.println("painting component");
         if (pingball != null) {
-            System.out.println("PINGBALL NOT NULL");
+            //System.out.println("PINGBALL NOT NULL");
             pingball.draw(g2d);            
         }
         

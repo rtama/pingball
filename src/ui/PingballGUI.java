@@ -77,6 +77,7 @@ public class PingballGUI extends JFrame implements KeyListener {
             }            
         });
         thread.start();
+        this.addKeyListener(this);
     }
     
     /**
@@ -89,6 +90,7 @@ public class PingballGUI extends JFrame implements KeyListener {
         setMenuBar();
         createLayout();
         addListeners();
+        this.addKeyListener(this);
     }
     
     /**
@@ -158,27 +160,30 @@ public class PingballGUI extends JFrame implements KeyListener {
         openFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int returnVal = fc.showOpenDialog(PingballGUI.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File boardFile = fc.getSelectedFile();
-                    String fileName = boardFile.getPath();
-                    System.out.println("I found the board file: " + fileName);
-                    Thread handler = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+                Thread fileThread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        int returnVal = fc.showOpenDialog(PingballGUI.this);
+                        if (returnVal == JFileChooser.APPROVE_OPTION) {
+                            File boardFile = fc.getSelectedFile();
+                            String fileName = boardFile.getPath();
+                            System.out.println("I found the board file: " + fileName);
                             try {
                                 client = new Pingball(fileName);
+                                canvas.setClient(client);
                                 client.gameLoop();
                             } catch (IOException | InterruptedException e1) {
                                 e1.printStackTrace();
-                            }                                                    
-                        }
-                    });
-                    handler.start();
-                    canvas.setClient(client);
-                } else {
-                    System.out.println("Aww");
-                }
+                            }
+                        } else {
+                            System.out.println("Aww");
+                        }                        
+                    }
+                    
+                });
+                fileThread.start();
+
             }
         });
 
