@@ -39,7 +39,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     private Timer boardTimer;
     private boolean isPaused;
     
-    private JPanel canvas;
+    private BoardDrawing canvas;
    
     // JMenu objects 
     private final JMenuBar menuBar = new JMenuBar();
@@ -175,7 +175,7 @@ public class PingballGUI extends JFrame implements KeyListener {
                         }
                     });
                     handler.start();
-                    canvas = new BoardDrawing(client);
+                    canvas.setClient(client);
                 } else {
                     System.out.println("Aww");
                 }
