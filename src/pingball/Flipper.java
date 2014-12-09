@@ -384,6 +384,7 @@ public abstract class Flipper extends Gadget{
         g2.setStroke(stroke);
         g2.setColor(color);
         g2.drawLine(x1, y1, x2, y2);
+        g2.setStroke(new BasicStroke());
 
     }
 

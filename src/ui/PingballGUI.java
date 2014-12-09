@@ -66,11 +66,11 @@ public class PingballGUI extends JFrame implements KeyListener {
         setMenuBar();
         createLayout();
         addListeners();
-//        try {
-//            client.gameLoop(canvas);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            client.gameLoop();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -162,8 +162,8 @@ public class PingballGUI extends JFrame implements KeyListener {
                         public void run() {
                             try {
                                 client = new Pingball(fileName);
-                               // client.gameLoop(canvas);
-                            } catch (IOException/* | InterruptedException */e1) {
+                                client.gameLoop();
+                            } catch (IOException | InterruptedException e1) {
                                 e1.printStackTrace();
                             }                                                    
                         }
