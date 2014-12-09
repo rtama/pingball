@@ -361,6 +361,7 @@ public abstract class Flipper extends Gadget{
         movingToInitialPosition = !movingToInitialPosition;
         currentTimeSinceMovement = Math.max(totalTimeToMove - currentTimeSinceMovement, 0);
         checkRep(); 
+        
     }
     
     /**

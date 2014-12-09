@@ -351,8 +351,6 @@ public class Ball extends Gadget {
      */
     public void remove(){ 
         this.removed = true; 
-        //System.out.println("setting ball to remove"); 
-        //System.out.println(this.removed) ;
         checkRep();
     }
     
@@ -391,7 +389,7 @@ public class Ball extends Gadget {
         System.out.println("printing ball");
         Shape shape = new Ellipse2D.Double( (this.xPos + 1 - this.RADIUS)*scaleFactor, (this.yPos + 1- this.RADIUS)*scaleFactor, 2*this.RADIUS*scaleFactor,2*this.RADIUS*scaleFactor);
         // Multiply the radius by 2 because we want the length and width of the bounding box
-        g2d.setColor(Color.YELLOW);;
+        g2d.setColor(Color.YELLOW);
         g2d.draw(shape);
         g2d.fill(shape);
     }
