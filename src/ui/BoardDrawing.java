@@ -71,6 +71,8 @@ public class BoardDrawing extends JPanel{
             System.out.println("PINGBALL NOT NULL");
             pingball.draw(g2d);            
         }
+        
+        this.repaint();
 //        for (ColoredShape coloredShape: shapes) {
 //        	g2d.setColor(coloredShape.getColor());;
 //        	g2d.draw(coloredShape.getShape());

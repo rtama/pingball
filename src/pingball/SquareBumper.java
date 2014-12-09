@@ -163,7 +163,7 @@ public class SquareBumper extends Gadget{
     
     @Override
     public void drawCanvas(Graphics2D g2d) {
-        Shape shape = new Rectangle2D.Double(scaleFactor*(boardX+1),scaleFactor*(1+ boardY), 1, 1);
+        Shape shape = new Rectangle2D.Double(scaleFactor*(boardX+1),scaleFactor*(1+ boardY), scaleFactor, scaleFactor);
         g2d.setColor(Color.WHITE);;
         g2d.draw(shape);
         g2d.fill(shape);

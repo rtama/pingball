@@ -34,7 +34,7 @@ public class LeftFlipper extends Flipper {
      * @param orientation clockwise orientation of the flipper. Must be 0, 90, 180, 270.
      */
     public LeftFlipper(String name, int boardX, int boardY, int orientation) {
-        super(name, boardX, boardY);
+        super(name, boardX, boardY, orientation, true); // true because this is a left flipper
         
         switch (orientation) {
         case ZERO_DEGREE_ORIENTATION:

@@ -208,10 +208,9 @@ public class Pingball {
     
     /**
      * Main game loop that plays pingball and draws the game.
-     * @param canvas to draw game onto
      * @throws InterruptedException
      */
-    public void gameLoop(JComponent canvas) throws InterruptedException{
+    public void gameLoop() throws InterruptedException{
         boolean gameIsOver = false;
         
         //game loop

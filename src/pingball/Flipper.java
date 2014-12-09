@@ -29,6 +29,7 @@ public abstract class Flipper extends Gadget{
     
     private LineSegment flipperEdge;
     private Color color = Color.MAGENTA;
+    private boolean left;   // true if left flipper, false if right flipper
     
     protected final int boardX;
     protected final int boardY;
@@ -60,56 +61,74 @@ public abstract class Flipper extends Gadget{
      * we have "a <= b + eq_buff" */
     protected final double equalityBuffer = .0005;
     
-    /**
-     * Create a flipper with its top-left corner at the specified coordinates. Subclasses
-     * will handle orientation.
-     * No name.
-     *  
-     * @param boardX top-left corner of the flipper x
-     * @param boardY top-left corner of the flipper y
-     */
-    public Flipper(int boardX, int boardY) {
-        this("", boardX, boardY);
-    }
+//    /**
+//     * Create a flipper with its top-left corner at the specified coordinates. Subclasses
+//     * will handle orientation.
+//     * No name.
+//     *  
+//     * @param boardX top-left corner of the flipper x
+//     * @param boardY top-left corner of the flipper y
+//     */
+//    public Flipper(int boardX, int boardY) {
+//        this("", boardX, boardY);
+//    }
     
     /**
-     * Create a flipper with a name, with its top-left corner at the specified coordinates. Subclasses
-     * will handle orientation.
+     * Create a flipper with a name, with its top-left corner at the specified coordinates.
      * 
      * @param name of this flipper
      * @param boardX top-left corner of the flipper x
      * @param boardY top-left corner of the flipper y
+     * @param orientation of the flipper, either 0 or 90 degrees
+     * @param left true if this is a left flipper, false if it's a right flipper
      */
-    public Flipper(String name, int boardX, int boardY) {
+    public Flipper(String name, int boardX, int boardY, int orientation, boolean left) {
         this.name = name;
         this.boardX = boardX;
         this.boardY = boardY;
+        this.left = left;
         
         this.pivotPoint = new Vect(boardX, boardY); 
         
         int dummyOrientation = 0;
         
-        final int DEGREES_IN_COMPLETE_REVOLUTION = 360;
+        //final int DEGREES_IN_COMPLETE_REVOLUTION = 360;
         
-        this.orientation = (DEGREES_IN_COMPLETE_REVOLUTION-dummyOrientation) % DEGREES_IN_COMPLETE_REVOLUTION;
+        //this.orientation = (DEGREES_IN_COMPLETE_REVOLUTION-dummyOrientation) % DEGREES_IN_COMPLETE_REVOLUTION;
+        this.orientation = orientation;
         this.initialAngle = DEFAULT_INITIAL_ANGLE - dummyOrientation; //From definition of Left Flipper
         
-        double x2;
-        double y2;
-        if (this.orientation==ZERO_DEGREE_ORIENTATION) {
-            x2 = boardX + FLIPPER_LENGTH;
-            y2 = boardY;
-        }else if (this.orientation==NINETY_DEGREE_ORIENTATION) {    // NOT SURE WHICH WAY NINETY DEGREES IS DEFINED, ASSUMING COUNTERCLOCKWISE
-            x2 = boardX;
-            y2 = boardY + FLIPPER_LENGTH;
-        }else if (this.orientation==ONE_EIGHTY_DEGREE_ORIENTATION) {
-            x2 = boardX - FLIPPER_LENGTH;
-            y2 = boardY;
+        // Initializing default values; these should always be reassigned
+        double x1=0;
+        double y1=0;
+        double x2=0;
+        double y2=0;
+        if (left) {
+            if (this.orientation==ZERO_DEGREE_ORIENTATION) {
+                x1 = boardX;
+                y1 = boardY;
+                x2 = x1;
+                y2 = boardY + FLIPPER_LENGTH;
+            }else if (this.orientation==NINETY_DEGREE_ORIENTATION) {    // NOT SURE WHICH WAY NINETY DEGREES IS DEFINED, ASSUMING COUNTERCLOCKWISE
+                x1 = boardX;
+                y1 = boardY;
+                x2 = boardX + FLIPPER_LENGTH;
+                y2 = y1;
+            }            
         }else {
-            x2 = boardX;
-            y2 = boardY - FLIPPER_LENGTH;
+            if (this.orientation==ZERO_DEGREE_ORIENTATION) {
+                x1 = boardX + FLIPPER_LENGTH;
+                y1 = boardY;
+                x2 = x1;
+                y2 = boardY + FLIPPER_LENGTH;
+            }else if (this.orientation==NINETY_DEGREE_ORIENTATION) {    // NOT SURE WHICH WAY NINETY DEGREES IS DEFINED, ASSUMING COUNTERCLOCKWISE
+                x1 = boardX;
+                y1 = boardY;
+                x2 = boardX + FLIPPER_LENGTH;
+                y2 = y1;
+            }               
         }
-        this.flipperEdge = new LineSegment(boardX, boardY, x2, y2);
+        this.flipperEdge = new LineSegment(x1, y1, x2, y2);
 
 
         //Start in initial position
@@ -365,6 +384,7 @@ public abstract class Flipper extends Gadget{
         g2.setStroke(stroke);
         g2.setColor(color);
         g2.drawLine(x1, y1, x2, y2);
+        g2.setStroke(new BasicStroke());
 
     }
 
