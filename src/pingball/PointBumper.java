@@ -93,12 +93,6 @@ public class PointBumper extends Gadget{
     }
 
     public void drawCanvas(Graphics2D g2d) {
-        Shape shape = new Ellipse2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, scaleFactor, scaleFactor);
-        g2d.setColor(Color.BLACK);;
-        g2d.setStroke(new BasicStroke(3.0f));
-        g2d.draw(shape);
-        //g2d.fill(shape);
-        
     }
 
 }
