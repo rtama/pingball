@@ -39,6 +39,8 @@ public class TriangleBumper extends Gadget{
     private static final double COEFFICIENT_OF_REFLECTION = 1.0;
     private final Gadget[] sides = new Gadget[3];
     private final Gadget[] corners = new Gadget[3];
+    private final Color LIGHT_GREEN = new Color(153, 204, 153);
+    private Color color = Color.GREEN;
     
     /**
      * Creates a triangle bumper without a name. Has edge length 1L, 1L, sqrt(2) L.
@@ -177,13 +179,18 @@ public class TriangleBumper extends Gadget{
     public void collideWithBall(Ball ball) {
         double equalityBuffer = 0.0005;
         collisionHelper(ball, equalityBuffer).getGadget().collideWithBall(ball);
+       
+        //changes the color of the flipper at ball collision
+        if (color == Color.GREEN)
+        	color = LIGHT_GREEN;
+        else
+        	color = Color.green;
         this.trigger();
     }
 
     @Override
     public void updateToTime(double timeToCollision) {
         // immutable. Nothing to update.
-        
     }
 
     @Override
@@ -223,7 +230,7 @@ public class TriangleBumper extends Gadget{
         
         g2d.setColor(Color.BLACK);
         g2d.drawPolygon(xpoints, ypoints, npoints);
-        g2d.setColor(Color.GREEN);
+        g2d.setColor(color);
         g2d.fillPolygon(xpoints, ypoints, npoints);;
 
     }

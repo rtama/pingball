@@ -29,6 +29,8 @@ public class CircleBumper extends Gadget{
     private final static double RADIUS = 0.5;
     private final static double COEFFICIENT_OF_REFLECTION = 1.0;
     private final Circle circle;
+    private Color color = Color.ORANGE;
+    private final Color LIGHT_ORANGE = new Color(255, 102, 0);
     
     /**
      * Creates a circle bumper of diameter 1L from a pair of coordinates 
@@ -79,6 +81,11 @@ public class CircleBumper extends Gadget{
     @Override
     public void collideWithBall(Ball ball) {
         ball.setVelocity(reflectCircle(this.circle.getCenter(), ball.getCircle().getCenter(),  ball.getVelocity(), getCoefficientOfReflection()));
+      //changes the color of the flipper at ball collision
+        if (color == Color.ORANGE)
+        	color = LIGHT_ORANGE;
+        else
+        	color = Color.ORANGE;
         this.trigger();
     }
 
@@ -110,7 +117,7 @@ public class CircleBumper extends Gadget{
         Shape shape = new Ellipse2D.Double(scaleFactor*(1+this.boardX), scaleFactor*(1+this.boardY), scaleFactor,scaleFactor);
         g2d.setColor(Color.BLACK);
         g2d.draw(shape);
-        g2d.setColor(Color.ORANGE);;
+        g2d.setColor(color);;
         g2d.fill(shape);
     }
 
