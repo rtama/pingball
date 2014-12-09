@@ -1,13 +1,16 @@
 package pingball;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
 
 /**
  * Represents a Flipper gadget. Flippers are size 2L x 2L elements which come in two varieties of orientation.
- * When triggered, they rotate backwards or forwards within a specific 90-degree arc. This class represents
- * the Left Flipper.
+ * When triggered, they rotate backwards or forwards within a specific 90-degree arc.
  * 
  * Thread Safety Argument: Flippers are contained in a single board so multiple boards (clients) will never
  *          access the same flipper. 
@@ -23,6 +26,10 @@ public abstract class Flipper extends Gadget{
     // Furthermore, angularVelocityForward and fullySweptAngleDegrees must have the same sign.
     // totalTimeToMove must have value:
     //          totalTimeToMove = fullySweptAngleDegrees / angularVelocityForward;
+    
+    private int scaleFactor = 20;
+    private LineSegment flipperEdge;
+    private Color color = Color.MAGENTA;
     
     protected final int boardX;
     protected final int boardY;
@@ -88,6 +95,24 @@ public abstract class Flipper extends Gadget{
         this.orientation = (DEGREES_IN_COMPLETE_REVOLUTION-dummyOrientation) % DEGREES_IN_COMPLETE_REVOLUTION;
         this.initialAngle = DEFAULT_INITIAL_ANGLE - dummyOrientation; //From definition of Left Flipper
         
+        double x2;
+        double y2;
+        if (this.orientation==ZERO_DEGREE_ORIENTATION) {
+            x2 = boardX + FLIPPER_LENGTH;
+            y2 = boardY;
+        }else if (this.orientation==NINETY_DEGREE_ORIENTATION) {    // NOT SURE WHICH WAY NINETY DEGREES IS DEFINED, ASSUMING COUNTERCLOCKWISE
+            x2 = boardX;
+            y2 = boardY + FLIPPER_LENGTH;
+        }else if (this.orientation==ONE_EIGHTY_DEGREE_ORIENTATION) {
+            x2 = boardX - FLIPPER_LENGTH;
+            y2 = boardY;
+        }else {
+            x2 = boardX;
+            y2 = boardY - FLIPPER_LENGTH;
+        }
+        this.flipperEdge = new LineSegment(boardX, boardY, x2, y2);
+
+
         //Start in initial position
         this.movingToInitialPosition = true;
         int extraMoveTime = 1; 
@@ -170,7 +195,7 @@ public abstract class Flipper extends Gadget{
         Vect flipperVector = makeFlipperVector(timeSinceMovementStarted, isMovingToInitialPosition); 
         
         Circle flipperTip = new Circle(pivotPoint.plus(flipperVector), radiusAtTipOfFlipper); //Radius-zero circle at tip of flipper
-        LineSegment flipperEdge = new LineSegment(pivotPoint,flipperTip.getCenter());
+        this.flipperEdge = new LineSegment(pivotPoint,flipperTip.getCenter());
         
         int pointsIndex = 2; 
         int edgeIndex = 1; 
@@ -327,6 +352,21 @@ public abstract class Flipper extends Gadget{
      */
     public boolean isMoving() {
         return currentTimeSinceMovement < totalTimeToMove;
+    }
+    
+    @Override
+    public void drawCanvas(Graphics2D g2) {
+        System.out.println("printing flipper");
+
+        int x1 = (int) (this.flipperEdge.p1().x()+1) * scaleFactor; // Add 1 to position coordinates to account for walls
+        int y1 = (int) (this.flipperEdge.p1().y()+1) * scaleFactor;
+        int x2 = (int) (this.flipperEdge.p2().x()+1) * scaleFactor;
+        int y2 = (int) (this.flipperEdge.p2().y()+1) * scaleFactor;
+        BasicStroke stroke = new BasicStroke(scaleFactor/2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        g2.setStroke(stroke);
+        g2.setColor(color);
+        g2.drawLine(x1, y1, x2, y2);
+
     }
 
 }
