@@ -1,5 +1,10 @@
 package pingball;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.JComponent;
 
 /**
@@ -204,11 +209,17 @@ public class TriangleBumper extends Gadget{
     public void action() {
         // This gadget has no action.
     }
-
+    
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
+    public void drawCanvas(Graphics2D g2d) {
+        int xpoints[] = {this.corners[0].getBoardX(), this.corners[1].getBoardX(), this.corners[2].getBoardX()};
+        int ypoints[] = {this.corners[0].getBoardY(), this.corners[1].getBoardY(), this.corners[2].getBoardY()};
+        int npoints = 3;
         
+        g2d.setColor(Color.GREEN);
+        g2d.drawPolygon(xpoints, ypoints, npoints);
+        g2d.fillPolygon(xpoints, ypoints, npoints);;
+
     }
 
 }

@@ -104,10 +104,11 @@ public class CircleBumper extends Gadget{
         // This gadget has no action.
     }
 
+    
     @Override
     public void drawCanvas(Graphics2D g2d) {
-        Shape shape = new Ellipse2D.Double(boardX, boardY, 1, 1);
-        g2d.setColor(Color.WHITE);;
+        Shape shape = new Ellipse2D.Double( 1.0*this.boardX, 1.0*this.boardY, 1,1);
+        g2d.setColor(Color.ORANGE);;
         g2d.draw(shape);
         g2d.fill(shape);
     }

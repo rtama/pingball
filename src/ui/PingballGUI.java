@@ -24,7 +24,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
-
 import pingball.Pingball;
 
    /**
