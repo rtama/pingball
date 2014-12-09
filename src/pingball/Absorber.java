@@ -196,7 +196,9 @@ public class Absorber extends Gadget{
     @Override
     public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Rectangle2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, this.width*scaleFactor, this.height*scaleFactor);
-        g2d.setColor(Color.YELLOW);
+        g2d.setColor(Color.BLACK);
+        g2d.draw(shape);
+        g2d.setColor(Color.RED);
         g2d.fill(shape);
     }
 
