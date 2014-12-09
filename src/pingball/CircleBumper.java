@@ -108,8 +108,9 @@ public class CircleBumper extends Gadget{
     @Override
     public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Ellipse2D.Double(scaleFactor*(1+this.boardX), scaleFactor*(1+this.boardY), scaleFactor,scaleFactor);
-        g2d.setColor(Color.ORANGE);;
+        g2d.setColor(Color.BLACK);
         g2d.draw(shape);
+        g2d.setColor(Color.ORANGE);;
         g2d.fill(shape);
     }
 
