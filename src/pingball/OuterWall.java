@@ -31,7 +31,6 @@ public class OuterWall extends Gadget {
     private String linkedBoardName; 
     private final wallType type;
     
-    private int scaleFactor = 20;
     private Color color = Color.CYAN;
     
     /*

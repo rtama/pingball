@@ -27,7 +27,6 @@ public abstract class Flipper extends Gadget{
     // totalTimeToMove must have value:
     //          totalTimeToMove = fullySweptAngleDegrees / angularVelocityForward;
     
-    private int scaleFactor = 20;
     private LineSegment flipperEdge;
     private Color color = Color.MAGENTA;
     
