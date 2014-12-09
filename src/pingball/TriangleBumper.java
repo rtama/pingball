@@ -179,6 +179,8 @@ public class TriangleBumper extends Gadget{
     public void collideWithBall(Ball ball) {
         double equalityBuffer = 0.0005;
         collisionHelper(ball, equalityBuffer).getGadget().collideWithBall(ball);
+       
+        //changes the color of the flipper at ball collision
         if (color == Color.GREEN)
         	color = LIGHT_GREEN;
         else
@@ -189,7 +191,6 @@ public class TriangleBumper extends Gadget{
     @Override
     public void updateToTime(double timeToCollision) {
         // immutable. Nothing to update.
-        
     }
 
     @Override
