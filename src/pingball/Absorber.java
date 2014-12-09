@@ -1,5 +1,11 @@
 package pingball;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +48,7 @@ public class Absorber extends Gadget{
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
     private final double maxBoardX = 19;
     private final double maxBoardY = 19;
+    private final int scaleFactor = 20;
     
     private boolean isHoldingBall = false;
     private List<Ball> heldBall = new ArrayList<Ball>();
@@ -187,9 +194,13 @@ public class Absorber extends Gadget{
     }
 
     @Override
-    public void drawCanvas(JComponent canvas) {
-        // TODO Auto-generated method stub
-        
+    public void drawCanvas(Graphics2D g2d) {
+        Shape shape = new Rectangle2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, this.width*scaleFactor, this.height*scaleFactor);
+        //g2d.setColor(Color.BLACK);
+        //g2d.setStroke(new BasicStroke(1.0f));
+        //g2d.draw(shape);
+        g2d.setColor(Color.YELLOW);
+        g2d.fill(shape);
     }
 
 }

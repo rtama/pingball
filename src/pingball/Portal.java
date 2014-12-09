@@ -216,7 +216,8 @@ public class Portal extends Gadget {
         g2d.setColor(Color.BLACK);;
         g2d.setStroke(new BasicStroke(3.0f));
         g2d.draw(shape);
-        //g2d.fill(shape);
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fill(shape);
         
     }
 }
