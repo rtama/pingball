@@ -81,11 +81,11 @@ public class PingballFactory extends PingballBaseListener {
         for (int i = 0; i < ctx.getChildCount(); i++){ 
                     
             if (children.get(i).toString().contains(KEYUP)) {
-                keyUp = children.get(i+SHIFT).getText(); 
+                keyUp = children.get(i+SHIFT+1).getText(); // Add 1 because the definition includes the word 'keyup' which it must skip
             }
             
             else if (children.get(i).toString().contains(KEYDOWN)) {
-                keyDown = children.get(i+SHIFT).getText(); 
+                keyDown = children.get(i+SHIFT+1).getText(); // Add 1 because the definition includes the word 'keydown' which it must skip
             }
             
             else if (children.get(i).toString().contains(ACTION)) {

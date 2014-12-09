@@ -17,10 +17,12 @@ circleBumper name=CircleE x=5 y=10
 
 # define an absorber to catch the ball
  absorber name=Abs x=0 y=18 width=20 height=2
+
+keyup key=space action=Abs
  
 # define events between gizmos
-fire trigger=CircleA action=Abs
-fire trigger=CircleB action=Abs
-fire trigger=CircleC action=Abs
-fire trigger=CircleD action=Abs
-fire trigger=CircleE action=Abs
+#fire trigger=CircleA action=Abs
+#fire trigger=CircleB action=Abs
+#fire trigger=CircleC action=Abs
+#fire trigger=CircleD action=Abs
+#fire trigger=CircleE action=Abs

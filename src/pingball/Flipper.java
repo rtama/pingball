@@ -374,7 +374,7 @@ public abstract class Flipper extends Gadget{
     
     @Override
     public void drawCanvas(Graphics2D g2) {
-        System.out.println("printing flipper");
+        //System.out.println("printing flipper");
 
         int x1 = (int) (this.flipperEdge.p1().x()+1) * scaleFactor; // Add 1 to position coordinates to account for walls
         int y1 = (int) (this.flipperEdge.p1().y()+1) * scaleFactor;

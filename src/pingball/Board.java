@@ -64,8 +64,8 @@ public class Board {
     private Socket socket;
     private PrintWriter out;
 
-    private Map<String, ArrayList<String>> keyups;
-    private Map<String, ArrayList<String>> keydowns;
+    private Map<String, ArrayList<String>> keyups = new HashMap<String, ArrayList<String>>();
+    private Map<String, ArrayList<String>> keydowns = new HashMap<String, ArrayList<String>>();
 
     private Boolean paused = false;
 
@@ -547,9 +547,12 @@ public class Board {
      * @param key that was pressed
      */
     public void keyPressed(String key) {
-        for (String gadgetName : keydowns.get(key)) {
-            this.activate(gadgetName);
+        if (keydowns.containsKey(key)) {
+            for (String gadgetName : keydowns.get(key)) {
+                this.activate(gadgetName);
+            }            
         }
+
     }
 
     /**
@@ -557,9 +560,12 @@ public class Board {
      * @param key that was released
      */
     public void keyReleased(String key) {
-        for (String gadgetName : keyups.get(key)) {
-            this.activate(gadgetName);
+        if (keyups.containsKey(key)) {
+            for (String gadgetName : keyups.get(key)) {
+                this.activate(gadgetName);
+            }            
         }
+
     }
 
     /**
