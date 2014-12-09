@@ -290,7 +290,21 @@ public class OuterWall extends Gadget {
         // Check when the ball will collide with the wall (regardless of whether or not it is solid)
         return Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
     }
-
+    
+    public void drawBoardNames(wallType walltype, Graphics2D g2d) {
+        String boardName =this.getLinkedBoardName();
+        if (!boardName.equals("")) {
+            switch(walltype) {
+                case TOP_WALL:
+                case BOTTOM_WALL:
+                case LEFT_WALL:
+                case RIGHT_WALL:
+            }
+        } else {
+            
+        }
+    }
+    
     @Override
     public void drawCanvas(Graphics2D g2d) {
         int height; // of rectangle shape
