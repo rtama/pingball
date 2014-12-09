@@ -29,6 +29,7 @@ public abstract class Flipper extends Gadget{
     
     private LineSegment flipperEdge;
     private Color color = Color.MAGENTA;
+    private final Color LIGHT_PINK= new Color(255, 186, 210);
     private boolean left;   // true if left flipper, false if right flipper
     
     protected final int boardX;
@@ -186,6 +187,10 @@ public abstract class Flipper extends Gadget{
             }
         }
         
+        if (color == Color.MAGENTA)
+        	color = LIGHT_PINK;
+        else
+        	color = Color.MAGENTA;
         trigger();
         
     }
