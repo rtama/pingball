@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import javax.swing.JComponent;
-
-import physics.*;
+import physics.Circle;
+import physics.Geometry;
+import physics.Vect;
 
 /**
  * 
@@ -92,6 +92,15 @@ public class Portal extends Gadget {
         }
         
         checkRep(); 
+    }
+    
+    /**
+     * Tell the server about the existence of this portal.
+     */
+    public void broadcastPresence() {
+        if (! board.getSinglePlayerMode()){ 
+            board.sendMessage("np "+board.name + " " + name + " " + otherBoardName + " " + targetPortalName ); 
+        }
     }
     
     /**

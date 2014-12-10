@@ -49,10 +49,10 @@ public class Ball extends Gadget {
     private String sendToBoard;
     private boolean shouldSend = false;
     
-    private final double xMax = 19.75;     // No part of the .25 radius ball can be beyond 20,20
-    private final double yMax = 19.75;
-    private final double yMin = 0;    
-    private final double xMin = 0; 
+    private final double xMax = 20 - RADIUS;     // No part of the .25 radius ball can be beyond 20,20
+    private final double yMax = 20 - RADIUS;
+    private final double yMin = RADIUS;    
+    private final double xMin = RADIUS; 
     
     private final double coefficientOfReflection = 1.0; 
     

@@ -79,7 +79,7 @@ public class ClientReceiver implements Runnable {
      */
     private void handleRequest(String message) throws IOException {
 
-        //System.out.println("Client Received:"+message);
+        System.out.println("Client Received:"+message);
         String[] messageParts = message.split(" ");
         String command = messageParts[0];
         final int BG_MESSAGE_LENGTH = 2;
