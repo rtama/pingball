@@ -13,6 +13,7 @@ leftFlipper name=FlipB x=4 y=10 orientation=90
 leftFlipper name=FlipC x=9 y=8 orientation=90
 leftFlipper name=FlipD x=15 y=8 orientation=90
 
+
 # define some right flippers 
 rightFlipper name=FlipE x=2 y=15 orientation=0
 rightFlipper name=FlipF x=17 y=15 orientation=0
@@ -40,5 +41,24 @@ fire trigger=CircleF action=FlipD
 fire trigger=Abs action=FlipE
 fire trigger=Abs action=FlipF
 fire trigger=Abs action=Abs
+
+#TESTED KEYCONTROLS:
+keyup key=space action=FlipA
+keyup key=left action= FlipB
+keyup key=right action=FlipC
+keyup key=up action=FlipD
+keyup key=down action=Abs
+#keyup key=minus action=FlipA
+#keyup key=equals action=FlipA
+#keyup key= backspace action=FlipA
+#keyup key=openbracket action=FlipA
+#keyup key=closebracket action=FlipA
+#keyup key=backlash action=FlipA
+#keyup key=semicolon action=FlipA
+#keyup key=quote action=FlipA
+#keyup key=enter action=FlipA
+#keyup key=comma action=FlipA
+#keyup key=period action=FlipA
+#keyup key=slash action=FlipA
 
 
