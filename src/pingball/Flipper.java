@@ -62,18 +62,6 @@ public abstract class Flipper extends Gadget{
      * we have "a <= b + eq_buff" */
     protected final double equalityBuffer = .0005;
     
-//    /**
-//     * Create a flipper with its top-left corner at the specified coordinates. Subclasses
-//     * will handle orientation.
-//     * No name.
-//     *  
-//     * @param boardX top-left corner of the flipper x
-//     * @param boardY top-left corner of the flipper y
-//     */
-//    public Flipper(int boardX, int boardY) {
-//        this("", boardX, boardY);
-//    }
-    
     /**
      * Create a flipper with a name, with its top-left corner at the specified coordinates.
      * 
@@ -104,7 +92,7 @@ public abstract class Flipper extends Gadget{
         double y1=0;
         double x2=0;
         double y2=0;
-        if (left) {
+        if (this.left) {
             if (this.orientation==ZERO_DEGREE_ORIENTATION) {
                 x1 = boardX;
                 y1 = boardY;
@@ -139,7 +127,7 @@ public abstract class Flipper extends Gadget{
         checkRep();
     }
     
-    public void checkRep(){
+    private void checkRep(){
         assert(orientation==ZERO_DEGREE_ORIENTATION||orientation==NINETY_DEGREE_ORIENTATION
                 ||orientation==ONE_EIGHTY_DEGREE_ORIENTATION||orientation==TWO_SEVENTY_DEGREE_ORIENTATION);
         assert(angularVelocityForward/angularVelocityForward==fullySweptAngleDegrees/fullySweptAngleDegrees);

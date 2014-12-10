@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import javax.swing.JComponent;
-
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
@@ -30,10 +28,9 @@ public class OuterWall extends Gadget {
     private final boolean isHorizontal;
     private String linkedBoardName; 
     private final wallType type;
-    
+
     private Color color = Color.DARK_GRAY;
-    private final Color LIGHT_GRAY = new Color(192, 192, 192);
-    
+
     /*
      * Mutability:
      * OuterWall is mutable. All but two of OuterWall's fields are final and immutable.
@@ -62,7 +59,7 @@ public class OuterWall extends Gadget {
     public OuterWall(double startX, double startY, double endX, double endY, wallType type) {
         this("", startX, startY, endX, endY, type);
     }
-    
+
     /**
      * Creates a wall which can only be horizontal or vertical (must start and
      * end either at the same x coordinate, or the same y coordinate)
@@ -154,7 +151,7 @@ public class OuterWall extends Gadget {
     public void addTriggeredGadget(Gadget triggeredGadget) {
         // Wall can't trigger any gadgets.
     }
-    
+
     /**
      * Gets the name of the Board that this wall is linked to.
      * @return name of the board that this ball links to if it is linked (otherwise return an empty name)
@@ -165,7 +162,7 @@ public class OuterWall extends Gadget {
         }
         return this.linkedBoardName; 
     }
-    
+
     /**
      * Sets the name of the Board that this wall is linked to.
      * @param name of the board that this ball links to
@@ -174,7 +171,7 @@ public class OuterWall extends Gadget {
         isSolid = false;
         this.linkedBoardName = name; 
     }
-    
+
     /**
      * 
      * @return whether this wall is a top, left, right, or bottom wall
@@ -186,25 +183,25 @@ public class OuterWall extends Gadget {
     @Override
     public char[][] getSymbol() {
         char[][] symbol = new char[Board.WIDTH][Board.HEIGHT];
-        
+
         //Fill board with IGNORE_CHARs
         for (int i=0; i<Board.WIDTH; i++) {
             for (int j=0; j<Board.HEIGHT; j++) {
                 symbol[i][j] = Board.IGNORE_CHAR;
             }
         }
-        
+
         //Calculate midpoint for LinkedBoardName
         int boardNameLength = 0;
         int dotsBeforeName = 0;
         int dotsAfterName = 0;
         if (!isSolid){
-             boardNameLength = linkedBoardName.length(); 
-             dotsBeforeName = Math.round(((Board.WIDTH - boardNameLength) / 2)); 
-             dotsAfterName = Board.WIDTH - dotsBeforeName - boardNameLength;  
-             if (dotsBeforeName < 0) dotsBeforeName =0; 
+            boardNameLength = linkedBoardName.length(); 
+            dotsBeforeName = Math.round(((Board.WIDTH - boardNameLength) / 2)); 
+            dotsAfterName = Board.WIDTH - dotsBeforeName - boardNameLength;  
+            if (dotsBeforeName < 0) dotsBeforeName =0; 
         }
-   
+
         if (isHorizontal) {
             if (this.wall.p1().y() == 0) {
                 for (int i=0; i<Board.WIDTH; i++) {
@@ -274,19 +271,13 @@ public class OuterWall extends Gadget {
     @Override
     public void collideWithBall(Ball ball) {
         if (!isSolid) {
-            // Notify the server that the ball will go through this wall //TODO
-            
-            //ball.remove(); //Remove the ball from the Board. 
-            //System.out.println("Wall wants to remove ball");
+            // Notify the server that the ball will go through this wall
             ball.sendToBoardMessage(linkedBoardName,this.type);
+            //Remove the ball from the Board. 
             ball.remove();
         }else {
             // Update the ball's velocity to that of after the collision
             ball.setVelocity(Geometry.reflectWall(wall, ball.getVelocity(), coeffOfRefl));   
-/*            if (color == Color.DARK_GRAY)
-            	color = Color.LIGHT_GRAY;
-            else
-            	color = Color.DARK_GRAY;*/
         }
     }
 
@@ -302,7 +293,7 @@ public class OuterWall extends Gadget {
         int width;
         double x;
         double y;
-        
+
         if (this.type.equals(wallType.BOTTOM_WALL)) {
             height = scaleFactor;
             width = Board.WIDTH*scaleFactor;
@@ -325,7 +316,6 @@ public class OuterWall extends Gadget {
             y = 0;            
         }
         Shape shape = new Rectangle2D.Double(x, y, width, height);
-        //System.out.println(this.wall.p1().x() + ", " + this.wall.p1().y());
         g2d.setColor(color);;
         g2d.draw(shape);
         g2d.fill(shape);

@@ -3,8 +3,6 @@ package pingball;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import javax.swing.JComponent;
-
 
 /**
  * Represents a gadget, an active object on the pingball playing board.

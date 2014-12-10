@@ -15,4 +15,4 @@ absorber name=Abs x=0 y=19 width=20 height=1
 fire trigger=Abs action=Abs 
 
 # make two portals
-portal name=Gamma x=12 y=2 otherPortal=Omega
+portal name=Gamma x=12 y=2 otherBoard=Mars otherPortal=Alpha
