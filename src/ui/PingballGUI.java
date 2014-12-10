@@ -35,6 +35,8 @@ import pingball.Pingball;
  * received, it will be converted to a KeyboardStroke enum and passed to the
  * model.
  * 
+ * Drawing the board, gadgets are synchronized.
+ * (If list of gadgets are being modified, won't draw)
  * 
  */
 

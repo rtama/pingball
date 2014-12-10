@@ -34,8 +34,8 @@ public abstract class Flipper extends Gadget{
     
     protected final int boardX;
     protected final int boardY;
-    protected final int width = 2;
-    protected final int height = 2;
+    protected final int WIDTH = 2;
+    protected final int HEIGHT = 2;
     protected static final double COEFFICIENT_OF_REFLECTION = 0.95;
     protected static final double FLIPPER_LENGTH = 2.0;
     protected double angularVelocityForward = -1.080; //<--|These should be the same sign for a proper flipper
@@ -363,6 +363,7 @@ public abstract class Flipper extends Gadget{
     
     @Override
     public void drawCanvas(Graphics2D g2) {
+
         int x1 = (int) (this.flipperEdge.p1().x()+1) * scaleFactor; // Add 1 to position coordinates to account for walls
         int y1 = (int) (this.flipperEdge.p1().y()+1) * scaleFactor;
         int x2 = (int) (this.flipperEdge.p2().x()+1) * scaleFactor;
