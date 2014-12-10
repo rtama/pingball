@@ -33,7 +33,7 @@ public class BumperTests {
     public void stepBoard(Board board, int steps){
         for (int i=1; i<steps; i++){ 
             board.update(200);
-            System.out.println(board.toString()) ;
+            //System.out.println(board.toString()) ;
         }
     }
     
@@ -51,7 +51,7 @@ public class BumperTests {
         Gadget triangleBumper = new TriangleBumper(5,5,0); 
         board.addGadget(triangleBumper); 
         //Hit top wall
-        System.out.println("Hitting Top Wall"); 
+        ////System.out.println("Hitting Top Wall"); 
         Ball ball = new Ball(5,1, 0,.001); 
         board.addBall(ball);
         stepBoard(board,24); 
@@ -59,7 +59,7 @@ public class BumperTests {
         //Should bounce back up 
         
         //Hit Bottom Wall
-        System.out.println("Hitting Bottom Wall"); 
+        //System.out.println("Hitting Bottom Wall"); 
 
 
         updateBall(ball, new Vect(5,10), new Vect(0,-5));
@@ -68,14 +68,14 @@ public class BumperTests {
         //Should hit the longWall and be deflected to the to the right
         
         //Hit RightWall(long)
-        System.out.println("Hitting Right Wall"); 
+        //System.out.println("Hitting Right Wall"); 
         updateBall(ball, new Vect(10.5,5.5), new Vect (-.001,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardY() > 5.5);
         //Should hit the longWall and be deflected to the bottom
         
         //Hit leftWall
-        System.out.println("Hitting Left Wall"); 
+        //System.out.println("Hitting Left Wall"); 
         updateBall(ball, new Vect(1,5), new Vect (-.005,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardX() < 5);        
@@ -89,7 +89,7 @@ public class BumperTests {
         Gadget triangleBumper = new TriangleBumper(5,5,90); 
         board.addGadget(triangleBumper); 
         //Hit top wall
-        System.out.println("Hitting Top Wall"); 
+        //System.out.println("Hitting Top Wall"); 
         Ball ball = new Ball(5,1, 0,.005); 
         board.addBall(ball);
         stepBoard(board,50); 
@@ -97,14 +97,14 @@ public class BumperTests {
         //Should bounce back up 
         
         //Hit Bottom Wall
-        System.out.println("Hitting Bottom Wall"); 
+        //System.out.println("Hitting Bottom Wall"); 
         updateBall(ball,new Vect(5,10), new Vect(0,-.005));
         stepBoard(board,50); 
         assertTrue(ball.getBoardX() < 5);
         //Should hit the longWall and be deflected to the to the left
         
         //Hit RightWall(long)
-        System.out.println("Hitting Right Wall"); 
+        //System.out.println("Hitting Right Wall"); 
         updateBall(ball,new Vect(10,5), new Vect (-.005,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardX() > 5); 
@@ -112,7 +112,7 @@ public class BumperTests {
         
         
         //Hit leftWall
-        System.out.println("Hitting Left Wall"); 
+        //System.out.println("Hitting Left Wall"); 
         updateBall(ball, new Vect(1,5.5), new Vect (.005,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardY() > 5);
@@ -126,7 +126,7 @@ public class BumperTests {
         Gadget triangleBumper = new TriangleBumper(5,5,180); 
         board.addGadget(triangleBumper); 
         //Hit top wall
-        System.out.println("Hitting Top Wall"); 
+        //System.out.println("Hitting Top Wall"); 
         Ball ball = new Ball(5.5,1, 0,.005); 
         board.addBall(ball);
         stepBoard(board,30); 
@@ -134,7 +134,7 @@ public class BumperTests {
         //Should hit longWall and be deflected to the left
         
         //Hit Bottom Wall
-        System.out.println("Hitting Bottom Wall"); 
+        //System.out.println("Hitting Bottom Wall"); 
         updateBall(ball,new Vect(5.5,10), new Vect(0,-.005));
 
         stepBoard(board,50); 
@@ -142,7 +142,7 @@ public class BumperTests {
         //Should bounce back to the bottom
         
         //Hit RightWall(long)
-        System.out.println("Hitting Right Wall"); 
+        //System.out.println("Hitting Right Wall"); 
         updateBall(ball,new Vect(10.5,5), new Vect (-.005,0));
         stepBoard(board,50);  
         assertTrue(ball.getBoardX() > 5); 
@@ -150,7 +150,7 @@ public class BumperTests {
         
         
         //Hit leftWall
-        System.out.println("Hitting Left Wall"); 
+        //System.out.println("Hitting Left Wall"); 
         updateBall(ball, new Vect(1.5,5), new Vect (.005,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardY() < 5); 
@@ -164,7 +164,7 @@ public class BumperTests {
         Gadget triangleBumper = new TriangleBumper(5,5,270); 
         board.addGadget(triangleBumper); 
         //Hit top wall
-        System.out.println("Hitting Top Wall"); 
+        //System.out.println("Hitting Top Wall"); 
         Ball ball = new Ball(5.5,1, 0,.005); 
         board.addBall(ball);
         stepBoard(board,50); 
@@ -172,21 +172,21 @@ public class BumperTests {
         //Should hit longWall and be deflected to the right
         
         //Hit Bottom Wall
-        System.out.println("Hitting Bottom Wall"); 
+        //System.out.println("Hitting Bottom Wall"); 
         updateBall(ball,new Vect(5.5,10), new Vect(0,-.005));
         stepBoard(board,50); 
         assertTrue(ball.getBoardY() > 5);
         //Should bounce back to the bottom
         
         //Hit RightWall(long)
-        System.out.println("Hitting Right Wall"); 
+        //System.out.println("Hitting Right Wall"); 
         updateBall(ball,new Vect(10.5,5), new Vect (-.005,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardY() < 5); 
         //Should hit longWall and be deflected up
         
         //Hit leftWall
-        System.out.println("Hitting Left Wall"); 
+        //System.out.println("Hitting Left Wall"); 
         updateBall(ball,new Vect(1.5,5), new Vect (.005,0));
         stepBoard(board,50); 
         assertTrue(ball.getBoardX() < 5);
@@ -217,11 +217,11 @@ public class BumperTests {
         
         
         //Bottom wall
-        System.out.println("Hitting bottom wall");
+        //System.out.println("Hitting bottom wall");
         updateBall(ball, new Vect(5, 10), new Vect(0, -.001));
         stepBoard(board, 20);
-        System.out.println(ball.getBoardY());
-        System.out.println(ball.getBoardX());
+        //System.out.println(ball.getBoardY());
+        //System.out.println(ball.getBoardX());
         assertEquals(ball.getBoardY(), 6);
         assertEquals(ball.getBoardX(), 5);
     }
@@ -236,7 +236,7 @@ public class BumperTests {
         
         
         // Left wall
-        System.out.println("Hitting left wall");
+        //System.out.println("Hitting left wall");
         
         updateBall(ball, new Vect(3, 5), new Vect(.001, 0));
         stepBoard(board, 20);
@@ -256,11 +256,11 @@ public class BumperTests {
         
         
         // Right Wall
-        System.out.println("Hitting right wall");
+        //System.out.println("Hitting right wall");
         updateBall(ball, new Vect(7, 5), new Vect(-.001, 0));
         stepBoard(board, 20);
-        System.out.println(ball.getBoardY());
-        System.out.println(ball.getBoardX());
+        //System.out.println(ball.getBoardY());
+        //System.out.println(ball.getBoardX());
         assertEquals(ball.getBoardY(), 5);
         assertEquals(ball.getBoardX(), 9);
     }
@@ -274,8 +274,8 @@ public class BumperTests {
         board.addGadget(sb);
         stepBoard(board, 20);
         
-        System.out.println(ball.getBoardY());
-        System.out.println(ball.getBoardX());
+        //System.out.println(ball.getBoardY());
+        //System.out.println(ball.getBoardX());
         assertEquals(ball.getBoardY(), 4);
         assertEquals(ball.getBoardX(), 4);
     }
@@ -289,8 +289,8 @@ public class BumperTests {
         board.addGadget(sb);
         stepBoard(board, 20);
         
-        System.out.println(ball.getBoardY());
-        System.out.println(ball.getBoardX());
+        //System.out.println(ball.getBoardY());
+        //System.out.println(ball.getBoardX());
         assertEquals(ball.getBoardY(), 4);
         assertEquals(ball.getBoardX(), 4);
     }
@@ -306,10 +306,9 @@ public class BumperTests {
         
         board.addGadget(abs);
         stepBoard(board, 20);
-        System.out.println("a;lskdjgaoiwejgoiwqjegoisjadlgkjasdlkgjaslkdgjaslkjdg");
         
-        System.out.println(ball.getBoardY());
-        System.out.println(ball.getBoardX());
+        //System.out.println(ball.getBoardY());
+        //System.out.println(ball.getBoardX());
         assertEquals(ball.getBoardY(), 13);
         assertEquals(ball.getBoardX(), 10);
     }
