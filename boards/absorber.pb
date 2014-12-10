@@ -19,6 +19,28 @@ circleBumper name=CircleE x=5 y=10
  absorber name=Abs x=0 y=18 width=20 height=2
 
 keyup key=space action=Abs
+
+
+#TESTED KEYCONTROLS:
+#keyup key=space action=Abs
+#keyup key=left action= Abs
+#keyup key=right action=Abs
+keyup key=up action=Abs
+keyup key=down action=Abs
+#keyup key=minus action=Abs
+#keyup key=equals action=Abs
+#keyup key= backspace action=Abs
+#keyup key=openbracket action=Abs
+#keyup key=closebracket action=Abs
+#keyup key=backlash action=Abs
+#keyup key=semicolon action=Abs
+#keyup key=quote action=Abs
+#keyup key=enter action=Abs
+#keyup key=comma action=Abs
+#keyup key=period action=Abs
+#keyup key=slash action=Abs
+
+
  
 # define events between gizmos
 #fire trigger=CircleA action=Abs
