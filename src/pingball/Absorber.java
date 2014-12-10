@@ -42,9 +42,9 @@ public class Absorber extends Gadget{
     private final int width;
     private final int height;
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
-    private final double maxBoardX = 19.75; // size of board - ball radius
-    private final double maxBoardY = 19.75;
-    private final int scaleFactor = 20;
+    private final double MAX_BOARD_X = 19.75; // size of board - ball radius
+    private final double MAX_BOARD_Y = 19.75;
+    private final int SCALE_FACTOR = 20;
     private Color color = Color.RED;
     private final Color LIGHT_RED = new Color(210, 54, 65);
     
@@ -55,11 +55,11 @@ public class Absorber extends Gadget{
         for (Ball ball : heldBall) {
             double ballExpectedX = boardX + width - ball.getCircle().getRadius();
             double ballExpectedY = boardY + height - ball.getCircle().getRadius();
-            if (ballExpectedX > maxBoardX) {
-                ballExpectedX = maxBoardX;
+            if (ballExpectedX > MAX_BOARD_X) {
+                ballExpectedX = MAX_BOARD_X;
             }
-            if (ballExpectedY > maxBoardY) {
-                ballExpectedY = maxBoardY;
+            if (ballExpectedY > MAX_BOARD_Y) {
+                ballExpectedY = MAX_BOARD_Y;
             }
             assert(ball.getXPos() == ballExpectedX);
             assert(ball.getYPos() == ballExpectedY);
@@ -198,7 +198,7 @@ public class Absorber extends Gadget{
 
     @Override
     public void drawCanvas(Graphics2D g2d) {
-        Shape shape = new Rectangle2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, this.width*scaleFactor, this.height*scaleFactor);
+        Shape shape = new Rectangle2D.Double((boardX+1)*SCALE_FACTOR, (boardY+1)*SCALE_FACTOR, this.width*SCALE_FACTOR, this.height*SCALE_FACTOR);
         // Add 1 to position to account for outer walls
         g2d.setColor(Color.BLACK);
         g2d.draw(shape);
