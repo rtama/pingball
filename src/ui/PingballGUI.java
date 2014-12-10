@@ -28,8 +28,7 @@ import pingball.Pingball;
  *  All operations (e.g. loading board from file, connecting to
  * servers) will be passed to the Pingball model (client), so they will be short
  * operations. This means none of the specified operations will be long-lived in
- * the PingballGUI class. Thus, no special care will be needed in handling user
- * events.
+ * the PingballGUI class. 
  * 
  * Keyboard control is handled in a similar fashion -- once an event is
  * received, it will be converted to a KeyboardStroke enum and passed to the
