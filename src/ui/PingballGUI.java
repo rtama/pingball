@@ -20,10 +20,25 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import pingball.Pingball;
 
-   /**
-    * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
-    * adds listeners to each component of the menu and drawing area.
-    */
+/**
+ * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
+ * adds listeners to each component of the menu and drawing area.
+ * 
+ *    
+ * Thread safety argument of Java GUI application:
+ *  All operations (e.g. loading board from file, connecting to
+ * servers) will be passed to the Pingball model (client), so they will be short
+ * operations. This means none of the specified operations will be long-lived in
+ * the PingballGUI class. Thus, no special care will be needed in handling user
+ * events.
+ * 
+ * Keyboard control is handled in a similar fashion -- once an event is
+ * received, it will be converted to a KeyboardStroke enum and passed to the
+ * model.
+ * 
+ * 
+ */
+
 public class PingballGUI extends JFrame implements KeyListener {
 	
     private static final long serialVersionUID = 1L; // required by Serializable
@@ -139,7 +154,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Adds Action Listeners to all of the components of the GUI:
      *      openFile: opens a new board file
      *      connect: connects the client to a server provided the hostname and port
-     *      disconnect: discconects the client from the server.
+     *      disconnect: disconnects the client from the server.
      *      pause: pause the game
      *      restart: restart the Board with the initial startstate
      */
