@@ -43,6 +43,12 @@ import pingball.Pingball;
  * received, it will be converted to a KeyboardStroke enum and passed to the
  * model.
  * 
+ * Our feature:
+ * To provide a heightened game-playing environment, we implemented a feature which
+ * causes each gadget to change colors when it is struck by a ball. To ensure that
+ * there is no visual confusion caused by gadgets having the same color, we carefully chose a
+ * color scheme such that each gadget maintains its assigned color, but switches between two
+ * distinct shades.
  * 
  */
 
