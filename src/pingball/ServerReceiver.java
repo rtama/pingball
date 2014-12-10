@@ -65,7 +65,7 @@ public class ServerReceiver implements Runnable {
         //PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         try {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                //System.out.println("Server Received: "+line);
+                System.out.println("Server Received: "+line);
                 if(!isHello(line)&&!portalCommands(line)){
                     queue.add(line);
                 }

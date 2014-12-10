@@ -186,8 +186,12 @@ public class Board {
      * @param message to send
      */
     public void sendMessage(String message){
+        System.out.println("Tryinmg to send message");
         if(this.singlePlayerMode==false && socket!=null){
+            System.out.println("Sending Message: " +  message); 
             out.println(message);
+            System.out.println("Message send"); 
+
         }
     }
 
@@ -584,7 +588,7 @@ public class Board {
      * Reassigns this board's socket to newSocket
      * @param newSocket
      */
-    public void changeSocket(Socket newSocket) {
+    public void changeSocket(Socket newSocket)  {
         if (this.socket != null) {
             try {
                 this.socket.close();
@@ -592,7 +596,18 @@ public class Board {
                 e.printStackTrace();
             }
         }
-        this.socket = newSocket;
+        
+        try {
+            this.socket = newSocket;
+            out = new PrintWriter(this.socket.getOutputStream(), true);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        this.singlePlayerMode = false; 
+
+        sendMessage("hello " + this.name); 
     }
 
     /**
