@@ -155,7 +155,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      *      connect: connects the client to a server provided the hostname and port
      *      disconnect: disconnects the client from the server.
      *      pause: pause the game
-     *      restart: restart the Board with the initial startstate
+     *      restart: restart the Board with the initial startstate, and disconnected from server
      */
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
