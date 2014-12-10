@@ -20,23 +20,29 @@ import javax.swing.WindowConstants;
 import pingball.Pingball;
 
 /**
- * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
+ * PingballGUI displays the GUI for our Pingball game. It creates its own layout and 
  * adds listeners to each component of the menu and drawing area.
- * 
+ * Its functions are described in the following spec:
+ * http://web.mit.edu/6.005/www/fa14/projects/pb3/pingball-phase3-spec.html
+ *    
  *    
  * Thread safety argument of Java GUI application:
- *  All operations (e.g. loading board from file, connecting to
- * servers) will be passed to the Pingball model (client), so they will be short
- * operations. This means none of the specified operations will be long-lived in
- * the PingballGUI class. Thus, no special care will be needed in handling user
- * events.
+ * 
+ * GUIs are not threadsafe but we have taken the following measures to limit concurrency issues:
+ * 
+ * Must first acquire a lock on the gadgets before drawing the board (this is
+ * handled in each gadget's draw method)
+ * Thus, if the list of gadgets is being modified, the draw method must wait until
+ * they are finished being modified.
+ * 
+ * All operations (e.g. loading board from file, connecting to
+ * servers) will be passed to the Pingball model, which deals with the operation
+ * in a separate thread from the GUI (see Pingball file for threadsafety argument)
  * 
  * Keyboard control is handled in a similar fashion -- once an event is
  * received, it will be converted to a KeyboardStroke enum and passed to the
  * model.
  * 
- * Drawing the board, gadgets are synchronized.
- * (If list of gadgets are being modified, won't draw)
  * 
  */
 
@@ -153,11 +159,11 @@ public class PingballGUI extends JFrame implements KeyListener {
     
     /**
      * Adds Action Listeners to all of the components of the GUI:
-     *      openFile: opens a new board file
-     *      connect: connects the client to a server provided the hostname and port
+     *      openFile: opens a new board file selected by the user
+     *      connect: connects the client to a server with the user-provided hostname and port
      *      disconnect: disconnects the client from the server.
-     *      pause: pause the game
-     *      restart: restart the Board with the initial startstate, and disconnected from server
+     *      pause: if the game is playing, pauses it; else if the game is paused, resumes it
+     *      restart: restarts the Board with the initial startstate, and disconnected from server
      */
     public void addListeners() {
         openFile.addActionListener(new ActionListener() {
@@ -259,7 +265,7 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
 
     /**
-     * Disconnect from the server yo
+     * Disconnect from the server
      */
     public void disconnectServer() {
         if (this.client != null) {
@@ -271,7 +277,6 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Pause the game
      */
     public void pauseGame() {
-        // boardTimer.stop();
         this.client.pause();
         pause.setText("Resume");
     }
@@ -280,7 +285,6 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Resume the game
      */
     public void resumeGame() {
-        // boardTimer.start();
         this.client.resume();
         pause.setText("Pause");
     }
@@ -295,12 +299,6 @@ public class PingballGUI extends JFrame implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        // Do nothing. keyTyped corresponds to viewable characters so is a
-        // subset of keyPressed.
-    }
-
-    @Override
     public void keyPressed(KeyEvent e) {
         String key = KeyNames.keyToString(e);
         this.client.keyPressed(key);
@@ -310,6 +308,12 @@ public class PingballGUI extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
         String key = KeyNames.keyToString(e);
         this.client.keyReleased(key);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // Do nothing. keyTyped corresponds to viewable characters so is a
+        // subset of keyPressed.
     }
 
 }
