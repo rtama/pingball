@@ -140,7 +140,6 @@ public class PingballServer {
                 //receives messages from the server
                 (new Thread(new ServerReceiver(socket,this.queue,this.boardNames,clientConnections.size()-1,portals))).start();
             }
-            //System.out.println("Connected");
         }
     }
     
