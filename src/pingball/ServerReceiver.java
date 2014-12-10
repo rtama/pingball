@@ -64,7 +64,6 @@ public class ServerReceiver implements Runnable {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         try {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                System.out.println("Server Received: "+line);
                 if(!isHello(line)&&!portalCommands(line)){
                     queue.add(line);
                 }

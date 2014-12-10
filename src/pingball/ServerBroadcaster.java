@@ -42,7 +42,6 @@ public class ServerBroadcaster implements Runnable {
     public void broadCastMessage(String message) throws IOException{
         synchronized(clientConnections){
             for(PrintWriter socket : clientConnections){
-                System.out.println("Server sent: "+message);
                 socket.println(message);
             }
         }
