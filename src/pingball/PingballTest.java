@@ -1,8 +1,8 @@
 package pingball;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -101,9 +101,8 @@ public class PingballTest {
     public ExpectedException exception = ExpectedException.none();
     @Test
     public void testParseIncorrectBoard() throws IOException {
-        Board board;
         exception.expect(IOException.class);
-        board = Pingball.parse("boards/wrong_board.pb",Optional.empty());
+        Board board = Pingball.parse("boards/wrong_board.pb",Optional.empty());
     }
     
  
@@ -166,7 +165,6 @@ public class PingballTest {
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
-        int expectedNumBalls = 1;
         Double expectedGravity = 2.5E-5;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  2.5E-5;
@@ -192,7 +190,6 @@ public class PingballTest {
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
-        int expectedNumBalls = 3;
         Double expectedGravity = 2.5E-5;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  2.5E-5;
@@ -215,7 +212,6 @@ public class PingballTest {
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
-        int expectedNumBalls = 2;
         Double expectedGravity = 2.5E-5;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  2.5E-5;
@@ -237,7 +233,6 @@ public class PingballTest {
         Double boardGravity= outputBoard.getBoardGravity(); 
         Double boardFriction = outputBoard.getBoardFriction();
         
-        int expectedNumBalls = 5;
         Double expectedGravity = 2.5E-5;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  2.5E-5;

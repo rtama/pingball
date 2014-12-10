@@ -87,7 +87,6 @@ public class Portal extends Gadget {
         
         //Broadcast creation 
         if (! board.getSinglePlayerMode()){  
-            //System.out.println("np "+board.name + " " + name + " " + otherBoardName + " " + targetPortal ); 
             board.sendMessage("np "+board.name + " " + name + " " + otherBoardName + " " + targetPortal ); 
         }
         
@@ -139,7 +138,6 @@ public class Portal extends Gadget {
     public void collideWithBall(Ball ball) {
         //Teleport ball to otherPortal
         this.trigger();
-        //System.out.println("Hit a portal " + targetPortalExists); 
         
         //Get Target Portal
         if (!portalInOtherBoard) { 
@@ -147,17 +145,15 @@ public class Portal extends Gadget {
                 targetPortal = (Portal) board.getPortal(targetPortalName); 
                 Vect vel = new Vect (ball.getXVel(), ball.getYVel()); 
                 vel = vel.times(RADIUS * 1/vel.length()); 
-                Ball newBall = new Ball(targetPortal.getBoardX()+vel.x(), targetPortal.getBoardY()+vel.y(), ball.getXVel(), ball.getYVel());
+                Ball newBall = new Ball(targetPortal.getBoardX()+vel.x()+Ball.RADIUS, targetPortal.getBoardY()+vel.y()+Ball.RADIUS, ball.getXVel(), ball.getYVel());
                 ball.remove();
                 board.addBallNext(newBall); 
-                //System.out.println(newBall.getXVel()) ;
             }
             else {
                 Vect vel = new Vect (ball.getXVel(), ball.getYVel()); 
                 vel = vel.times(RADIUS * 1/vel.length());
                 Ball newBall = new Ball (ball.getXPos() + vel.x(),ball.getYPos() + vel.y(), ball.getXVel(), ball.getYVel()); 
                 board.addBallNext(newBall);
-                //board.sendMessage("pb " + board.name + " " + this.name + " " + ball.getXVel() + " " + ball.getYVel());
                 ball.remove();  
                 return; //Target portal Does not exist
             }
@@ -219,6 +215,7 @@ public class Portal extends Gadget {
     @Override
     public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Ellipse2D.Double((boardX+1)*scaleFactor, (boardY+1)*scaleFactor, scaleFactor, scaleFactor);
+        // Add 1 to the position coordinates to account for board walls
         g2d.setColor(Color.BLACK);;
         g2d.setStroke(new BasicStroke(3.0f));
         g2d.draw(shape);
