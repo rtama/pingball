@@ -3,6 +3,7 @@ package pingball;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+
 /**
  * Represents a gadget, an active object on the pingball playing board.
  * Examples of such objects include ball, bumper, and outer wall.

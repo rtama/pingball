@@ -2,11 +2,7 @@ package pingball;
 
 import static physics.Geometry.reflectRotatingWall;
 import static physics.Geometry.timeUntilRotatingWallCollision;
-
 import java.awt.Graphics2D;
-
-import javax.swing.JComponent;
-
 import physics.LineSegment;
 import physics.Vect;
 

@@ -8,9 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import javax.swing.GroupLayout;
 import javax.swing.JFileChooser;
@@ -19,26 +16,33 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import pingball.Pingball;
 
-   /**
-    * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
-    * adds listeners to each component of the menu and drawing area.
-    */
-public class PingballGUI extends JFrame implements KeyListener {
-    private static final long serialVersionUID = 1L; // required by Serializable
+/**
+ * PingballGUI describes the GUI for our Pingball game. It creates its own layout and 
+ * adds listeners to each component of the menu and drawing area.
+ * 
+ *    
+ * Thread safety argument of Java GUI application:
+ *  All operations (e.g. loading board from file, connecting to
+ * servers) will be passed to the Pingball model (client), so they will be short
+ * operations. This means none of the specified operations will be long-lived in
+ * the PingballGUI class. Thus, no special care will be needed in handling user
+ * events.
+ * 
+ * Keyboard control is handled in a similar fashion -- once an event is
+ * received, it will be converted to a KeyboardStroke enum and passed to the
+ * model.
+ * 
+ * 
+ */
 
-   // private final CopyOnWriteArrayList<String> wallNames;
-    private Pingball client;
-    private String initalStateString;
-    private Timer boardTimer;
-    private boolean isPaused;
-    
+public class PingballGUI extends JFrame implements KeyListener {
+	
+    private static final long serialVersionUID = 1L; // required by Serializable
+    private Pingball client;   
     private BoardDrawing canvas;
    
     // JMenu objects 
@@ -150,7 +154,7 @@ public class PingballGUI extends JFrame implements KeyListener {
      * Adds Action Listeners to all of the components of the GUI:
      *      openFile: opens a new board file
      *      connect: connects the client to a server provided the hostname and port
-     *      disconnect: discconects the client from the server.
+     *      disconnect: disconnects the client from the server.
      *      pause: pause the game
      *      restart: restart the Board with the initial startstate
      */
@@ -306,25 +310,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         String key = KeyNames.keyToString(e);
         this.client.keyReleased(key);
     }
-
-    public static void main(final String[] args) {
-        Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
-        // default ports
-        int p = 4444;
-        // if not specified, no server connection will be attempted
-        String hn = "";
-        String fp = "";
-        // parse arguments
-        
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                PingballGUI main = new PingballGUI();
-                //main.setVisible(true);
-            }
-        });
-        
-    }
-
 
 }
 

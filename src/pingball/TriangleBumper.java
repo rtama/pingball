@@ -176,7 +176,7 @@ public class TriangleBumper extends Gadget{
         double equalityBuffer = 0.0005;
         collisionHelper(ball, equalityBuffer).getGadget().collideWithBall(ball);
        
-        //changes the color of the flipper at ball collision
+        //changes the color of the bumper at ball collision
         if (color == Color.GREEN)
         	color = LIGHT_GREEN;
         else
@@ -215,7 +215,6 @@ public class TriangleBumper extends Gadget{
     
     @Override
     public void drawCanvas(Graphics2D g2d) {
-    	
         int xpoints[] = {scaleFactor*(1+this.corners[0].getBoardX()), 
         		scaleFactor*(1+this.corners[1].getBoardX()), 
         		scaleFactor*(1+this.corners[2].getBoardX())};
