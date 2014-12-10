@@ -1,6 +1,7 @@
 package pingball;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
@@ -283,10 +284,6 @@ public class OuterWall extends Gadget {
         }else {
             // Update the ball's velocity to that of after the collision
             ball.setVelocity(Geometry.reflectWall(wall, ball.getVelocity(), coeffOfRefl));   
-/*            if (color == Color.DARK_GRAY)
-            	color = Color.LIGHT_GRAY;
-            else
-            	color = Color.DARK_GRAY;*/
         }
     }
 
@@ -296,18 +293,54 @@ public class OuterWall extends Gadget {
         return Geometry.timeUntilWallCollision(wall, ball.getCircle(), ball.getVelocity());
     }
     
+
+    
+    /**
+     * Draws the name of the board that this wall is connected to.
+     * @param walltype: type of wall this is.
+     * @param g2d: graphics instance
+     */
     public void drawBoardNames(wallType walltype, Graphics2D g2d) {
-        String boardName =this.getLinkedBoardName();
-        if (!boardName.equals("")) {
+        int fontSize = 20;
+        if (!isSolid()) {
             switch(walltype) {
                 case TOP_WALL:
+                    g2d.setColor(color.WHITE);
+                    g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
+                    g2d.drawString(linkedBoardName, scaleFactor, scaleFactor-2);
+                    break;
                 case BOTTOM_WALL:
+                    g2d.setColor(color.WHITE);
+                    g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
+                    g2d.drawString(linkedBoardName, scaleFactor, scaleFactor*Board.HEIGHT-2);
+                    break;
                 case LEFT_WALL:
+                    g2d.setColor(color.WHITE);
+                    g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
+                    g2d.rotate(Math.toRadians(-90));
+                    g2d.drawString(linkedBoardName, -(scaleFactor-2)*Board.WIDTH, scaleFactor);
+                    g2d.rotate(Math.toRadians(90));
+                    break;
                 case RIGHT_WALL:
+                    g2d.setColor(color.WHITE);
+                    g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
+                    g2d.drawString(linkedBoardName, scaleFactor, scaleFactor);
+                    break;
             }
         } else {
-            
         }
+    }
+    
+    public String centerBoardName(String boardName) {
+        String cutBoardName;
+        if (boardName.length()>30) {
+            cutBoardName = boardName.substring(0,29);
+        } else {
+            cutBoardName = boardName;
+        }
+        int nameLength = cutBoardName.length();
+        int half = nameLength/2;
+        return "hello";
     }
     
     @Override
@@ -318,16 +351,21 @@ public class OuterWall extends Gadget {
         double y;
         
         if (this.type.equals(wallType.BOTTOM_WALL)) {
+            setLinkedBoardName("Blah blah blah");
             height = scaleFactor;
             width = Board.WIDTH*scaleFactor;
             x = 0;
             y = (this.wall.p1().y()+1)*scaleFactor; // Add 1 because wall goes outside of playing area
         }else if (this.type.equals(wallType.TOP_WALL)) {
+            //this.linkedBoardName = "Hello Jellosdjflksdjglksjdklgjsldkgjlkjljljks";
+            setLinkedBoardName("01234567890123456789012345678901234567890123456789");
             height = scaleFactor;
             width = Board.WIDTH*scaleFactor;
             x = 0;
             y = 0;            
         }else if (this.type.equals(wallType.LEFT_WALL)) {
+            setLinkedBoardName("Please work");
+            //this.linkedBoardName = "abcdefghijklmnopqrstuwxyz";
             height = Board.HEIGHT*scaleFactor;
             width = scaleFactor;
             x = 0;
@@ -343,6 +381,7 @@ public class OuterWall extends Gadget {
         g2d.setColor(color);;
         g2d.draw(shape);
         g2d.fill(shape);
+        drawBoardNames(this.type, g2d);
     }
 
 }
