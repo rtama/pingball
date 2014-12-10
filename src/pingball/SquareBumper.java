@@ -134,7 +134,7 @@ public class SquareBumper extends Gadget{
         double equalityBuffer = 0.0005;
         collisionHelper(ball, equalityBuffer).getGadget().collideWithBall(ball);
         
-        //changes the color of the flipper at ball collision
+        //changes the color of the bumper at ball collision
         if (color == Color.WHITE) 
         	color = Color.BLACK;
         else

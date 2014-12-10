@@ -1,9 +1,5 @@
 package pingball;
 
-import java.awt.Graphics2D;
-
-import javax.swing.JComponent;
-
 import physics.Vect;
 
 public class RightFlipper extends Flipper {
