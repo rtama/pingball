@@ -4,12 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-
-import javax.swing.JComponent;
-
 import physics.Circle;
 import physics.LineSegment;
-import ui.ColoredShape;
 
 /**
  * Immutable square bumper class.
