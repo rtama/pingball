@@ -63,11 +63,11 @@ public class BoardTest {
         
         String theBoardToString = theBoard.toString();
         
-        final int rowNum = 20;
-        final int totalRows = 22;
+        final int ROW_NUM = 20;
+        final int TOTAL_ROWS = 22;
         int stringLength = theBoardToString.length();
-        int rowStartRough = (stringLength * rowNum) / totalRows;
-        int rowLength = (stringLength / totalRows);
+        int rowStartRough = (stringLength * ROW_NUM) / TOTAL_ROWS;
+        int rowLength = (stringLength / TOTAL_ROWS);
         
         //Extract something in the middle of the row. Like bracketed expression in:
         //   Row 20:   .                   .
