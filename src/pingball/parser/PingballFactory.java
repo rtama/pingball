@@ -25,7 +25,7 @@ import pingball.SquareBumper;
 import pingball.TriangleBumper;
 
 /**
- * TODO: spec
+ * Used to parse board files to generate representative Board objects.
  *
  */
 public class PingballFactory extends PingballBaseListener {
@@ -61,18 +61,20 @@ public class PingballFactory extends PingballBaseListener {
     private Map<String, ArrayList<String>> keydowns = new HashMap<String, ArrayList<String>>();
         
     /**
-     * TODO add detail
-     * Constructor 
+     * Creates a pingball factory that creates a single-player board
      */   
     public PingballFactory() {    }
     
+    /**
+     * Creates a pingball factory that creates a board connected to a server
+     * @param socket for server connection
+     */
     public PingballFactory(Socket socket) {
         this.socket = socket;
     }
     
     
     @Override public void enterKeyDef(PingballParser.KeyDefContext ctx) {
-        //System.out.print( ctx.children ); 
         String keyUp = "";
         String keyDown = "";
         String action = "";
@@ -113,9 +115,6 @@ public class PingballFactory extends PingballBaseListener {
     }
     
     @Override public void enterAbsorberDef(PingballParser.AbsorberDefContext ctx) {
-//      System.out.println("Creating new absorber:");
-//      System.out.println(ctx.getText()); 
-//      System.out.println(ctx.children); 
         
         int x = 0; 
         int y = 0; 
@@ -154,7 +153,6 @@ public class PingballFactory extends PingballBaseListener {
     }
 
     @Override public void enterFireDef(PingballParser.FireDefContext ctx) {
-       //System.out.print( ctx.children ); 
        String trigger = "";  
        String action = "";
        
@@ -263,7 +261,6 @@ public class PingballFactory extends PingballBaseListener {
     }
 
     @Override public void enterBallDef(PingballParser.BallDefContext ctx) {
-        //System.out.println(ctx.children);
         String name = "";
         double x = 0; 
         double y = 0; 
@@ -275,32 +272,27 @@ public class PingballFactory extends PingballBaseListener {
 
             if (children.get(i).toString().contains(NAME_LITERAL)) {
                 name = children.get(i+SHIFT).getText(); 
-                //System.out.println("name:" + name); 
             } 
                      
 
             
             else if (children.get(i).toString().contains(X_VELOCITY)) {
                 xVelocity = Double.parseDouble(children.get(i+SHIFT).getText()); 
-                //System.out.println("xVel:" + x); 
 
             }
             
             else if (children.get(i).toString().contains(Y_VELOCITY)) {
                 yVelocity = Double.parseDouble(children.get(i+SHIFT).getText()); 
-                //System.out.println("yVel:" + y); 
 
 
             }    
             else if (children.get(i).toString().contains(X)) {
                 x = Double.parseDouble(children.get(i+SHIFT).getText()); 
-                //System.out.println("x:" + x); 
 
             }
             
             else if (children.get(i).toString().contains(Y)) {
                 y = Double.parseDouble(children.get(i+SHIFT).getText());
-                //System.out.println("y:" + y); 
 
             }
         }
@@ -312,8 +304,6 @@ public class PingballFactory extends PingballBaseListener {
     }
 
     @Override public void enterBoardDef(PingballParser.BoardDefContext ctx) {
-
-        //System.out.println(ctx.children); 
         
         String name = ""; 
         double gravity = .000025;
@@ -344,7 +334,6 @@ public class PingballFactory extends PingballBaseListener {
             try {
                 board = new Board(name,gravity,mu1,mu2, socket);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }else {
@@ -420,9 +409,7 @@ public class PingballFactory extends PingballBaseListener {
             }
             
             else if (children.get(i).toString().equals(Y)) {
-                //System.out.println("Portal parsing "+ children.get(i+SHIFT).getText());
-                y= Integer.parseInt(children.get(i+SHIFT).getText()); 
-                //System.out.println("Portal parsing complte: "+ children.get(i+SHIFT).getText());
+                y = Integer.parseInt(children.get(i+SHIFT).getText()); 
 
             }
             
@@ -450,7 +437,6 @@ public class PingballFactory extends PingballBaseListener {
 
     @Override public void visitErrorNode(ErrorNode node) {
   
-         //throw new IOException();
         this.badBoard = true; 
     }
     
@@ -461,7 +447,6 @@ public class PingballFactory extends PingballBaseListener {
      */
     public Board getBoard() throws IOException{ 
         if (badBoard) throw new IOException(); 
-        //System.out.println(board.toString());
         this.board.assignKeydowns(keydowns);
         this.board.assignKeyups(keyups);
         return this.board; 
