@@ -526,7 +526,7 @@ public class Board {
                     if (gadgetSymbol[x][y] != IGNORE_CHAR) {
                         int gadgetDrawX = 1 + x + gadget.getBoardX();
                         int gadgetDrawY = 1 + y + gadget.getBoardY();
-                        if (board[gadgetDrawX][gadgetDrawY] != BALL_CHAR) { //TODO: Don't overwrite the Balls, it causes an array out of bounds exception 22
+                        if (board[gadgetDrawX][gadgetDrawY] != BALL_CHAR) { 
                             board[gadgetDrawX][gadgetDrawY] = gadgetSymbol[x][y];
                         }
                     }
