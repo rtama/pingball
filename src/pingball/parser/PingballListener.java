@@ -2,8 +2,7 @@
 
 package pingball.parser;
 
-import org.antlr.v4.runtime.tree.*;
-import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public interface PingballListener extends ParseTreeListener {
 	void enterAbsorberDef(PingballParser.AbsorberDefContext ctx);

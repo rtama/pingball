@@ -1,6 +1,5 @@
 package pingball;
 
-
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -135,6 +134,8 @@ public class Board {
         this.mu = mu;
         this.mu2 = mu2;
         this.gravity = gravity;
+        
+        this.singlePlayerMode = true;
         checkRep();
     }
     /**
@@ -598,7 +599,6 @@ public class Board {
                 this.activate(gadgetName);
             }            
         }
-
     }
 
     /**
@@ -660,7 +660,6 @@ public class Board {
     }
 
     // The following methods are used for testing.
-
     /**
      * 
      * @return the value of this board's gravity

@@ -46,7 +46,7 @@ public class PingballServer {
     //thread safe message queue that will be used to communicate between the client threads
     private BlockingQueue<String> queue = new ArrayBlockingQueue<String>(100);
     
-    //[[board,portal,looking for portal, is linked]]
+    //[[board, portal, looking for portal, is linked]]
     private List<ArrayList<String>> portals = new ArrayList<ArrayList<String>>();
     
     /**
@@ -76,6 +76,7 @@ public class PingballServer {
         {
             public void run() {
                 while(true){
+                    @SuppressWarnings("resource")
                     Scanner reader = new Scanner(System.in);
                     String consoleInput=reader.nextLine();
                     if(isValidInput(consoleInput)){
@@ -83,7 +84,6 @@ public class PingballServer {
                     }else{
                         System.err.println("Invalid Command!");
                     }
-                    //reader.close();
                 }
             }
             /**
@@ -104,7 +104,6 @@ public class PingballServer {
             public boolean isValidInput(String consoleInput){
                 consoleInput=consoleInput.trim();
                 String[] messageParts = consoleInput.split("\\s+");
-                //System.out.println(messageParts[0]);
                 String nameReq = "[A-Za-z][A-Za-z0-9]*";
                 int minMessageLength = 3;
                 if (messageParts.length < minMessageLength) {
@@ -140,7 +139,6 @@ public class PingballServer {
                 //receives messages from the server
                 (new Thread(new ServerReceiver(socket,this.queue,this.boardNames,clientConnections.size()-1,portals))).start();
             }
-            //System.out.println("Connected");
         }
     }
     
@@ -152,7 +150,7 @@ public class PingballServer {
      */
     public static void main(String[] args) throws InterruptedException, IOException {
         final int PORT;
-        if(args.length==2&&args[0]=="--port"){
+        if(args.length==2&&args[0]=="--port"){  // the 2 args should be host and port
             PORT = Integer.parseInt(args[1]);
         }
         else {

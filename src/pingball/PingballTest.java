@@ -61,7 +61,6 @@ public class PingballTest {
     @Test
     public void testParsePortalBoard() {
         Board boardA = new Board();
-//        Board boardB = new Board();
         try {
             boardA = Pingball.parse("boards/portal_board_A.pb",Optional.empty());
         } catch (IOException e) {
@@ -79,7 +78,6 @@ public class PingballTest {
         abs.addTriggeredGadget(abs);
         Portal alpha = new Portal("Alpha", 5, 7, "", boardA);
         
-        // portal name=Beta x=15 y=7 otherBoard=Mercury otherPortal=Gamma
         Portal beta = new Portal("Beta", 15, 7, "Mercury", "Gamma",boardA);
         
         Board expectedBoard = new Board();
@@ -189,7 +187,6 @@ public class PingballTest {
         Double boardGravity = outputBoard.getBoardGravity();
         Double boardDrag= outputBoard.getBoardDrag(); 
         Double boardFriction = outputBoard.getBoardFriction();
-
         Double expectedGravity = 2.5E-5;
         Double expectedBoardFriction = 0.025;
         Double expectedBoardDrag =  2.5E-5;

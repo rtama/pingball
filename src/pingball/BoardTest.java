@@ -89,8 +89,9 @@ public class BoardTest {
         //advance board linearly by 7 milliseconds 
         oneBallBoard.update(7);
         //After the above described collision at (20,13) after 5 milliseconds, should use new
-        //velocity (1,-1) to continue to point (16,11) after remaining 2 milliseconds.
-        assertEquals('*',charAtBoardPosition(oneBallBoard,16,11));
+        //velocity (1,-1) to continue to point (17,11) after remaining 2 milliseconds.
+        System.out.println(oneBallBoard.toString());
+        assertEquals('*',charAtBoardPosition(oneBallBoard,17,11));
     }
     
     @Test
