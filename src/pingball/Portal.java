@@ -99,7 +99,7 @@ public class Portal extends Gadget {
      */
     public void broadcastPresence() {
         if (! board.getSinglePlayerMode()){ 
-            board.sendMessage("np "+board.name + " " + name + " " + board.name + " " + targetPortal ); 
+            board.sendMessage("np "+board.name + " " + name + " " + otherBoardName + " " + targetPortalName ); 
         }
     }
     
