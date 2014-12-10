@@ -165,7 +165,9 @@ public class PingballGUI extends JFrame implements KeyListener {
     
     /**
      * Adds Action Listeners to all of the components of the GUI:
-     *      openFile: opens a new board file selected by the user
+     *      openFile: loads a board from a valid board file selected by the user. The board file
+     *          must follow the format specified at:
+     *          http://web.mit.edu/6.005/www/fa14/projects/pb2/pingball-phase2-spec.html#pingball_file_format
      *      connect: connects the client to a server with the user-provided hostname and port
      *      disconnect: disconnects the client from the server.
      *      pause: if the game is playing, pauses it; else if the game is paused, resumes it
