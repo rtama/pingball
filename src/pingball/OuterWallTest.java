@@ -1,6 +1,6 @@
 package pingball;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,9 +8,6 @@ import org.junit.Test;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
-import pingball.Ball;
-import pingball.Gadget;
-import pingball.OuterWall;
 
 /**
  * Tests for OuterWall
@@ -32,17 +29,13 @@ public class OuterWallTest {
      *      disappear from the first wall and appear on the other side (other wall). 
      */
     
-    private static Gadget topWall;
     private static Gadget leftWall;
     private static Gadget rightWall;
-    private static Gadget bottomWall;
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        topWall = OuterWall.TOP_WALL();
         leftWall = OuterWall.LEFT_WALL();
         rightWall = OuterWall.RIGHT_WALL();
-        bottomWall = OuterWall.BOTTOM_WALL();
     }
     
     /**

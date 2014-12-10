@@ -403,6 +403,7 @@ public class Ball extends Gadget {
     @Override
     public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Ellipse2D.Double( (this.xPos + 1 - this.RADIUS)*scaleFactor, (this.yPos + 1- this.RADIUS)*scaleFactor, 2*this.RADIUS*scaleFactor,2*this.RADIUS*scaleFactor);
+        // Add 1 to the position coordinates to account for the board walls
         // Multiply the radius by 2 because we want the length and width of the bounding box
 
         g2d.setColor(Color.BLACK);

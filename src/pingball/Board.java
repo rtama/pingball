@@ -15,7 +15,7 @@ import java.util.TreeSet;
 /**
  * The board is a 20L x 20L playing area that can contain gadgets on it
  * such as bumpers, flippers, absorbers, and balls.
- * If the board is multiplayer it can send messages to the host server
+ * If the board is multiplayer it can send messages to the host server.
  * 
  * Thread safety:
  * Only one board is created per client. All messages are sent through board which makes writing to the socket thread safe.
@@ -24,6 +24,7 @@ import java.util.TreeSet;
 public class Board {
 
     //rep invariant: has outer walls, height and width are 22 (including outer walls)
+    // If the board is not in single-player mode, its socket can't be null
 
     /*
      * Mutability:
@@ -40,8 +41,7 @@ public class Board {
     public static final char IGNORE_CHAR = 'N';
     public static final char BALL_CHAR = '*';
 
-    private List<Gadget> gadgets = new ArrayList<Gadget>();
-    
+    private List<Gadget> gadgets = new ArrayList<Gadget>();    
     private List<Ball> balls = new ArrayList<Ball>();
     private List<Ball> newBalls = new ArrayList<Ball>();
     private List<Gadget> portals = new ArrayList<Gadget>(); 
@@ -135,6 +135,7 @@ public class Board {
         this.mu = mu;
         this.mu2 = mu2;
         this.gravity = gravity;
+        checkRep();
     }
     /**
      * Constructor for Board class allowing for specification of friction and gravity and a name;
@@ -153,14 +154,18 @@ public class Board {
         this(name, mu, mu2, gravity);
         this.socket=clientSocket;
         out = new PrintWriter(socket.getOutputStream(), true);
-        //send hello message
+        this.singlePlayerMode = false;
+        //send hello message to server
         if(this.name!=""){
             out.println("hello "+this.name);
         }
+        checkRep();
     }
 
-    public void checkRep(){
-        // don't have to check, because using final variables
+    private void checkRep(){
+        if (this.socket == null) {
+            assert(this.singlePlayerMode == true);
+        }
     }
 
     /**
@@ -169,6 +174,7 @@ public class Board {
      */
     public void setSinglePlayerMode(boolean singlePlayerMode){
         this.singlePlayerMode=singlePlayerMode;
+        checkRep();
     }
 
     /**
@@ -184,12 +190,8 @@ public class Board {
      * @param message to send
      */
     public void sendMessage(String message){
-        System.out.println("Tryinmg to send message");
         if(this.singlePlayerMode==false && socket!=null){
-            System.out.println("Sending Message: " +  message); 
             out.println(message);
-            System.out.println("Message send"); 
-
         }
     }
 
@@ -208,6 +210,7 @@ public class Board {
         synchronized(gadgets) {
             gadgets.add(ball);            
         }
+        checkRep();
     }
 
     /**
@@ -216,6 +219,7 @@ public class Board {
      */
     public void addBallNext(Ball ball){
         newBalls.add(ball); 
+        checkRep();
     }
 
     /**
@@ -227,6 +231,7 @@ public class Board {
         synchronized(gadgets) {
             gadgets.add(gadget);            
         }
+        checkRep();
     }
 
 
@@ -239,6 +244,7 @@ public class Board {
             portals.add(portal);             
         }
         this.addGadget(portal); 
+        checkRep();
     }
 
     /**
@@ -247,7 +253,7 @@ public class Board {
      */
     public List<Gadget> getPortals(){ 
         synchronized(portals) {
-        return this.portals; 
+            return this.portals; 
         }
     }
 
@@ -308,7 +314,7 @@ public class Board {
     public void pause() {
         synchronized(this.paused) {
             this.paused = true;   
-        }
+        }checkRep();
     }
 
     /**
@@ -317,7 +323,7 @@ public class Board {
     public void resume() {
         synchronized(this.paused) {
             this.paused = false;            
-        }
+        }checkRep();
     }
 
     /**
@@ -439,7 +445,7 @@ public class Board {
                 this.addBall(ball); 
             }
             newBalls.clear();   
-        }
+        }checkRep();
     }
 
     /**
@@ -611,7 +617,7 @@ public class Board {
 
     /**
      * Reassigns this board's socket to newSocket
-     * @param newSocket
+     * @param newSocket must not be null
      */
     public void changeSocket(Socket newSocket)  {
         if (this.socket != null) {
@@ -635,7 +641,7 @@ public class Board {
         //Broadcast existence of each portal
         for (Gadget portal : portals) {
             ((Portal) portal).broadcastPresence();
-        }
+        }checkRep();
     }
 
     /**
@@ -650,7 +656,7 @@ public class Board {
             this.singlePlayerMode = true;
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }checkRep();
     }
 
     // The following methods are used for testing.

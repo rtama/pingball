@@ -40,7 +40,7 @@ public class ClientReceiver implements Runnable {
     }
 
     public void checkRep(){
-        // don't have to check, no repinvariants
+        // don't have to check, no rep invariants
     }
     
     /**
@@ -266,7 +266,6 @@ public class ClientReceiver implements Runnable {
         try {
             handleConnection();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }finally{
             try {
