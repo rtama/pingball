@@ -42,8 +42,8 @@ public class Absorber extends Gadget{
     private final int width;
     private final int height;
     private final double COEFFICIENT_OF_REFLECTION = 1.0;
-    private final double maxBoardX = 19;
-    private final double maxBoardY = 19;
+    private final double maxBoardX = 19.75; // size of board - ball radius
+    private final double maxBoardY = 19.75;
     private final int scaleFactor = 20;
     private Color color = Color.RED;
     private final Color LIGHT_RED = new Color(210, 54, 65);
