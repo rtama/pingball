@@ -37,13 +37,13 @@ public class LeftFlipper extends Flipper {
             this.pivotPoint = new Vect(boardX, boardY);
             break;
         case NINETY_DEGREE_ORIENTATION:
-            this.pivotPoint = new Vect(boardX+width, boardY);
+            this.pivotPoint = new Vect(boardX+WIDTH, boardY);
             break;
         case ONE_EIGHTY_DEGREE_ORIENTATION:
-            this.pivotPoint = new Vect(boardX+width, boardY+height);
+            this.pivotPoint = new Vect(boardX+WIDTH, boardY+HEIGHT);
             break;
         case TWO_SEVENTY_DEGREE_ORIENTATION:
-            this.pivotPoint = new Vect(boardX, boardY+height);
+            this.pivotPoint = new Vect(boardX, boardY+HEIGHT);
             break;
         default:
             throw new IllegalArgumentException("orientation must be 0, 90, 180, or 270");

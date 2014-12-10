@@ -34,8 +34,8 @@ public abstract class Flipper extends Gadget{
     
     protected final int boardX;
     protected final int boardY;
-    protected final int width = 2;
-    protected final int height = 2;
+    protected final int WIDTH = 2;
+    protected final int HEIGHT = 2;
     protected static final double COEFFICIENT_OF_REFLECTION = 0.95;
     protected static final double FLIPPER_LENGTH = 2.0;
     protected double angularVelocityForward = -1.080; //<--|These should be the same sign for a proper flipper
@@ -80,10 +80,6 @@ public abstract class Flipper extends Gadget{
         this.pivotPoint = new Vect(boardX, boardY); 
         
         int dummyOrientation = 0;
-        
-        //final int DEGREES_IN_COMPLETE_REVOLUTION = 360;
-        
-        //this.orientation = (DEGREES_IN_COMPLETE_REVOLUTION-dummyOrientation) % DEGREES_IN_COMPLETE_REVOLUTION;
         this.orientation = orientation;
         this.initialAngle = DEFAULT_INITIAL_ANGLE - dummyOrientation; //From definition of Left Flipper
         
@@ -367,7 +363,6 @@ public abstract class Flipper extends Gadget{
     
     @Override
     public void drawCanvas(Graphics2D g2) {
-        //System.out.println("printing flipper");
 
         int x1 = (int) (this.flipperEdge.p1().x()+1) * scaleFactor; // Add 1 to position coordinates to account for walls
         int y1 = (int) (this.flipperEdge.p1().y()+1) * scaleFactor;
