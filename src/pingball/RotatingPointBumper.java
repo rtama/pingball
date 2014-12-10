@@ -117,7 +117,6 @@ public class RotatingPointBumper extends Gadget{
 
     @Override
     public void drawCanvas(Graphics2D g2) {
-        // TODO Auto-generated method stub
         
     }
 

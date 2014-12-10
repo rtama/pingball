@@ -43,9 +43,7 @@ public class ServerBroadcaster implements Runnable {
         synchronized(clientConnections){
             for(PrintWriter socket : clientConnections){
                 System.out.println("Server sent: "+message);
-                //PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 socket.println(message);
-                //out.close();
             }
         }
     }
@@ -58,7 +56,6 @@ public class ServerBroadcaster implements Runnable {
                 message = queue.take();
                 broadCastMessage(message);
             } catch (InterruptedException | IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             

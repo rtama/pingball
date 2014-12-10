@@ -62,7 +62,6 @@ public class ServerReceiver implements Runnable {
      */
     public void handleConnection(Socket socket) throws IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        //PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         try {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 System.out.println("Server Received: "+line);
@@ -71,11 +70,15 @@ public class ServerReceiver implements Runnable {
                 }
             }
         } finally {
-            //out.close();
             in.close();
         }
     }
     
+    /**
+     * 
+     * @param line to check whether it is a portal command
+     * @return true if the line is a portal command, false otherwise
+     */
     public boolean portalCommands(String line){
         String[] messageParts = line.split(" ");
         String command = messageParts[0];
@@ -94,18 +97,12 @@ public class ServerReceiver implements Runnable {
                 portalBoard.add(targetPortal);
 
                synchronized(portals){
-                    //System.out.println("Processing np message"); 
                     for(ArrayList<String> newPortal:portals){
                         if(newPortal.get(0).equals(targetBoard)&&newPortal.get(1).equals(targetPortal)){
-                            //System.out.println("Something found");
-                            //System.out.println("pr " + senderBoard + " "+ senderPortal + " " + "true");
                             String message = "pr " + senderBoard + " "+ senderPortal + " " + "true";
                             queue.add(message);
-                            //portalBoard.add("1");
                         }
                         if(newPortal.get(2).equals(senderBoard)&&newPortal.get(3).equals(senderPortal)){
-                            //System.out.println("Current portal found");
-                            //System.out.println("pr " + newPortal.get(0) + " "+ newPortal.get(1) + " " + "true");
                             String message = "pr " + newPortal.get(0) + " "+ newPortal.get(1) + " " + "true";
                             queue.add(message);
                         }
@@ -114,15 +111,20 @@ public class ServerReceiver implements Runnable {
                     }
                 }
                     portals.add(portalBoard);
-            }//System.out.println("returning true");
+            }
             return true;
-        }//System.out.println("returning false");
+        }
         return false;
     }
  
+    /**
+     * Checks if line is a hello message
+     * @param line
+     * @return true if line is a hello message, false otherwise
+     */
     private boolean isHello(String line) {
         String[] messageParts = line.split(" ");
-        if (messageParts.length != 2) {
+        if (messageParts.length != 2) { // since length of hello message is 2
             return false;
         }if (messageParts[0].equals("hello")){
             synchronized(this.boardNames) {
@@ -133,6 +135,9 @@ public class ServerReceiver implements Runnable {
         return false;
     }
 
+    /**
+     * Send out the message that a socket has closed
+     */
     private void sendCloseSocketMessage() {
         synchronized(this.boardNames) {
             if(boardNames.containsKey(socketID)){
@@ -161,7 +166,6 @@ public class ServerReceiver implements Runnable {
         try {
             handleConnection(socket);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }finally{
             try {
