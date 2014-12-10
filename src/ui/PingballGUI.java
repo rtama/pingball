@@ -8,9 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import javax.swing.GroupLayout;
 import javax.swing.JFileChooser;
@@ -19,10 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import pingball.Pingball;
 
@@ -31,14 +25,9 @@ import pingball.Pingball;
     * adds listeners to each component of the menu and drawing area.
     */
 public class PingballGUI extends JFrame implements KeyListener {
+	
     private static final long serialVersionUID = 1L; // required by Serializable
-
-   // private final CopyOnWriteArrayList<String> wallNames;
-    private Pingball client;
-    private String initalStateString;
-    private Timer boardTimer;
-    private boolean isPaused;
-    
+    private Pingball client;   
     private BoardDrawing canvas;
    
     // JMenu objects 
@@ -306,25 +295,6 @@ public class PingballGUI extends JFrame implements KeyListener {
         String key = KeyNames.keyToString(e);
         this.client.keyReleased(key);
     }
-
-    public static void main(final String[] args) {
-        Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
-        // default ports
-        int p = 4444;
-        // if not specified, no server connection will be attempted
-        String hn = "";
-        String fp = "";
-        // parse arguments
-        
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                PingballGUI main = new PingballGUI();
-                //main.setVisible(true);
-            }
-        });
-        
-    }
-
 
 }
 
