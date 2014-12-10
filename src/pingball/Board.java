@@ -653,10 +653,15 @@ public class Board {
         }
         try {
             this.socket.close();
-            this.singlePlayerMode = true;
         } catch (IOException e) {
             e.printStackTrace();
-        }checkRep();
+        }
+        this.singlePlayerMode = true;
+        this.topWall.makeSolid();
+        this.leftWall.makeSolid();
+        this.rightWall.makeSolid();
+        this.bottomWall.makeSolid();
+        checkRep();
     }
 
     // The following methods are used for testing.
