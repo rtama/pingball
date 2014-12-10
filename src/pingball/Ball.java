@@ -1,16 +1,16 @@
 package pingball;
 
-import physics.Circle;
-import physics.Vect;
-import static physics.Geometry.*;
+import static physics.Geometry.reflectBalls;
+import static physics.Geometry.timeUntilBallBallCollision;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
-import java.lang.Math;
 
-import javax.swing.JComponent;
+import physics.Circle;
+import physics.Geometry.VectPair;
+import physics.Vect;
 
 /**
  * 
@@ -224,6 +224,12 @@ public class Ball extends Gadget {
         return symbol;
     }
     
+    /**
+     * Send a message that contains information about the location 
+     * on the other board where this ball should be sent, and this ball's velocity
+     * @param boardName name of board to be sent to
+     * @param type of wall that this ball is going through
+     */
     public void sendToBoardMessage(String boardName, wallType type){
         this.shouldSend = true;
         if(type.equals(wallType.LEFT_WALL)){
@@ -247,9 +253,19 @@ public class Ball extends Gadget {
             +yCoord+" "+this.getXVel()+" "+this.getYVel();
         }
     }
+    
+    /**
+     * 
+     * @return true if this ball should be sent to another board, false otherwise
+     */
     public boolean getShouldSend(){
         return shouldSend;
     }
+    
+    /**
+     * 
+     * @return message containing this ball's information (location, velocity)
+     */
     public String getSendToBoardMessage(){
         return sendToBoard;
     }
@@ -387,6 +403,7 @@ public class Ball extends Gadget {
     @Override
     public void drawCanvas(Graphics2D g2d) {
         Shape shape = new Ellipse2D.Double( (this.xPos + 1 - this.RADIUS)*scaleFactor, (this.yPos + 1- this.RADIUS)*scaleFactor, 2*this.RADIUS*scaleFactor,2*this.RADIUS*scaleFactor);
+        // Add 1 to the position coordinates to account for the board walls
         // Multiply the radius by 2 because we want the length and width of the bounding box
 
         g2d.setColor(Color.BLACK);

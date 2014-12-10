@@ -8,8 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Optional;
 
-import javax.swing.JComponent;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -48,7 +46,6 @@ public class Pingball {
     
     private long fieldTime;
     private final long MILLISECS_PER_FRAME = 100; // Formula: 1000 / MILLLISECS_PER_FRAME = FPS
-    //create the board
     private Board board;
     private Socket clientSocket;
     
@@ -63,10 +60,12 @@ public class Pingball {
         this.board.setSinglePlayerMode(true);
         this.fileName = defaultBoardName;
         createDefaultBoard(this.board);
+        checkRep();
     }
     
-    public void checkRep(){
+    private void checkRep(){
         // don't have to check, no rep invariant
+        assert(true);
     }
     
     /**
@@ -78,6 +77,7 @@ public class Pingball {
         this.board = parse(fileName,Optional.empty());
         this.board.setSinglePlayerMode(true);
         this.fileName = fileName;
+        checkRep();
     }
 
     /**
@@ -94,6 +94,7 @@ public class Pingball {
         createDefaultBoard(this.board);
         this.fileName = defaultBoardName;
         (new Thread(new ClientReceiver(clientSocket,board))).start();
+        checkRep();
     }
     
     /**
@@ -109,6 +110,7 @@ public class Pingball {
         this.board=parse(fileName, Optional.of(clientSocket));
         this.fileName = fileName;
         (new Thread(new ClientReceiver(clientSocket,board))).start();
+        checkRep();
     }
     
     /**
@@ -144,10 +146,6 @@ public class Pingball {
         board.addGadget(new CircleBumper(8, 18));
         board.addGadget(new CircleBumper(9, 18));
 
-//        board.addGadget(new TriangleBumper(19, 0, 90));
-//        Absorber abs = new Absorber(0,19,20,1);
-//        abs.addTriggeredGadget(abs);
-//        board.addGadget(abs);
     }
     
     /**
@@ -168,9 +166,8 @@ public class Pingball {
      * Restarts the board to its original state. Disconnects from the server.
      */
     public void restartBoard() {
-        //System.out.println(this.fileName);
         if (this.fileName.equals(defaultBoardName)) {
-            this.board = new Board(defaultBoardName,.000025, .025, .000025);
+            this.board = new Board(defaultBoardName,.000025, .025, .000025);    // default values of gravity, mu1, mu2, respectively
             this.board.setSinglePlayerMode(true);
             createDefaultBoard(this.board);
         }else {
@@ -223,6 +220,7 @@ public class Pingball {
                 //update gadgets
                 board.update(MILLISECS_PER_FRAME);
                 
+                //Uncomment the line below to view the text-format display
                 //System.out.println(board.toString());
             }
             //sleep to achieve desired FPS
@@ -257,10 +255,8 @@ public class Pingball {
         int port = DEFAULT_PORT;
         String hostName = "localhost";
         String filename = "";
-        //Board board = new Board(defaultBoardName,0,0,0);
         
         for (int i=0; i<args.length; i++) {
-            //System.out.println(args[i]);
             if (args[i].equals("--host") && i+1<args.length) {
                 singlePlayerMode = false;
                 hostName = args[i+1];
@@ -280,21 +276,17 @@ public class Pingball {
         if (filename.length() > 0) {
             if(singlePlayerMode){
                 client = new Pingball(filename);
-                //client.gameLoop();
             }
             else{
                 client = new Pingball(port,hostName, filename);
-                //client.gameLoop();
             }
         }
         else{
             if(singlePlayerMode){
                 client = new Pingball();
-                //client.gameLoop();
             }
             else{
                 client = new Pingball(port,hostName);
-                //client.gameLoop();
             }
         }
         GUI = new PingballGUI(client);
@@ -320,7 +312,6 @@ public class Pingball {
         PingballLexer lexer = new PingballLexer(input); 
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         tokenStream.fill();
-        //System.out.println(tokenStream.getTokens());
         PingballParser parser = new PingballParser(tokenStream); 
         
         parser.addParseListener(new PingballBaseListener());
@@ -335,7 +326,6 @@ public class Pingball {
         
         ParseTreeWalker.DEFAULT.walk(boardFactory, parseTree);
         
-        //System.out.println(parseTree.toStringTree());
         return ((PingballFactory) boardFactory).getBoard(); 
     }
     

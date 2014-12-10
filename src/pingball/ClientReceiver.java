@@ -40,7 +40,7 @@ public class ClientReceiver implements Runnable {
     }
 
     public void checkRep(){
-        // don't have to check, no repinvariants
+        // don't have to check, no rep invariants
     }
     
     /**
@@ -50,13 +50,11 @@ public class ClientReceiver implements Runnable {
      */
     public void handleConnection() throws IOException{
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        //PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         try {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 handleRequest(line);
             }
         } finally {
-            //out.close();
             in.close();
         }
     }
@@ -79,7 +77,6 @@ public class ClientReceiver implements Runnable {
      */
     private void handleRequest(String message) throws IOException {
 
-        System.out.println("Client Received:"+message);
         String[] messageParts = message.split(" ");
         String command = messageParts[0];
         final int BG_MESSAGE_LENGTH = 2;
@@ -120,7 +117,6 @@ public class ClientReceiver implements Runnable {
                             String unlinkMessage = "uh " + leftBoard + " " + alreadyLinkedBoard;
                             board.sendMessage(unlinkMessage);
                         }
-                        //System.out.println("linking " + board.name + " with " + rightBoard);
                         board.linkWall(wallType.RIGHT_WALL, rightBoard);
                     }
                     if (rightBoard.equals(board.name)) {
@@ -131,7 +127,6 @@ public class ClientReceiver implements Runnable {
                             String unlinkMessage = "uh " + leftBoard + " " + alreadyLinkedBoard;
                             board.sendMessage(unlinkMessage);
                         }
-                        //System.out.println("linking " + board.name + " with " + leftBoard);
                         board.linkWall(wallType.LEFT_WALL, leftBoard);
                     }
                 }
@@ -266,7 +261,6 @@ public class ClientReceiver implements Runnable {
         try {
             handleConnection();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }finally{
             try {

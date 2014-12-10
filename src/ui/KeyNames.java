@@ -1,13 +1,10 @@
 package ui;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
 
 public class KeyNames {
 
