@@ -36,13 +36,13 @@ public class RightFlipper extends Flipper {
         
         switch (orientation) {
         case ZERO_DEGREE_ORIENTATION:
-            this.pivotPoint = new Vect(boardX+width, boardY);
+            this.pivotPoint = new Vect(boardX+WIDTH, boardY);
             break;
         case NINETY_DEGREE_ORIENTATION:
-            this.pivotPoint = new Vect(boardX+width, boardY+height);
+            this.pivotPoint = new Vect(boardX+WIDTH, boardY+HEIGHT);
             break;
         case ONE_EIGHTY_DEGREE_ORIENTATION:
-            this.pivotPoint = new Vect(boardX, boardY+height);
+            this.pivotPoint = new Vect(boardX, boardY+HEIGHT);
             break;
         case TWO_SEVENTY_DEGREE_ORIENTATION:
             this.pivotPoint = new Vect(boardX, boardY);
