@@ -299,24 +299,24 @@ public class OuterWall extends Gadget {
         if (!isSolid()) {
             switch(walltype) {
                 case TOP_WALL:
-                    g2d.setColor(color.WHITE);
+                    g2d.setColor(Color.WHITE);
                     g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
                     centerBoardName(linkedBoardName, g2d, scaleFactor, scaleFactor-offSet);
                     break;
                 case BOTTOM_WALL:
-                    g2d.setColor(color.WHITE);
+                    g2d.setColor(Color.WHITE);
                     g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
                     centerBoardName(linkedBoardName, g2d, scaleFactor, scaleFactor*Board.HEIGHT-offSet);
                     break;
                 case LEFT_WALL:
-                    g2d.setColor(color.WHITE);
+                    g2d.setColor(Color.WHITE);
                     g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
                     g2d.rotate(Math.toRadians(-90));
                     centerBoardName(linkedBoardName, g2d, -(scaleFactor)*Board.WIDTH, scaleFactor-offSet);
                     g2d.rotate(Math.toRadians(90));
                     break;
                 case RIGHT_WALL:
-                    g2d.setColor(color.WHITE);
+                    g2d.setColor(Color.WHITE);
                     g2d.setFont(new Font("SansSerif", Font.PLAIN, fontSize));
                     g2d.rotate(Math.toRadians(90));
                     centerBoardName(linkedBoardName, g2d, scaleFactor, -(scaleFactor)*Board.HEIGHT+scaleFactor-offSet);
@@ -345,7 +345,7 @@ public class OuterWall extends Gadget {
         int stringLen = (int)  
                 g2d.getFontMetrics().getStringBounds(cutBoardName, g2d).getWidth(); 
         
-        int start = (Board.WIDTH-2)*scaleFactor/2 - stringLen/2;
+        int start = ((Board.WIDTH)*scaleFactor-scaleFactor)/2 - stringLen/2;
         g2d.drawString(cutBoardName, start + x, y);
     }
     
@@ -357,25 +357,21 @@ public class OuterWall extends Gadget {
         double y;
 
         if (this.type.equals(wallType.BOTTOM_WALL)) {
-            //setLinkedBoardName("Blah blah blah");
             height = scaleFactor;
             width = Board.WIDTH*scaleFactor;
             x = 0;
             y = (this.wall.p1().y()+1)*scaleFactor; // Add 1 because wall goes outside of playing area
         }else if (this.type.equals(wallType.TOP_WALL)) {
-            //setLinkedBoardName("abcdefghijklmnyzablskdjflksjdflksjglskdjglkssdfsdfsdfcd");
             height = scaleFactor;
             width = Board.WIDTH*scaleFactor;
             x = 0;
             y = 0;            
         }else if (this.type.equals(wallType.LEFT_WALL)) {
-            //setLinkedBoardName("Please work");
             height = Board.HEIGHT*scaleFactor;
             width = scaleFactor;
             x = 0;
             y = 0;            
         }else {
-            //setLinkedBoardName("swiggity swooty");
             height = Board.HEIGHT*scaleFactor;
             width = scaleFactor;
             x = (this.wall.p1().x()+1)*scaleFactor; // Add 1 because wall goes outside of playing area
