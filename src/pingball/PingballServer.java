@@ -122,64 +122,6 @@ public class PingballServer {
                         return true;
                     }return false;
                 }
-                /**
-                else if (command.equals("b")) {
-//                    System.out.println("sending ball");
-                    int ballMessageLength = 6; //TODO: make constants final
-                    if (messageParts.length != ballMessageLength) {
-                        return false;
-                    }
-                    String name = messageParts[1];
-                    if (!name.matches(nameReq)) {
-                        return false;
-                    }
-                    for (int i=2; i<ballMessageLength; i++) {   // start at 2 because already checked indices 0 and 1
-                        if (!messageParts[i].matches(doubleReq)) {
-                            return false;
-                        }
-                    }return true;
-                }else if (command.equals("bp")) {
-                    int ballPortalMessageLength = 5;
-                    if (messageParts.length != ballPortalMessageLength) {
-                        return false;
-                    }
-                    String name1 = messageParts[1];
-                    String name2 = messageParts[2];
-                    String xVel = messageParts[3];
-                    String yVel = messageParts[4];
-                    if (!name1.matches(nameReq) || !name2.matches(nameReq)) {
-                        return false;
-                    }
-                    if (!xVel.matches(doubleReq) || !yVel.matches(doubleReq)) {
-                        return false;
-                    }
-                    return true;
-                }
-                else if (command.equals("np")) {
-                    int newPortalMessageLength = 5;
-                    if (messageParts.length != newPortalMessageLength) {
-                        return false;
-                    }
-                    for (int i=1; i<newPortalMessageLength; i++) {  // start at 1 because already checked index 0
-                        if (!messageParts[i].matches(nameReq)) {
-                            return false;
-                        }
-                    }return true;
-                }else if (command.equals("pr")) {
-                    int portalReplyMessageLength = 4;
-                    if (messageParts.length != portalReplyMessageLength) {
-                        return false;
-                    }
-                    String name1 = messageParts[1];
-                    String name2 = messageParts[2];
-                    String bool = messageParts[3];
-                    if (!name1.matches(nameReq) || !name2.matches(nameReq)) {
-                        return false;
-                    }if (!bool.equals("true") || !bool.equals("false")) {
-                        return false;
-                    }return true;
-                }
-                */
                 return false;  // invalid command
             }
         }.start();

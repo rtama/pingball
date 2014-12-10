@@ -5,8 +5,6 @@ import static physics.Geometry.timeUntilRotatingCircleCollision;
 
 import java.awt.Graphics2D;
 
-import javax.swing.JComponent;
-
 import physics.Circle;
 import physics.Vect;
 
