@@ -45,7 +45,7 @@ public class Ball extends Gadget {
     private boolean ghost;
     private boolean removed; //If the ball should be removed on the next timestep
     
-    private final double RADIUS=0.25;
+    public static final double RADIUS=0.25;
     private String sendToBoard;
     private boolean shouldSend = false;
     
@@ -402,7 +402,7 @@ public class Ball extends Gadget {
 
     @Override
     public void drawCanvas(Graphics2D g2d) {
-        Shape shape = new Ellipse2D.Double( (this.xPos + 1 - this.RADIUS)*scaleFactor, (this.yPos + 1- this.RADIUS)*scaleFactor, 2*this.RADIUS*scaleFactor,2*this.RADIUS*scaleFactor);
+        Shape shape = new Ellipse2D.Double( (this.xPos + 1 - RADIUS)*scaleFactor, (this.yPos + 1- RADIUS)*scaleFactor, 2*RADIUS*scaleFactor,2*RADIUS*scaleFactor);
         // Add 1 to the position coordinates to account for the board walls
         // Multiply the radius by 2 because we want the length and width of the bounding box
 

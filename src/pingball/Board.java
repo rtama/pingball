@@ -134,6 +134,8 @@ public class Board {
         this.mu = mu;
         this.mu2 = mu2;
         this.gravity = gravity;
+        
+        this.singlePlayerMode = true;
         checkRep();
     }
     /**
