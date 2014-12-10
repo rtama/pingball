@@ -49,13 +49,17 @@ public class ClientReceiver implements Runnable {
      * @throws IOException if the connection encounters an error or terminates unexpectedly
      */
     public void handleConnection() throws IOException{
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        try {
-            for (String line = in.readLine(); line != null; line = in.readLine()) {
-                handleRequest(line);
-            }
-        } finally {
-            in.close();
+        if (!socket.isClosed()) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            try {
+                if (!socket.isClosed()) {
+                    for (String line = in.readLine(); line != null; line = in.readLine()) {
+                        handleRequest(line);
+                    }                    
+                }
+            } finally {
+                in.close();
+            }            
         }
     }
 
