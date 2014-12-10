@@ -45,11 +45,9 @@ public class PingballGUI extends JFrame implements KeyListener {
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenu menuGame = new JMenu("Game");
-    private final JMenu menuHelp = new JMenu("Help");
     private final JMenu menuConnection = new JMenu("Connection");
     private final JMenuItem openFile = new JMenuItem("Open board");
     private final JMenuItem restartBoard = new JMenuItem("Restart board");
-    private final JMenuItem controls = new JMenuItem("Controls");
     private final JMenuItem pause = new JMenuItem("Pause");
     private final JMenuItem connect = new JMenuItem("Connect");
     private final JMenuItem disconnect = new JMenuItem("Disconnect");

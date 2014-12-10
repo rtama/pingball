@@ -1,8 +1,7 @@
 package pingball;
 
+
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -12,8 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
-
-import javax.swing.JComponent;
 
 /**
  * The board is a 20L x 20L playing area that can contain gadgets on it
@@ -44,6 +41,7 @@ public class Board {
     public static final char BALL_CHAR = '*';
 
     private List<Gadget> gadgets = new ArrayList<Gadget>();
+    
     private List<Ball> balls = new ArrayList<Ball>();
     private List<Ball> newBalls = new ArrayList<Ball>();
     private List<Gadget> portals = new ArrayList<Gadget>(); 
@@ -204,8 +202,12 @@ public class Board {
         //balls are gadgets, a reference to them is stored in both balls and
         //gadgets so that we know which gadgets are balls
 
-        balls.add(ball);
-        gadgets.add(ball);
+        synchronized(balls) {
+            balls.add(ball);            
+        }
+        synchronized(gadgets) {
+            gadgets.add(ball);            
+        }
     }
 
     /**
@@ -222,7 +224,9 @@ public class Board {
      * @param gadget Gadget object to be added to the board
      */
     public void addGadget(Gadget gadget){
-        gadgets.add(gadget);
+        synchronized(gadgets) {
+            gadgets.add(gadget);            
+        }
     }
 
 
@@ -231,7 +235,9 @@ public class Board {
      * @param portal
      */
     public void addPortal(Gadget portal){ 
-        portals.add(portal); 
+        synchronized(portals) {
+            portals.add(portal);             
+        }
         this.addGadget(portal); 
     }
 
@@ -240,7 +246,9 @@ public class Board {
      * @return all of the portals in the board
      */
     public List<Gadget> getPortals(){ 
+        synchronized(portals) {
         return this.portals; 
+        }
     }
 
     /**
@@ -249,14 +257,16 @@ public class Board {
      * @param action    name of gadget that responds to the trigger
      */
     public void addTrigger(String trigger, String action) {
-        for (Gadget triggerGadget : gadgets) {
-            if (triggerGadget.getName().equals(trigger)) {
-                for (Gadget actionGadget : gadgets) {
-                    if (actionGadget.getName().equals(action)) {
-                        triggerGadget.addTriggeredGadget(actionGadget);
+        synchronized(gadgets) {
+            for (Gadget triggerGadget : gadgets) {
+                if (triggerGadget.getName().equals(trigger)) {
+                    for (Gadget actionGadget : gadgets) {
+                        if (actionGadget.getName().equals(action)) {
+                            triggerGadget.addTriggeredGadget(actionGadget);
+                        }
                     }
                 }
-            }
+            }            
         }
     }
 
@@ -266,11 +276,13 @@ public class Board {
      * @return true if this board contains a gadget with the specified name; false otherwise
      */
     public boolean containsGadget(String gadgetName) {
-        for (Gadget gadget : gadgets) {
-            if (gadget.getName().equals(gadgetName)) {
-                return true;
-            }
-        }return false;
+        synchronized(gadgets) {
+            for (Gadget gadget : gadgets) {
+                if (gadget.getName().equals(gadgetName)) {
+                    return true;
+                }
+            }return false;            
+        }
     }
 
     /**
@@ -279,10 +291,12 @@ public class Board {
      * @return the portal on this board with name portalName
      */
     public Gadget getPortal(String portalName) {
-        for (Gadget gadget : gadgets) {
-            if (gadget.getName().equals(portalName)) {
-                return gadget;
-            }
+        synchronized(gadgets) {
+            for (Gadget gadget : gadgets) {
+                if (gadget.getName().equals(portalName)) {
+                    return gadget;
+                }
+            }            
         }
         System.err.println("You disobeyed the spec. Here's a top wall for you instead of a portal.");
         return OuterWall.TOP_WALL(); // This line should only occur if the user disobeyed the spec.
@@ -335,17 +349,22 @@ public class Board {
                 events = new TreeSet<CollisionEvent>();
 
                 // update all objects to new collision time, update collision times
-                for (Ball firstBall : balls) {
-                    if (!firstBall.isGhost() && !firstBall.isRemoved()) {
-                        for(Gadget gadget : gadgets) {
-                            if (!(gadget.isGhost())) {
-                                if (firstBall != gadget) {
-                                    events.add(new CollisionEvent(firstBall, gadget, gadget.collisionTime(firstBall)));
-                                }
+                synchronized(balls) {
+                    for (Ball firstBall : balls) {
+                        if (!firstBall.isGhost() && !firstBall.isRemoved()) {
+                            synchronized(gadgets) {
+                                for(Gadget gadget : gadgets) {
+                                    if (!(gadget.isGhost())) {
+                                        if (firstBall != gadget) {
+                                            events.add(new CollisionEvent(firstBall, gadget, gadget.collisionTime(firstBall)));
+                                        }
+                                    }
+                                }                                
                             }
                         }
-                    }
+                    }                    
                 }
+
 
 
                 // try to get first collision (u,v)
@@ -353,8 +372,10 @@ public class Board {
                 if (!events.isEmpty() && firstCollisionEvent.getTimeToCollision() <= timeToEndOfFrame) {
 
                     // update all gadgets to collision time
-                    for(Gadget gadget : gadgets) {
-                        gadget.updateToTime(firstCollisionEvent.getTimeToCollision());
+                    synchronized(gadgets) {
+                        for(Gadget gadget : gadgets) {
+                            gadget.updateToTime(firstCollisionEvent.getTimeToCollision());
+                        }                        
                     }
 
                     // collide gadget with ball, updating ball's velocity
@@ -370,28 +391,34 @@ public class Board {
             }
 
             // update all to final time
-            for(Gadget gadget : gadgets) {
-                gadget.updateToTime(timeToEndOfFrame);
+            synchronized(gadgets) {
+                for(Gadget gadget : gadgets) {
+                    gadget.updateToTime(timeToEndOfFrame);
+                }                
             }
 
             //Apply friction and gravity for previous timestep
-            for (Ball ball : balls) {
+            synchronized(balls) {
+                for (Ball ball : balls) {
 
-                if (!ball.isGhost()){
-                    ball.applyFriction(this.mu, this.mu2, initialTimeToEndOfFrame);
-                    ball.applyGravity(this.gravity, initialTimeToEndOfFrame);
-                }
+                    if (!ball.isGhost()){
+                        ball.applyFriction(this.mu, this.mu2, initialTimeToEndOfFrame);
+                        ball.applyGravity(this.gravity, initialTimeToEndOfFrame);
+                    }
+                }                
             }
 
             //send balls to other client board
             //System.out.println("singlePlayerMode?" + this.singlePlayerMode);
             if(!this.singlePlayerMode){
-                for (Ball ball : balls) {
-                    //System.out.println("ball should send?" + ball.getShouldSend());
-                    if (ball.getShouldSend()){
-                        sendMessage(ball.getSendToBoardMessage());
-                        //System.out.println("ball.getsendtoboardmessage" + ball.getSendToBoardMessage());
-                    }
+                synchronized(balls) {
+                    for (Ball ball : balls) {
+                        //System.out.println("ball should send?" + ball.getShouldSend());
+                        if (ball.getShouldSend()){
+                            sendMessage(ball.getSendToBoardMessage());
+                            //System.out.println("ball.getsendtoboardmessage" + ball.getSendToBoardMessage());
+                        }
+                    }                    
                 }
             }
 
@@ -401,7 +428,9 @@ public class Board {
                 Ball currentBall = iter.next(); 
                 if (currentBall.isRemoved()) {
                     iter.remove(); //Remove from balls
-                    gadgets.remove(currentBall); //Remove from gadgets. 
+                    synchronized(gadgets) {
+                        gadgets.remove(currentBall); //Remove from gadgets.                         
+                    }
                 }
             }
 
@@ -513,17 +542,11 @@ public class Board {
      * @param g2 graphics to draw
      */
     public void paintBoardOnGraphics2D(Graphics2D g2) {
-//        int LPixelLength=10;
-        for (Gadget gadget : gadgets) {
-            gadget.drawCanvas(g2);
-//            if (!balls.contains(gadget)) {
-//                g2.draw(new Rectangle(gadget.getBoardX()*LPixelLength,gadget.getBoardY()*LPixelLength,LPixelLength,LPixelLength));
-//            }
+        synchronized(gadgets) {
+            for (Gadget gadget : gadgets) {
+                gadget.drawCanvas(g2);
+            }            
         }
-
-//        for (Ball ball : balls) {
-//            g2.draw(new Ellipse2D.Double((ball.getXPos()-ball.getCircle().getRadius())*LPixelLength,(ball.getYPos()-ball.getCircle().getRadius())*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength,2*ball.getCircle().getRadius()*LPixelLength));
-//        }
     }
 
     /**
@@ -577,10 +600,12 @@ public class Board {
      * @param gadgetName name of gadget to activate
      */
     private void activate(String gadgetName) {
-        for (Gadget gadget : gadgets) {
-            if (gadget.name.equals(gadgetName)) {
-                gadget.action();
-            }
+        synchronized(gadgets) {
+            for (Gadget gadget : gadgets) {
+                if (gadget.name.equals(gadgetName)) {
+                    gadget.action();
+                }
+            }            
         }
     }
 
@@ -601,13 +626,16 @@ public class Board {
             this.socket = newSocket;
             out = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         this.singlePlayerMode = false; 
 
         sendMessage("hello " + this.name); 
+        //Broadcast existence of each portal
+        for (Gadget portal : portals) {
+            ((Portal) portal).broadcastPresence();
+        }
     }
 
     /**

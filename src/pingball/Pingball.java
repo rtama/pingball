@@ -223,7 +223,7 @@ public class Pingball {
                 //update gadgets
                 board.update(MILLISECS_PER_FRAME);
                 
-                System.out.println(board.toString());
+                //System.out.println(board.toString());
             }
             //sleep to achieve desired FPS
             long elapsedTime = System.currentTimeMillis() - fieldTime;
